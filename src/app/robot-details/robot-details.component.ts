@@ -23,8 +23,9 @@ export class RobotDetailsComponent implements OnInit {
       let robotID = params.get('robotId');
       console.log(robotID);
       
-      this.robotService.getRobotDoc(robotID).snapshotChanges().subscribe(data => {
-        console.log(data.data());
+      this.robotService.getRobotDoc(robotID).snapshotChanges()
+      .subscribe(data => {
+        //console.log(data.data());
       })
     });
   }

@@ -26,7 +26,6 @@ export class RobotListComponent {
           //timestamp: e.payload.doc.data()['timestamp']
         } as Robot;
       })
-      console.log(this.robots);
     });
   }
 

@@ -1,4 +1,4 @@
-<form [formGroup]="importRobotsForm">
+<form [formGroup]="importRobotsForm" (ngSubmit)="importBots()">
   <div>
     <label for="">Event ID</label>
     <input
@@ -21,5 +21,5 @@
       type="select"
       class="form-control">
   </div> -->
-  <button type="submit" class="btn btn-success">Submit</button>
+  <button type="submit" class="btn btn-success">Import</button>
 </form>

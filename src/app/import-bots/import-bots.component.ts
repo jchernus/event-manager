@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { eventIdValidators } from './eventIdValidators';
+import { eventIdValidators } from './eventIdValidators'; 
 
 import { RobotsService } from '../robots.service';
+
+declare function importRobots(): any;
 
 @Component({
   selector: 'app-import-bots',
@@ -32,9 +34,11 @@ export class ImportBotsComponent implements OnInit {
 
   }
 
-  importRobots(){
-    //this.robotService.importRobots(myEventID, myClassID);
-    this.robotService.importRobots(580, 7);
+  pullClassIds(){
+
   }
 
+  importBots(){
+    importRobots();
+  }
 }
