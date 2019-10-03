@@ -11,6 +11,7 @@ import { RobotsService } from '../robots.service';
 })
 export class RobotDetailsComponent implements OnInit {
   robot: Robot;
+  robotObservable;
   
   constructor(
     private route: ActivatedRoute,
@@ -19,9 +20,12 @@ export class RobotDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      let myVal = +params.get('robotId');
-      console.log(myVal);
-      this.robotService.getRobot(myVal);
+      let robotID = params.get('robotId');
+      console.log(robotID);
+      
+      this.robotService.getRobotDoc(robotID).snapshotChanges().subscribe(data => {
+        console.log(data.data());
+      })
     });
   }
 }

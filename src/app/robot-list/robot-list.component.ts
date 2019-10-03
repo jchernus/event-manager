@@ -10,11 +10,14 @@ import { Robot } from '../robot';
 })
 export class RobotListComponent {
   robots: Robot[];
+  robotsObservable;
 
   constructor(private robotService: RobotsService){}
 
   ngOnInit() {
-    this.robotService.getRobots().subscribe(data => {
+    this.robotsObservable = this.robotService.getRobotsObservable();
+
+    this.robotsObservable.subscribe(data => {
       this.robots = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -27,11 +30,11 @@ export class RobotListComponent {
     });
   }
 
-  create(robot: Robot){
-    this.robotService.addRobot(robot);
-  }
+  // create(robot: Robot){
+  //   this.robotService.addRobot(robot);
+  // }
 
-  delete(id: string) {
-    this.robotService.deleteRobot(id);
-  }
+  // delete(id: string) {
+  //   this.robotService.deleteRobot(id);
+  // }
 }

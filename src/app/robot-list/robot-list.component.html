@@ -1,9 +1,9 @@
 <h2>Robots</h2>
 
-<div *ngFor="let robot of robots; index as robotId">
+<div *ngFor="let robot of robots">
 
   <h3>
-    <a [title]="robot.name + ' details'" [routerLink]="['/robot', robotId]">
+    <a [title]="robot.name + ' details'" [routerLink]="['/robot', robot.id]">
       {{ robot.name }}
     </a>
   </h3>
