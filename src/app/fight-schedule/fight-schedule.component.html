@@ -1,0 +1,16 @@
+<h2>Fight Schedule</h2>
+
+<div>
+  <table> 
+    <tr>
+      <th>Winner</th>
+      <th>Loser</th>
+      <th>Date/Time</th>
+    </tr>
+    <tr *ngFor="let fight of fights">
+      <td>{{fight.winner}}</td>
+      <td>{{fight.loser}}</td>
+      <td>{{fight.timestamp | date:'medium'}}</td>
+    </tr>
+  </table>
+</div>
