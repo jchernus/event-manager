@@ -33,11 +33,11 @@ export class RobotsService {
     const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + eventID + '&sort=&classid=' + classID;
     return null;
 
-    const EVENTID = 580;
+    //const EVENTID = 580;
 
-    const BOTS15 = 142;
-    const BOTS30 = 123;
-    const BOTSHW = 7;
+    //const BOTS15 = 142;
+    //const BOTS30 = 123;
+    //const BOTSHW = 7;
 
     // Images can be at botpics/thumbs/13516.jpg
     // or at botpics/13516.jpg
@@ -60,5 +60,4 @@ export class RobotsService {
         //handle error
       });
   }
-    
 }
