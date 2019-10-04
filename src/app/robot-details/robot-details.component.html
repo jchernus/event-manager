@@ -1,11 +1,13 @@
 <h2>Robot Details</h2>
 
 <div>
-  <p>{{robot | async | json}}</p>
-  <h3>{{(robot | async).name}}</h3>
-
-  <!-- <p><b>State:</b> {{ (robot | async)?.state }}</p> -->
-  <!-- <img src="https://www.buildersdb.com/botpics/{{ (robot | async).imgID }}.jpg"> -->
+  <h3>{{robot.name}}</h3>
+  <p *ngIf="robot.state">
+    <b>State:</b> {{ robot.state }}
+  </p>
+  <!-- <div *ngIf="robot.imgID">
+    <img src="https://www.buildersdb.com/botpics/robot.imgID }}.jpg">
+  </div> -->
 
   <!-- <button (click)="scheduleFight(robot)">Schedule Fight</button> -->
 </div>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { RobotsService } from '../robots.service';
-import { Robot } from '../robot';
 
 @Component({
   selector: 'app-robot-list',
@@ -16,7 +15,6 @@ export class RobotListComponent implements OnInit {
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable();
-    console.log(this.robots);
   }
 
   // create(robot: Robot){

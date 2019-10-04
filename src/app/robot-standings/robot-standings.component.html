@@ -1,3 +1,20 @@
-<p>
-robot-standings works!
-</p>
+<h2>Robot Standings</h2>
+
+<div>
+	<table>
+		<tr>
+      <th>Bot</th>
+      <th>Fights</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <th>KOs</th>
+    </tr>
+		<tr *ngFor="let robot of (robots | async)">
+      <td>{{ robot.name }} </td>
+      <td>{{ robot.fightCount }} </td>
+      <td>{{ robot.winCount }} </td>
+      <td>{{ robot.lossCount }} </td>
+      <td>{{ robot.koCount }} </td>
+    </tr>
+	</table>
+</div>

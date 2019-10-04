@@ -1,4 +1,4 @@
-<h2>Robots</h2>
+<h2>Robot List</h2>
 
 <div *ngFor="let robot of (robots | async)">
 
@@ -12,15 +12,15 @@
     <b>State:</b> {{ robot.state }}
   </p>
 
-  <div *ngIf="robot.imgID">
-    <img src="https://www.buildersdb.com/botpics/thumbs/{{ robot.imgID }}.jpg">
-  </div>
+  <!-- <div *ngIf="robot.imgID">
+    <img src="www.buildersdb.com/botpics/thumbs/{{ robot.imgID }}.jpg">
+  </div> -->
 
 </div>
 
 
-<!-- <div *ngFor="let robot of robots" class="media">
-  <img src= "{{ robot.imgURL }}" class="mr-3" alt="...">
+<!-- <div *ngFor="let robot of (robots | async)" class="media">
+  <img src= "www.buildersdb.com/botpics/thumbs/{{ robot.imgID }}.jpg" class="mr-3" alt="...">
   <div class="media-body">
     <h5 class="mt-0">{{ robot.name }}</h5>
     <p *ngIf="robot.state">

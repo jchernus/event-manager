@@ -21,8 +21,8 @@ export class RobotDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let robotID = params.get('robotId');
-      console.log(robotID);
-      this.robot = this.robotService.getRobotDoc(robotID);
+      this.robotService.getRobotDoc(robotID)
+            .subscribe(bot => this.robot = bot);
     });
   }
 }
