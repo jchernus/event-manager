@@ -25,4 +25,8 @@ export class RobotDetailsComponent implements OnInit {
             .subscribe(bot => this.robot = bot);
     });
   }
+
+  initializeRobot(bot){
+    this.robotService.initializeBot(bot);
+  }
 }

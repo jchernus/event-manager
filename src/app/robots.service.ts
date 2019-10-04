@@ -4,8 +4,7 @@ import { Robot } from './robot';
 
 import { map } from 'rxjs/operators/map';
 
-//const rp = require('request-promise');
-//const $ = require('cheerio');
+import * as MyJSThingy from './assets/js/import-robots';
 
 @Injectable()
 export class RobotsService {
@@ -23,6 +22,21 @@ export class RobotsService {
 
   getRobotDoc(robotId : string) {
     return this.firestore.doc('robots/' + robotId).valueChanges();
+  }
+  
+  importBot(){
+    MyJSThingy.importRobots();
+  }
+
+  initializeBot(robotId : string){
+    // Add all of the other fields to the documents & initialize
+    // to something reasonable
+    this.firestore.doc('robots/' + robotId)
+      .update({
+        inAttendance : false,
+        passedSafety : false,
+        state : "N/A"
+      });
   }
 
   documentToDomainObject = _ => {

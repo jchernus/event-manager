@@ -33,11 +33,11 @@ export class ImportBotsComponent implements OnInit {
   constructor(private robotService: RobotsService) { }
 
   ngOnInit() {
-
+    
   }
 
-  pullClassIds(){
-
+  pullClassIds(eventID: number){
+    // Collect any classIDs that exist for the given eventID
   }
 
   importBots(){
