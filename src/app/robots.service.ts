@@ -2,23 +2,33 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Robot } from './robot';
 
-import * as cheerio from 'cheerio';
+import { map } from 'rxjs/operators/map';
 
 //const rp = require('request-promise');
 //const $ = require('cheerio');
 
 @Injectable()
 export class RobotsService {
+  robots;
 
   constructor(private firestore: AngularFirestore) { 
   }
 
   getRobotsObservable() {
-    return this.firestore.collection('robots').valueChanges();
+    this.robots = this.firestore.collection('robots').snapshotChanges()
+    .pipe(map(actions => actions.map(this.documentToDomainObject)));
+
+    return this.robots;
   }
 
   getRobotDoc(robotId : string) {
     return this.firestore.doc('robots/' + robotId).valueChanges();
+  }
+
+  documentToDomainObject = _ => {
+    const object = _.payload.doc.data();
+    object.id = _.payload.doc.id;
+    return object;
   }
 
   // addRobot(robot: Robot){
