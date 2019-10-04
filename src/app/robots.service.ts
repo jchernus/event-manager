@@ -14,7 +14,7 @@ export class RobotsService {
   }
 
   getRobotsObservable() {
-    return this.firestore.collection('robots').snapshotChanges();
+    return this.firestore.collection('robots').valueChanges();
   }
 
   getRobotDoc(robotId : string) {
