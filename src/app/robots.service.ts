@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Robot } from './robot';
 
 import { map } from 'rxjs/operators/map';
 
-/import * as MyJSThingy from './js/import-robots';
+//import * as MyJSThingy from './js/import-robots';
 
 @Injectable()
 export class RobotsService {
@@ -25,7 +24,7 @@ export class RobotsService {
   }
   
   importBots(){
-    MyJSThingy.importRobots();
+    //MyJSThingy.importRobots();
   }
 
   initializeBot(robotId : string){
@@ -45,11 +44,11 @@ export class RobotsService {
     return object;
   }
 
-  // addRobot(robot: Robot){
-  //   return this.firestore.collection('robots').add(robot);
-  // }
+  addRobot(){
+    return this.firestore.collection('robots').add();
+  }
 
-  // deleteRobot(robotId: string){
-  //     this.firestore.doc('robots/' + robotId).delete();
-  // }
+  deleteRobot(robotId: string){
+      this.firestore.doc('robots/' + robotId).delete();
+  }
 }

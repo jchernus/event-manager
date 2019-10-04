@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Robot } from '../robot';
 import { RobotsService } from '../robots.service';
 
 @Component({

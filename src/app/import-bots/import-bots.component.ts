@@ -4,8 +4,6 @@ import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
 
-declare function importRobots(): any;
-
 @Component({
   selector: 'app-import-bots',
   templateUrl: './import-bots.component.html',
