@@ -7,7 +7,7 @@
 // Images can be at botpics/thumbs/13516.jpg
 // or at botpics/13516.jpg
 
-function importRobots(){
+module.exports = function importRobots(){
   console.log("Got here");
   const rp = require('request-promise');
   const $ = require('cheerio');
