@@ -3,7 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { map } from 'rxjs/operators/map';
 
-import * as MyJSThingy from './js/import-robots.js';
+declare var require: any;
+var MyJSThingy = require('./js/import-robots.js');
 
 @Injectable()
 export class RobotsService {
@@ -24,7 +25,7 @@ export class RobotsService {
   }
   
   importBots(){
-    //MyJSThingy.importRobots();
+    MyJSThingy.importRobots();
   }
 
   initializeBot(robotId : string){

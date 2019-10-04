@@ -27,7 +27,7 @@
             ],
             "scripts": [
               "node_modules/cheerio/lib/cheerio.js",
-              "assets/js/import-robots.js"
+              "js/import-robots.js"
             ]
           },
           "configurations": {
