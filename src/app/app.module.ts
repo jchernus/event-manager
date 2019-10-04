@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { RobotListComponent } from './robot-list/robot-list.component';
 import { RobotDetailsComponent } from './robot-details/robot-details.component';
-import { CartService } from './cart.service';
 import { FightScheduleComponent } from './fight-schedule/fight-schedule.component';
 import { RobotStandingsComponent } from './robot-standings/robot-standings.component';
 import { FightsService } from './fights.service';
@@ -46,6 +45,6 @@ import { ImportBotsComponent } from './import-bots/import-bots.component';
     ImportBotsComponent
   ],
   bootstrap: [ AppComponent ],
-  providers: [CartService, FightsService, RobotsService]
+  providers: [FightsService, RobotsService]
 })
 export class AppModule { }

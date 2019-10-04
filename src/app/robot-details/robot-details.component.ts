@@ -24,9 +24,17 @@ export class RobotDetailsComponent implements OnInit {
       console.log(robotID);
       
       this.robotService.getRobotDoc(robotID).snapshotChanges()
-      .subscribe(data => {
-        //console.log(data.data());
-      })
+      .subscribe(
+        data => {
+          //console.log(data.data());
+        }, 
+        (error : Response) => {
+          if (error.status === 404){
+            console.log("Error: Robot not found.");
+          } else {
+            console.log("Error: " + error);
+          }
+        });
     });
   }
 }

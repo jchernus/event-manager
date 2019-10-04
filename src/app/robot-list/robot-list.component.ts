@@ -17,7 +17,8 @@ export class RobotListComponent {
   ngOnInit() {
     this.robotsObservable = this.robotService.getRobotsObservable();
 
-    this.robotsObservable.subscribe(data => {
+    this.robotsObservable.subscribe(
+      data => {
       this.robots = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -25,7 +26,10 @@ export class RobotListComponent {
           state: e.payload.doc.data()['state'],
           //timestamp: e.payload.doc.data()['timestamp']
         } as Robot;
-      })
+      });
+    }, 
+    error => {
+      console.log("An unexpected error occured: " + error);
     });
   }
 

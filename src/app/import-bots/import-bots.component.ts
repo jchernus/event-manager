@@ -4,6 +4,8 @@ import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
 
+//import { importRobots } from './assets/js/import-robots';
+
 declare function importRobots(): any;
 
 @Component({
@@ -40,5 +42,12 @@ export class ImportBotsComponent implements OnInit {
 
   importBots(){
     importRobots();
+
+    /*
+      this.importRobotsForm.setErrors({
+        invalidEventID: true
+        invalidClassID: true
+      })
+    */
   }
 }
