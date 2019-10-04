@@ -4,7 +4,7 @@ import { Robot } from './robot';
 
 import { map } from 'rxjs/operators/map';
 
-import * as MyJSThingy from './assets/js/import-robots';
+/import * as MyJSThingy from './js/import-robots';
 
 @Injectable()
 export class RobotsService {
@@ -24,7 +24,7 @@ export class RobotsService {
     return this.firestore.doc('robots/' + robotId).valueChanges();
   }
   
-  importBot(){
+  importBots(){
     MyJSThingy.importRobots();
   }
 
