@@ -18,7 +18,7 @@ export class RobotsService {
   }
 
   getRobotDoc(robotId : string) {
-    return this.firestore.collection('robots').doc(robotId);
+    return this.firestore.doc('robots/' + robotId).valueChanges();
   }
 
   // addRobot(robot: Robot){

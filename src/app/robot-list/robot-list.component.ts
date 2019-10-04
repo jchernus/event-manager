@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { RobotsService } from '../robots.service';
 import { Robot } from '../robot';
@@ -8,16 +8,17 @@ import { Robot } from '../robot';
   templateUrl: './robot-list.component.html',
   styleUrls: ['./robot-list.component.css']
 })
-export class RobotListComponent {
+export class RobotListComponent implements OnInit, OnDestroy {
   robots: Robot[];
   robotsObservable;
+  subscription;
 
   constructor(private robotService: RobotsService){}
 
   ngOnInit() {
     this.robotsObservable = this.robotService.getRobotsObservable();
 
-    this.robotsObservable.subscribe(
+    this.subscription = this.robotsObservable.subscribe(
       data => {
       this.robots = data.map(e => {
         return {
@@ -31,6 +32,10 @@ export class RobotListComponent {
     error => {
       console.log("An unexpected error occured: " + error);
     });
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
   // create(robot: Robot){

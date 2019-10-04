@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Robot } from '../robot';
@@ -9,9 +9,10 @@ import { RobotsService } from '../robots.service';
   templateUrl: './robot-details.component.html',
   styleUrls: ['./robot-details.component.css']
 })
-export class RobotDetailsComponent implements OnInit {
+export class RobotDetailsComponent implements OnInit, OnDestroy {
   robot: Robot;
   robotObservable;
+  subscription;
   
   constructor(
     private route: ActivatedRoute,
@@ -23,7 +24,7 @@ export class RobotDetailsComponent implements OnInit {
       let robotID = params.get('robotId');
       console.log(robotID);
       
-      this.robotService.getRobotDoc(robotID).snapshotChanges()
+      this.subscription = this.robotService.getRobotDoc(robotID).snapshotChanges()
       .subscribe(
         data => {
           //console.log(data.data());
@@ -36,5 +37,9 @@ export class RobotDetailsComponent implements OnInit {
           }
         });
     });
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }
