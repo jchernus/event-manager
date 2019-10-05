@@ -4,7 +4,7 @@ export class Fight {
   winner: String;
   loser: String;
   ko: boolean;
-  timestamp: Date;
+  timestamp: string;
   completed : boolean;
   //TODO: Fill in the rest
 }

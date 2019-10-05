@@ -15,7 +15,7 @@ export class ScheduleFightComponent implements OnInit {
   }
 
   addFight(){
-    this.fightService.addFight();
+    // Schedule a fight
   }
 
 }

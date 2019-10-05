@@ -1,18 +1,23 @@
-<app-schedule-fight></app-schedule-fight>
+<app-record-result></app-record-result>
 
-<h2>Fight Schedule</h2>
+<h2>Fight Results</h2>
 
 <div>
   <table> 
     <tr>
       <th>Winner</th>
       <th>Loser</th>
-      <th>Date/Time</th>
+      <th>Win Condition</th>
+      <!-- <th>Date/Time</th> -->
     </tr>
     <tr *ngFor="let fight of fights">
       <td>{{fight.winner}}</td>
       <td>{{fight.loser}}</td>
-      <td>{{fight.timestamp | date:'medium'}}</td>
+      <td *ngIf="fight.ko; else jd">KO</td>
+      <ng-template #jd>
+        <td>JD</td>
+      </ng-template>
+      <!-- <td>{{fight.timestamp }}</td> -->
     </tr>
   </table>
 </div>

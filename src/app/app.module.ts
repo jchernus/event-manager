@@ -20,6 +20,7 @@ import { RobotsService } from './robots.service';
 import { ImportBotsComponent } from './import-bots/import-bots.component';
 import { ScheduleFightComponent } from './schedule-fight/schedule-fight.component';
 import { FightHistoryComponent } from './fight-history/fight-history.component';
+import { RecordResultComponent } from './record-result/record-result.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { FightHistoryComponent } from './fight-history/fight-history.component';
     RobotStandingsComponent,
     ImportBotsComponent,
     ScheduleFightComponent,
-    FightHistoryComponent
+    FightHistoryComponent,
+    RecordResultComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService]
