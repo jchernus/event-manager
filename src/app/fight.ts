@@ -2,7 +2,7 @@ export class Fight {
   id: String;
   winner: String;
   loser: String;
-  ko : false;
+  //ko : false;
   //timestamp: Date;
   //TODO: Fill in the rest
 }
