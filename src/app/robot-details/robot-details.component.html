@@ -2,12 +2,30 @@
 
 <div>
   <h3>{{robot.name}}</h3>
+  <p><b>Weight Class: </b> {{ robot.weightClass }} </p>
+  <p *ngIf="robot.inAttendance">
+    <b>Attendance:</b> Present
+  </p>
+  <p *ngIf="robot.passedSafety">
+    <b>Safety:</b> Passed
+  </p>
   <p *ngIf="robot.state">
     <b>State:</b> {{ robot.state }}
   </p>
   <!-- <div *ngIf="robot.imgID">
     <img src="https://www.buildersdb.com/botpics/robot.imgID }}.jpg">
   </div> -->
+
+  <div *ngIf="">
+    <p></p>
+    <table>
+      <tr>
+        <th></th>
+      </tr>
+      <tr *ngFor="">
+      </tr>
+    </table>
+  </div>
 
   <button (click)="initializeRobot(robotID)">Initialize Bot</button>
 </div>
