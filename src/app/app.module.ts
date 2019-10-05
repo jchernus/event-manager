@@ -18,6 +18,7 @@ import { RobotStandingsComponent } from './robot-standings/robot-standings.compo
 import { FightsService } from './fights.service';
 import { RobotsService } from './robots.service';
 import { ImportBotsComponent } from './import-bots/import-bots.component';
+import { ScheduleFightComponent } from './schedule-fight/schedule-fight.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { ImportBotsComponent } from './import-bots/import-bots.component';
     RobotDetailsComponent,
     FightScheduleComponent,
     RobotStandingsComponent,
-    ImportBotsComponent
+    ImportBotsComponent,
+    ScheduleFightComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService]

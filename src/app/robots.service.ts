@@ -88,12 +88,6 @@ export class RobotsService {
     
   }
 
-  documentToDomainObject = _ => {
-    const object = _.payload.doc.data();
-    object.id = _.payload.doc.id;
-    return object;
-  }
-
   addRobot(botName: String, weight: number){
     return this.firestore.collection('robots').add({
       name: botName,
@@ -117,5 +111,11 @@ export class RobotsService {
 
   deleteRobot(robotId: string){
       this.firestore.doc('robots/' + robotId).delete();
+  }
+
+  documentToDomainObject = _ => {
+    const object = _.payload.doc.data();
+    object.id = _.payload.doc.id;
+    return object;
   }
 }
