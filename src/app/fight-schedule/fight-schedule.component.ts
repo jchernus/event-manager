@@ -14,17 +14,6 @@ export class FightScheduleComponent implements OnInit {
   constructor(private fightService: FightsService) { }
 
   ngOnInit() {
-    this.fightService.getFights().subscribe(data => {
-      this.fights = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          winner: e.payload.doc.data()['winner'],
-          loser: e.payload.doc.data()['loser'],
-          //timestamp: e.payload.doc.data()['timestamp']
-        } as Fight;
-      })
-      console.log(this.fights);
-    });
   }
 
   create(fight: Fight){

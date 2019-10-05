@@ -1,14 +1,17 @@
+<app-schedule-fight></app-schedule-fight>
+
 <h2>Fight Schedule</h2>
 
 <div>
   <table> 
     <tr>
-      <th>Red</th>
-      <th>Blue</th>
+      <th>Winner</th>
+      <th>Loser</th>
+      <th>Date/Time</th>
     </tr>
     <tr *ngFor="let fight of fights">
-      <td>{{fight.red}}</td>
-      <td>{{fight.blue}}</td>
+      <td>{{fight.winner}}</td>
+      <td>{{fight.loser}}</td>
       <td>{{fight.timestamp | date:'medium'}}</td>
     </tr>
   </table>

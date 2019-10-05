@@ -1,8 +1,10 @@
 export class Fight {
   id: String;
+  weightClass: number;
   winner: String;
   loser: String;
-  //ko : false;
-  //timestamp: Date;
+  ko: boolean;
+  timestamp: Date;
+  completed : boolean;
   //TODO: Fill in the rest
 }

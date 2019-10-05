@@ -19,6 +19,7 @@ import { FightsService } from './fights.service';
 import { RobotsService } from './robots.service';
 import { ImportBotsComponent } from './import-bots/import-bots.component';
 import { ScheduleFightComponent } from './schedule-fight/schedule-fight.component';
+import { FightHistoryComponent } from './fight-history/fight-history.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ScheduleFightComponent } from './schedule-fight/schedule-fight.componen
       { path: '', component: RobotListComponent },
       { path: 'robot/:robotId', component: RobotDetailsComponent },
       { path: 'schedule', component: FightScheduleComponent },
+      { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
       { path: 'import', component: ImportBotsComponent },
     ]),
@@ -46,7 +48,8 @@ import { ScheduleFightComponent } from './schedule-fight/schedule-fight.componen
     FightScheduleComponent,
     RobotStandingsComponent,
     ImportBotsComponent,
-    ScheduleFightComponent
+    ScheduleFightComponent,
+    FightHistoryComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService]
