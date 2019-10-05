@@ -10,6 +10,7 @@ import { RobotsService } from '../robots.service';
   styleUrls: ['./robot-details.component.css']
 })
 export class RobotDetailsComponent implements OnInit {
+  robotID : String;
   robot : Observable<any>;
   
   constructor(
@@ -19,10 +20,10 @@ export class RobotDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      let robotID = params.get('robotId');
-      this.robotService.getRobotDoc(robotID)
-            .subscribe(bot => this.robot = bot);
+      this.robotID = params.get('robotId');
     });
+    this.robotService.getRobotDoc(this.robotID)
+          .subscribe(bot => this.robot = bot);
   }
 
   initializeRobot(bot){
