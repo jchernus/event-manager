@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators/map';
@@ -10,7 +11,7 @@ declare var require: any;
 export class RobotsService {
   robots;
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { 
   }
 
   getRobotsObservable(weightClass:number) {
@@ -22,6 +23,11 @@ export class RobotsService {
 
   getRobotDoc(robotId : string) {
     return this.firestore.doc('robots/' + robotId).valueChanges();
+  }
+
+  getRobotImage(imgID : number){
+    const ref = this.storage.ref('botPhotos/' + imgID + '.jpg');
+    return ref.getDownloadURL();
   }
   
   importBots(){
@@ -79,7 +85,7 @@ export class RobotsService {
   initializeAllBots(){
     // Initialize all existing robots to starting config
     //this.robots = this.firestore.collection('robots').
-
+    
   }
 
   documentToDomainObject = _ => {

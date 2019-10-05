@@ -3,20 +3,33 @@
 <div>
   <h3>{{robot.name}}</h3>
   <p><b>Weight Class: </b> {{ robot.weightClass }} </p>
-  <p *ngIf="robot.inAttendance">
+
+  <p *ngIf="robot.inAttendance; else notInAttendance">
     <b>Attendance:</b> Present
   </p>
-  <p *ngIf="robot.passedSafety">
+  <ng-template #notInAttendance>
+    <p><b>Attendance:</b> Awaiting</p>
+  </ng-template>
+
+  <p *ngIf="robot.passedSafety; then yesSafety else noSafety">
     <b>Safety:</b> Passed
   </p>
+  <ng-template #noSafety>
+    <p><b>Safety:</b> Awaiting</p>
+  </ng-template>
+  
   <p *ngIf="robot.state">
     <b>State:</b> {{ robot.state }}
   </p>
-  <!-- <div *ngIf="robot.imgID">
-    <img src="https://www.buildersdb.com/botpics/robot.imgID }}.jpg">
-  </div> -->
 
-  <div *ngIf="">
+  <div *ngIf="robotPhoto; else noImage">
+    <img src={{ robotPhotoURL }}>
+  </div>
+  <ng-template #noImage>
+    <p>No image to display.</p>
+  </ng-template>
+
+  <!-- <div *ngIf="">
     <p></p>
     <table>
       <tr>
@@ -25,7 +38,7 @@
       <tr *ngFor="">
       </tr>
     </table>
-  </div>
+  </div> -->
 
   <button (click)="initializeRobot(robotID)">Initialize Bot</button>
 </div>

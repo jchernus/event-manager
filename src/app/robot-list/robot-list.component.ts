@@ -18,7 +18,7 @@ export class RobotListComponent implements OnInit {
   }
 
   // create(robot: Robot){
-  //   this.robotService.addRobot(robot);
+  //   this.robotService.addRobot(robot, weightClass);
   // }
 
   // delete(id: string) {

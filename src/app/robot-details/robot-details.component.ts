@@ -12,6 +12,7 @@ import { RobotsService } from '../robots.service';
 export class RobotDetailsComponent implements OnInit {
   robotID : string;
   robot : Observable<any>;
+  robotPhotoURL : Observable<any>;
   
   constructor(
     private route: ActivatedRoute,
@@ -23,7 +24,10 @@ export class RobotDetailsComponent implements OnInit {
       this.robotID = params.get('robotId');
     });
     this.robotService.getRobotDoc(this.robotID)
-          .subscribe(bot => this.robot = bot);
+        .subscribe(bot => this.robot = bot);
+        
+    this.robotService.getRobotImage(13526)
+        .subscribe(photoURL => this.robotPhotoURL = photoURL);
   }
 
   initializeRobot(bot){
