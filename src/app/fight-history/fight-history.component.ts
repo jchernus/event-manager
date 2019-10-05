@@ -24,7 +24,6 @@ export class FightHistoryComponent implements OnInit {
           timestamp: e.payload.doc.data()['timestamp'] // TODO: Figure out how to format on the html side
         } as Fight;
       })
-      console.log(this.fights);
     });
   }
 

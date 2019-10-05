@@ -1,5 +1,48 @@
 <h2>Record Results</h2>
-<div>
-  
-  <button (click)="addFight()">Enter Results</button>
+<div *ngIf="resultsForm.errors" class="alert alert-danger">
+  <p>You must select two unique bots.</p>
 </div>
+<form [formGroup]="resultsForm" (ngSubmit)="addFight()">
+	<div class="form-group">
+    <label for="winner">Winner:</label>
+    <select
+      [(ngModel)]="winnerBot"
+      formControlName="winner"
+      id=""
+      type="select"
+      class="form-control">
+      <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+    </select>
+  </div>
+	<div class="form-group">
+    <label for="loser">Loser:</label>
+    <select
+      [(ngModel)]="loserBot" 
+      name="loser"
+      formControlName="winner"
+      id=""
+      type="select"
+      class="form-control">
+      <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+    </select>
+  </div>
+	<div class="form-group">
+    <label for="ko">KO</label>
+    <input 
+      [(ngModel)]="ko" 
+      formControlName="ko"
+      id=""
+      name="ko"
+      type="radio"
+      class="form-control">
+    <label for="ko">JD</label>
+    <input 
+      [(ngModel)]="jd" 
+      formControlName="ko"
+      id=""
+      name="ko"
+      type="radio"
+      class="form-control">
+  </div>
+  <button (click)="addFight()">Enter Results</button>
+</form>

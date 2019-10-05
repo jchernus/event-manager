@@ -76,7 +76,7 @@ export class FightsService {
       .update({
         fightCount : robot.fightCount + 1,
         winCount : robot.winCount + 1,
-        koCount : robot.koCount + ko,
+        koCount : robot.koCount + +ko,
         // Append a new array item to 'fights'
       })
       .then(function() {
