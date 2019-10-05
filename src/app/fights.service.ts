@@ -51,23 +51,24 @@ export class FightsService {
             koCount: e.payload.doc.data()['koCount'],
             //timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
-      })
-      console.log(this.bots);
+        })
+
+        let robot = this.bots[0];
+
+        this.firestore.doc('robots/' + robot.id)
+        .update({
+          fightCount : robot.fightCount + 1,
+          winCount : robot.winCount + 1,
+          koCount : robot.koCount + incrementKo,
+          // Append a new array item to 'fights'
+        })
+        .then(function() {
+            console.log("Winning robot successfully updated!");
+        })
+        .catch(function(error) {
+            console.error("Error updating winning robot: ", error);
+        });
     });
-    
-    // this.firestore.doc('robots/' + robot.id)
-    //   .update({
-    //     fightCount : robot.fightCount + 1,
-    //     winCount : robot.winCount + 1,
-    //     koCount : robot.koCount + incrementKo,
-    //     // Append a new array item to 'fights'
-    //   })
-    //   .then(function() {
-    //       console.log("Winning robot successfully updated!");
-    //   })
-    //   .catch(function(error) {
-    //       console.error("Error updating winning robot: ", error);
-    //   });
 
     // // Update the losing robot's doc
     // this.firestore.doc('robots/' + robot.id)
