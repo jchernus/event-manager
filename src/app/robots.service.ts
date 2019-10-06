@@ -86,22 +86,22 @@ export class RobotsService {
     // Initialize all existing robots to starting config
     //this.robots = this.firestore.collection('robots').
     
-    this.firestore.collection('robots').snapshotChanges()
-      .subscribe(data => {
-        this.bots = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            name: e.payload.doc.data()['name'],
-            state: 'Repairing',
-            fightCount: e.payload.doc.data()['fightCount'],
-            winCount: e.payload.doc.data()['winCount'],
-            lossCount: e.payload.doc.data()['lossCount'],
-            koCount: e.payload.doc.data()['koCount'],
-            //timestamp: e.payload.doc.data()['timestamp']
-          } as Robot;
-        }).forEach()
-        this.initializeBot(this.bots[0].id);
-    });
+    // this.firestore.collection('robots').snapshotChanges()
+    //   .subscribe(data => {
+    //     this.bots = data.map(e => {
+    //       return {
+    //         id: e.payload.doc.id,
+    //         name: e.payload.doc.data()['name'],
+    //         state: 'Repairing',
+    //         fightCount: e.payload.doc.data()['fightCount'],
+    //         winCount: e.payload.doc.data()['winCount'],
+    //         lossCount: e.payload.doc.data()['lossCount'],
+    //         koCount: e.payload.doc.data()['koCount'],
+    //         //timestamp: e.payload.doc.data()['timestamp']
+    //       } as Robot;
+    //     }).forEach()
+    //     this.initializeBot(this.bots[0].id);
+    // });
   }
 
   addRobot(botName: String, weight: number){

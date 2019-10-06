@@ -30,7 +30,6 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
-            state: 'Repairing',
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
@@ -39,7 +38,7 @@ export class FightsService {
           } as Robot;
         })
         if (updateWinner) {
-          this.incrementWinCount(this.bots[0], true);
+          this.incrementWinCount(this.bots[0], 1, true);
           updateWinner = false;
         }
     });
@@ -52,7 +51,6 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
-            state: 'Repairing',
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
@@ -61,18 +59,73 @@ export class FightsService {
           } as Robot;
         })
         if (updateLoser) {
-          this.incrementLossCount(this.bots[0]);
+          this.incrementLossCount(this.bots[0], 1);
           updateLoser = false;
         }
     });
   }
 
-  incrementWinCount(robot: Robot, ko : boolean) {
+  deleteFight(fight: Fight){
+    //this.firestore.doc('fightHistory/' + fight.id).delete();
+    // Update the winning robot's doc
+    let updateWinner = true;
+    this.firestore.collection('robots', ref => ref.where('name', '==', fight.winner)).snapshotChanges()
+      .subscribe(data => {
+        this.bots = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            fightCount: e.payload.doc.data()['fightCount'],
+            winCount: e.payload.doc.data()['winCount'],
+            lossCount: e.payload.doc.data()['lossCount'],
+            koCount: e.payload.doc.data()['koCount'],
+            //timestamp: e.payload.doc.data()['timestamp']
+          } as Robot;
+        })
+        if (updateWinner) {
+          this.incrementWinCount(this.bots[0], -1, true);
+          updateWinner = false;
+        }
+    });
+
+    // Update the losing robot's doc
+    let updateLoser = true;
+    this.firestore.collection('robots', ref => ref.where('name', '==', fight.loser)).snapshotChanges()
+      .subscribe(data => {
+        this.bots = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            fightCount: e.payload.doc.data()['fightCount'],
+            winCount: e.payload.doc.data()['winCount'],
+            lossCount: e.payload.doc.data()['lossCount'],
+            koCount: e.payload.doc.data()['koCount'],
+            //timestamp: e.payload.doc.data()['timestamp']
+          } as Robot;
+        })
+        if (updateLoser) {
+          this.incrementLossCount(this.bots[0], -1);
+          updateLoser = false;
+        }
+    });
+  }
+
+  incrementWinCount(robot: Robot, val: number, ko : boolean) {
+    let newState = "";
+    if (val === 1) {
+      newState = "Repairing";
+    } else if (val === -1){
+      newState = "N/A";
+    } else {
+      console.log("Incorrect value provided for incrementLossCount.");
+      return;
+    }
     this.firestore.doc('robots/' + robot.id)
       .update({
         fightCount : robot.fightCount + 1,
         winCount : robot.winCount + 1,
         koCount : robot.koCount + +ko,
+        state: 'Repairing'
         // Append a new array item to 'fights'
       })
       .then(function() {
@@ -83,11 +136,21 @@ export class FightsService {
       });
   }
 
-  incrementLossCount(robot: Robot) {
+  incrementLossCount(robot: Robot, val: number) {
+    let newState = "";
+    if (val === 1) {
+      newState = "Repairing";
+    } else if (val === -1){
+      newState = "N/A";
+    } else {
+      console.log("Incorrect value provided for incrementLossCount.");
+      return;
+    }
     this.firestore.doc('robots/' + robot.id)
       .update({
-        fightCount : robot.fightCount + 1,
-        lossCount : robot.lossCount + 1
+        fightCount : robot.fightCount + val,
+        lossCount : robot.lossCount + val,
+        state: newState
         // Append a new array item to 'fights'
       })
       .then(function() {
@@ -96,10 +159,6 @@ export class FightsService {
       .catch(function(error) {
           console.error("Error updating losing robot: ", error);
       });
-  }
-
-  deleteFight(fightId: string){
-      this.firestore.doc('fightHistory/' + fightId).delete();
   }
 
   documentToDomainObject = _ => {
