@@ -27,29 +27,35 @@ export class RecordResultComponent implements OnInit {
   resultsForm = new FormGroup({
     winner: new FormControl(),
     loser: new FormControl(),
-    ko: new FormControl()
+    ko: new FormControl(),
+    jd: new FormControl()
   });
 
   addFight(){
-
-    console.log("Loser is: " + this.loserBot);
-    console.log("Winner is: " + this.winnerBot);
-    console.log("KO is: " + this.ko);
-    console.log("JD is: " + this.jd);
-
     // Check the form
     if (this.winnerBot === this.loserBot){
       this.resultsForm.setErrors({
         botValues: true
       });
+      return;
+    }
+    
+    // Populate fight from information entered in the form
+
+    let wonByKO : boolean = false;
+    if (this.ko === "ko"){
+      wonByKO = true;
     }
 
-    let fight: Fight;
+    let fight = <Fight>({
+      winner: this.winnerBot,
+      loser: this.loserBot,
+      ko: wonByKO
+    });
 
-    // Populate fight from information entered in the form
-    fight.winner = this.winnerBot;
-    fight.loser = this.loserBot;
+    console.log(fight);
 
+    // Send 'er off
     this.fightService.addFight(fight);
   }
 

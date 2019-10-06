@@ -12,9 +12,6 @@ export class FightsService {
 
   constructor(private firestore: AngularFirestore) { 
 
-    //Q: Why wouldn't I populate fights here, and then 
-    //just point to fights instead of calling getFights()
-    //from each component?
   }
 
   getFights(){
@@ -22,7 +19,6 @@ export class FightsService {
   }
 
   addFight(fight : Fight){
-
     // Update the fights collection
     this.firestore.collection('fightHistory').add(fight);
 
@@ -50,8 +46,10 @@ export class FightsService {
 
     // Update the losing robot's doc
     update = true;
+    console.log("Loser robot is: " + fight.loser);
     this.firestore.collection('robots', ref => ref.where('name', '==', fight.loser)).snapshotChanges()
       .subscribe(data => {
+        console.log("Found the loser robot: " + fight.loser);
         this.bots = data.map(e => {
           return {
             id: e.payload.doc.id,
@@ -63,8 +61,10 @@ export class FightsService {
             koCount: e.payload.doc.data()['koCount'],
             //timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
+          console.log("Loser");
         })
         if (update) {
+          console.log("Updating loser robot: " + this.bots[0].name);
           this.incrementLossCount(this.bots[0]);
           update = false;
         }
@@ -88,6 +88,7 @@ export class FightsService {
   }
 
   incrementLossCount(robot: Robot) {
+    console.log("Got to loss count method");
     this.firestore.doc('robots/' + robot.id)
       .update({
         fightCount : robot.fightCount + 1,
@@ -95,10 +96,10 @@ export class FightsService {
         // Append a new array item to 'fights'
       })
       .then(function() {
-          console.log("Winning robot successfully updated!");
+          console.log("Losing robot successfully updated!");
       })
       .catch(function(error) {
-          console.error("Error updating winning robot: ", error);
+          console.error("Error updating losing robot: ", error);
       });
   }
 
