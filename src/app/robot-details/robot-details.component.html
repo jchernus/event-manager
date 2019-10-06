@@ -25,9 +25,9 @@
   <div *ngIf="robot.name == 'Button Lee'">
     <img src= "https://i.ibb.co/tsP2qwr/13526.jpg">
   </div>
-  <ng-template #noImage>
+  <!-- <ng-template #noImage>
     <p>No image to display.</p>
-  </ng-template>
+  </ng-template> -->
 
   <p><b>Fight History:</b></p>
   <div *ngIf="robot.fights; else noFightsYet">

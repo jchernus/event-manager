@@ -25,9 +25,10 @@ export class RobotDetailsComponent implements OnInit {
     });
     this.robotService.getRobotDoc(this.robotID)
         .subscribe(bot => this.robot = bot);
-        
-    this.robotService.getRobotImage(13526)
-        .subscribe(photoURL => this.robotPhotoURL = photoURL);
+
+    // TODO: Images   
+    // this.robotService.getRobotImage(13526)
+    //     .subscribe(photoURL => this.robotPhotoURL = photoURL);
   }
 
   initializeRobot(bot){

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { Robot } from './robot';
 
 import { map } from 'rxjs/operators/map';
 
@@ -10,12 +11,20 @@ declare var require: any;
 @Injectable()
 export class RobotsService {
   robots;
+  bots = [];
 
   constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { 
   }
 
   getRobotsObservable(weightClass:number) {
-    this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass)).snapshotChanges()
+    this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('name', 'asc')).snapshotChanges()
+    .pipe(map(actions => actions.map(this.documentToDomainObject)));
+
+    return this.robots;
+  }
+
+  getRobotsObservableByStandings(weightClass:number) {
+    this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('fightCount', 'desc').orderBy('winCount', 'desc').orderBy('koCount', 'desc')).snapshotChanges()
     .pipe(map(actions => actions.map(this.documentToDomainObject)));
 
     return this.robots;
@@ -84,24 +93,40 @@ export class RobotsService {
 
   initializeAllBots(){
     // Initialize all existing robots to starting config
-    //this.robots = this.firestore.collection('robots').
-    
-    // this.firestore.collection('robots').snapshotChanges()
-    //   .subscribe(data => {
-    //     this.bots = data.map(e => {
-    //       return {
-    //         id: e.payload.doc.id,
-    //         name: e.payload.doc.data()['name'],
-    //         state: 'Repairing',
-    //         fightCount: e.payload.doc.data()['fightCount'],
-    //         winCount: e.payload.doc.data()['winCount'],
-    //         lossCount: e.payload.doc.data()['lossCount'],
-    //         koCount: e.payload.doc.data()['koCount'],
-    //         //timestamp: e.payload.doc.data()['timestamp']
-    //       } as Robot;
-    //     }).forEach()
-    //     this.initializeBot(this.bots[0].id);
-    // });
+    // this.robots = this.firestore.collection('robots').
+    console.log("Initializing bots...");
+
+    this.firestore.collection('robots').snapshotChanges()
+      .subscribe(data => {
+        data.map(e => {
+          return {
+            id: e.payload.doc.id
+          } as Robot;
+        }).forEach(function(docRef) {
+            console.log("Initializing bot with ID: " + docRef.id);
+            this.initializeBot(docRef.id);
+        });
+    });
+
+    const query = this.firestore.collection('robots');
+
+    // query.snapshotChanges().map(changes => {
+    //   changes.map(a => {
+    //     const id = a.payload.doc.id; 
+    //     this.firestore.collection('robots').doc(id).update({
+    //       weightClass : 250, // TODO: Remove
+    //       alive: true,  // Still participating (or intending to) in the competition
+    //       inAttendance : false, // Arrived & checked in
+    //       passedSafety : false, // Passed safety
+    //       state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
+    //       fightCount : 0, 
+    //       winCount : 0,
+    //       lossCount : 0, 
+    //       koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
+    //       matches : {} // History of matches for the robot
+    //     })
+    //   })
+    // }).subscribe();
   }
 
   addRobot(botName: String, weight: number){

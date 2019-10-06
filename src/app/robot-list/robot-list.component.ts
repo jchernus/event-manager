@@ -16,6 +16,15 @@ export class RobotListComponent implements OnInit {
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(250);
   }
+  
+
+  initializeBot(robotId : string){
+    this.robotService.initializeBot(robotId);
+  }
+
+  initializeBots(){
+    this.robotService.initializeAllBots();
+  }
 
   // create(robot: Robot){
   //   this.robotService.addRobot(robot, weightClass);

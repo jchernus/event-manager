@@ -14,7 +14,7 @@ export class RobotStandingsComponent implements OnInit {
   constructor(private robotService: RobotsService){}
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(250);
+    this.robots = this.robotService.getRobotsObservableByStandings(250);
   }
 
 }
