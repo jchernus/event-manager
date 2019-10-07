@@ -1,7 +1,6 @@
 <h2>Robot List</h2>
 
 <div *ngFor="let robot of (robots | async)">
-
   <h3>
     <a [title]="robot.name + ' details'" [routerLink]="['/robot', robot.id]">
       {{ robot.name }}

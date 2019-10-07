@@ -32,6 +32,6 @@ export class FightHistoryComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.fightService.deleteFight(id);
+    // this.fightService.deleteFight(id);
   }
 }

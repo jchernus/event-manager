@@ -24,7 +24,7 @@ export class RobotsService {
   }
 
   getRobotsObservableByStandings(weightClass:number) {
-    this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('fightCount', 'desc').orderBy('winCount', 'desc').orderBy('koCount', 'desc')).snapshotChanges()
+    this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('fightCount', 'desc').orderBy('winCount', 'desc').orderBy('koCount', 'desc').orderBy('name')).snapshotChanges()
     .pipe(map(actions => actions.map(this.documentToDomainObject)));
 
     return this.robots;

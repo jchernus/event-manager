@@ -1,15 +1,19 @@
+<app-schedule-fight></app-schedule-fight>
+
 <h2>Fight Schedule</h2>
 
 <div>
   <table> 
     <tr>
-      <th>Red</th>
-      <th>Blue</th>
+      <th>Fight </th>
+      <th>Red Square</th>
+      <th>Blue Square</th>
     </tr>
-    <tr *ngFor="let fight of fights">
-      <td>{{fight.red}}</td>
-      <td>{{fight.blue}}</td>
-      <td>{{fight.timestamp | date:'medium'}}</td>
+    <tr *ngFor="let match of (schedule | async)">
+      <td> </td>
+      <td>{{match.redSquare}}</td>
+      <td>{{match.blueSquare}}</td>
+      <!-- <td>{{fight.timestamp | date:'medium'}}</td> comment this -->
     </tr>
   </table>
 </div>

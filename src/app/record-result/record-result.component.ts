@@ -58,5 +58,4 @@ export class RecordResultComponent implements OnInit {
     // Send 'er off
     this.fightService.addFight(fight);
   }
-
 }

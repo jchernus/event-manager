@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { FightsService } from '../fights.service';
-import { Fight } from '../fight';
+import { ScheduleService } from '../schedule.service';
 
 @Component({
   selector: 'app-fight-schedule',
@@ -9,18 +9,16 @@ import { Fight } from '../fight';
   styleUrls: ['./fight-schedule.component.css']
 })
 export class FightScheduleComponent implements OnInit {
-  fights:Fight[];
+  schedule : Observable<any[]>;
 
-  constructor(private fightService: FightsService) { }
+  constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit() {
+    this.schedule = this.scheduleService.getSchedule();
   }
 
-  create(fight: Fight){
-    this.fightService.addFight(fight);
-  }
 
-  delete(id: string) {
-    this.fightService.deleteFight(id);
+  deleteMatch(id: string) {
+    this.scheduleService.deleteMatch(id);
   }
 }

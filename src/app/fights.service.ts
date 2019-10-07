@@ -30,6 +30,7 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state'],
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
@@ -51,6 +52,7 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state'],
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
@@ -75,6 +77,7 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state'],
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
@@ -96,6 +99,7 @@ export class FightsService {
           return {
             id: e.payload.doc.id,
             name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state'],
             fightCount: e.payload.doc.data()['fightCount'],
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
