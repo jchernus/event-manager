@@ -22,6 +22,8 @@ import { ScheduleFightComponent } from './schedule-fight/schedule-fight.componen
 import { FightHistoryComponent } from './fight-history/fight-history.component';
 import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { ScheduleService } from './schedule.service';
       { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
       { path: 'import', component: ImportBotsComponent },
+      { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
@@ -52,9 +55,10 @@ import { ScheduleService } from './schedule.service';
     ImportBotsComponent,
     ScheduleFightComponent,
     FightHistoryComponent,
-    RecordResultComponent
+    RecordResultComponent,
+    NotFoundComponent
   ],
   bootstrap: [ AppComponent ],
-  providers: [FightsService, RobotsService, ScheduleService]
+  providers: [FightsService, RobotsService, ScheduleService, AuthService]
 })
 export class AppModule { }

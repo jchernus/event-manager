@@ -143,13 +143,6 @@ export class RobotsService {
     });
   }
 
-  // addWin(robotId: String) {
-  //   this.firestore.doc('robots/' + robotId)
-  //     .update({
-  //       //increment winCount intelligently
-  //   }
-  // }
-
   deleteRobot(robotId: string){
       this.firestore.doc('robots/' + robotId).delete();
   }
