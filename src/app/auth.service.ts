@@ -8,6 +8,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from './user';
 
+import * as firebase from 'firebase/app';
+
 
 @Injectable()
 export class AuthService {
@@ -18,15 +20,18 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router
   ) { 
+    // Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
+          // Logged in
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
+          // Logged out
           return of(null);
         }
       })
-    );
+    )
   }
 
   async googleSignin(){
@@ -40,18 +45,35 @@ export class AuthService {
     return this.router.navigate(['/']);
   }
 
-  private updateUserData(user) {
+  private updateUserData({uid, email, displayName, photoURL} : User) {
+
+    console.log("Updating user data.");
     // Set user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users\${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users\${uid}`);
 
     const data = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
+      uid,
+      email,
+      displayName,
+      photoURL
     };
 
     return userRef.set(data, {merge: true});
+  }
+
+  
+  doGoogleLogin(){
+    return new Promise<any>((resolve, reject) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(res => {
+        resolve(res);
+      })
+      console.log("Logging in...");
+    })
   }
 
 }

@@ -8,6 +8,7 @@ import { AngularFireModule} from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -24,6 +25,7 @@ import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -38,12 +40,14 @@ import { AuthService } from './auth.service';
       { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
       { path: 'import', component: ImportBotsComponent },
+      { path: 'login', component: LoginComponent },
       { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireAuthModule,
   ],
   declarations: [
     AppComponent,
@@ -56,7 +60,8 @@ import { AuthService } from './auth.service';
     ScheduleFightComponent,
     FightHistoryComponent,
     RecordResultComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoginComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService]
