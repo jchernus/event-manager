@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { RobotsService } from '../robots.service';
 import { ScheduleService } from '../schedule.service';
+import { AuthService} from '../auth.service';
 // import { FightsService } from '../fights.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class ScheduleFightComponent implements OnInit {
   redBot : string;
   blueBot : string;
 
-  constructor(private robotService: RobotsService, private scheduleService: ScheduleService) { }
+  constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService) { }
 
   scheduleForm = new FormGroup({
     red: new FormControl(),

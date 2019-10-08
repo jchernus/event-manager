@@ -13,6 +13,9 @@ export class TopBarComponent implements OnInit {
   ngOnInit() {
   }
 
+  login(){
+    this.auth.googleLogin();
+  }
 }
 
 

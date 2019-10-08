@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { RobotsService } from '../robots.service';
 import { FightsService } from '../fights.service';
+import { AuthService} from '../auth.service';
 import { Fight } from '../fight';
 
 @Component({
@@ -18,7 +19,7 @@ export class RecordResultComponent implements OnInit {
   ko : string;
   jd : string;
 
-  constructor(private robotService: RobotsService, private fightService: FightsService){}
+  constructor(public auth: AuthService, private robotService: RobotsService, private fightService: FightsService){}
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(250);

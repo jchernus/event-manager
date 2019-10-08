@@ -23,6 +23,7 @@ export class ScheduleService {
       //timestamp
     });
 
+    // TODO: Combine the following two, if possible - use forEach?
     // Update the robot's states to "Scheduled"
     let updateRed = true;
     this.firestore.collection('robots', ref => ref.where('name', '==', redBot)).snapshotChanges()
@@ -75,7 +76,7 @@ export class ScheduleService {
   }
 
   deleteMatch(id: string){
-
+    
   }
 
   documentToDomainObject = _ => {
