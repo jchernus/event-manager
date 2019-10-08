@@ -1,6 +1,6 @@
 export class Robot {
   id : String;
-  name : String;
+  name? : String;
   state? : String;
   fightCount? : number;
   winCount? : number;

@@ -130,7 +130,7 @@ export class FightsService {
         winCount : robot.winCount + val,
         koCount : robot.koCount + (val * +ko),
         state: newState
-        // Append a new array item to 'fights'
+        // TODO: Append a new array item to 'fightHistory'
       })
       .then(function() {
           console.log("Winning robot successfully updated! KO: " + ko);
@@ -155,7 +155,7 @@ export class FightsService {
         fightCount : robot.fightCount + val,
         lossCount : robot.lossCount + val,
         state: newState
-        // Append a new array item to 'fights'
+        // TODO: Pop fight from bot's history
       })
       .then(function() {
           console.log("Losing robot successfully updated!");
