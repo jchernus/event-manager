@@ -39,7 +39,7 @@ export class FightsService {
           } as Robot;
         })
         if (updateWinner) {
-          this.incrementWinCount(this.bots[0], 1, true);
+          this.incrementWinCount(this.bots[0], 1, fight.ko);
           updateWinner = false;
         }
     });
@@ -126,14 +126,14 @@ export class FightsService {
     }
     this.firestore.doc('robots/' + robot.id)
       .update({
-        fightCount : robot.fightCount + 1,
-        winCount : robot.winCount + 1,
-        koCount : robot.koCount + +ko,
-        state: 'Repairing'
+        fightCount : robot.fightCount + val,
+        winCount : robot.winCount + val,
+        koCount : robot.koCount + (val * +ko),
+        state: newState
         // Append a new array item to 'fights'
       })
       .then(function() {
-          console.log("Winning robot successfully updated!");
+          console.log("Winning robot successfully updated! KO: " + ko);
       })
       .catch(function(error) {
           console.error("Error updating winning robot: ", error);
