@@ -1,3 +1,3 @@
-# angular-uqblz9
+# Event Manager App
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-uqblz9)
+[Latest release](https://combat-robotics-event-manager.firebaseapp.com)
