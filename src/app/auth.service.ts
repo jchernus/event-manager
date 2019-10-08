@@ -1,79 +1,155 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { auth } from 'firebase/app';
+import { AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { User } from './user';
-
-import * as firebase from 'firebase/app';
+import { Router } from "@angular/router";
+import * as firebase from 'firebase';
 
 
 @Injectable()
 export class AuthService {
-  user$: Observable<User>;
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
-    private router: Router
-  ) { 
-    // Get the auth state, then fetch the Firestore user document or return null
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-          // Logged in
-        if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          // Logged out
-          return of(null);
-        }
+  authState: any = null;
+
+  constructor(private afAuth: AngularFireAuth,
+              private afs: AngularFirestore,
+              private router:Router) {
+
+            this.afAuth.authState.subscribe((auth) => {
+              this.authState = auth
+            });
+          }
+
+  // Returns true if user is logged in
+  get authenticated(): boolean {
+    return this.authState !== null;
+  }
+
+  // Returns current user data
+  get currentUser(): any {
+    return this.authenticated ? this.authState : null;
+  }
+
+  // Returns
+  get currentUserObservable(): any {
+    return this.afAuth.authState
+  }
+
+  // Returns current user UID
+  get currentUserId(): string {
+    return this.authenticated ? this.authState.uid : '';
+  }
+
+  // Anonymous User
+  get currentUserAnonymous(): boolean {
+    return this.authenticated ? this.authState.isAnonymous : false
+  }
+
+  // Returns current user display name or Guest
+  get currentUserDisplayName(): string {
+    if (!this.authState) { return 'Guest' }
+    else if (this.currentUserAnonymous) { return 'Anonymous' }
+    else { return this.authState['displayName'] || 'User without a Name' }
+  }
+
+  //// Social Auth ////
+
+  githubLogin() {
+    const provider = new firebase.auth.GithubAuthProvider()
+    return this.socialSignIn(provider);
+  }
+
+  googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return this.socialSignIn(provider);
+  }
+
+  facebookLogin() {
+    const provider = new firebase.auth.FacebookAuthProvider()
+    return this.socialSignIn(provider);
+  }
+
+  twitterLogin(){
+    const provider = new firebase.auth.TwitterAuthProvider()
+    return this.socialSignIn(provider);
+  }
+
+  private socialSignIn(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) =>  {
+          this.authState = credential.user
+          this.updateUserData()
       })
-    )
+      .catch(error => console.log(error));
   }
 
-  async googleSignin(){
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.afAuth.auth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+
+  //// Anonymous Auth ////
+
+  anonymousLogin() {
+    return this.afAuth.auth.signInAnonymously()
+    .then((user) => {
+      this.authState = user
+      this.updateUserData()
+    })
+    .catch(error => console.log(error));
   }
 
-  async signOut(){
-    await this.afAuth.auth.signOut();
-    return this.router.navigate(['/']);
+  //// Email/Password Auth ////
+
+  emailSignUp(email:string, password:string) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.authState = user
+        this.updateUserData()
+      })
+      .catch(error => console.log(error));
   }
 
-  private updateUserData({uid, email, displayName, photoURL} : User) {
+  emailLogin(email:string, password:string) {
+     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+       .then((user) => {
+         this.authState = user
+         this.updateUserData()
+       })
+       .catch(error => console.log(error));
+  }
 
-    console.log("Updating user data at users\\" + uid);
+  // Sends email allowing user to reset password
+  resetPassword(email: string) {
+    var auth = firebase.auth();
+
+    return auth.sendPasswordResetEmail(email)
+      .then(() => console.log("email sent"))
+      .catch((error) => console.log(error))
+  }
+
+
+  //// Sign Out ////
+
+  signOut(): void {
+    this.afAuth.auth.signOut();
+    this.router.navigate(['/'])
+  }
+
+
+  //// Helpers ////
+  
+  private updateUserData() {
+
+    console.log("Updating user data at users\\" + this.currentUserId);
     // Set user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${uid}`);
 
-    const data = {
-      uid,
-      email,
-      displayName,
-      photoURL
+    let data = {
+      uid: this.currentUserId,
+      email: this.authState.email,
+      name: this.authState.displayName,
+      photoURL: this.authState.photoURL
     };
 
-    return userRef.set(data, {merge: true});
+    this.afs.doc(`users/${this.currentUserId}`).set(data, {merge: true});
   }
 
-  
-  doGoogleLogin(){
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(res => {
-        resolve(res);
-      })
-      console.log("Logging in...");
-    })
-  }
+
+
 
 }
