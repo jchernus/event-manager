@@ -11,7 +11,7 @@
     <p><b>Attendance:</b> Awaiting</p>
   </ng-template>
 
-  <p *ngIf="robot.passedSafety; then yesSafety else noSafety">
+  <p *ngIf="robot.passedSafety; else noSafety">
     <b>Safety:</b> Passed
   </p>
   <ng-template #noSafety>
@@ -21,7 +21,7 @@
   <p *ngIf="robot.state">
     <b>State:</b> {{ robot.state }}
   </p>
-  
+
   <!-- <ng-template #noImage>
     <p>No image to display.</p>
   </ng-template> -->
