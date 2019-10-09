@@ -10,6 +10,7 @@ import { RobotsService } from '../robots.service';
 })
 export class RobotListComponent implements OnInit {
   robots : Observable<any[]>;
+  viewMode = 250;
 
   constructor(private robotService: RobotsService){}
 
@@ -24,6 +25,11 @@ export class RobotListComponent implements OnInit {
 
   initializeBots(){
     this.robotService.initializeAllBots();
+  }
+
+  changeViewMode(weight: number){
+    this.robots = this.robotService.getRobotsObservable(weight);
+    this.viewMode = weight;
   }
 
   // create(robot: Robot){

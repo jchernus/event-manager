@@ -4,7 +4,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from "@angular/router";
 import * as firebase from 'firebase';
 
-
 @Injectable()
 export class AuthService {
 
@@ -136,7 +135,7 @@ export class AuthService {
   
   private updateUserData() {
 
-    console.log("Updating user data at users\\" + this.currentUserId);
+    console.log("Updating user data at users/" + this.currentUserId);
     // Set user data to firestore on login
 
     let data = {
@@ -148,8 +147,4 @@ export class AuthService {
 
     this.afs.doc(`users/${this.currentUserId}`).set(data, {merge: true});
   }
-
-
-
-
 }
