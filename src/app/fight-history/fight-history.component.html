@@ -8,7 +8,7 @@
       <th>Winner</th>
       <th>Loser</th>
       <th>Win Condition</th>
-      <!-- <th>Date/Time</th> -->
+      <th>Date/Time</th>
     </tr>
     <tr *ngFor="let fight of fights">
       <td>{{fight.winner}}</td>
@@ -17,8 +17,8 @@
       <ng-template #jd>
         <td>JD</td>
       </ng-template>
+      <td>{{fight.timestamp.toDate() | date:'medium'}}</td>
       <!-- <button onClick()="deleteFight()">Delete Fight</button> -->
-      <!-- <td>{{fight.timestamp }}</td> -->
     </tr>
   </table>
 </div>

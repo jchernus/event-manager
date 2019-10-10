@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase/app';
 
 import { RobotsService } from '../robots.service';
 import { FightsService } from '../fights.service';
@@ -30,6 +31,7 @@ export class RecordResultComponent implements OnInit {
     loser: new FormControl(),
     ko: new FormControl(),
     jd: new FormControl()
+    // TODO: Add weight class
   });
 
   addFight(){
@@ -51,7 +53,9 @@ export class RecordResultComponent implements OnInit {
     let fight = <Fight>({
       winner: this.winnerBot,
       loser: this.loserBot,
-      ko: wonByKO
+      ko: wonByKO,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      // TODO: Weight class
     });
 
     console.log(fight);

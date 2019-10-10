@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators/map';
+import * as firebase from 'firebase/app';
 
 import { Robot } from './robot';
 
@@ -12,7 +13,7 @@ export class ScheduleService {
   constructor(private firestore: AngularFirestore) { }
 
   getSchedule(){
-    return this.firestore.collection('fightSchedule').snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
+    return this.firestore.collection('fightSchedule', ref => ref.orderBy('timestamp')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }
 
   addMatch(redBot: string, blueBot: string){
@@ -20,7 +21,8 @@ export class ScheduleService {
     this.firestore.collection('fightSchedule').add({
       redSquare: redBot,
       blueSquare: blueBot,
-      //timestamp
+      //timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     });
 
     // TODO: Combine the following two, if possible - use forEach?

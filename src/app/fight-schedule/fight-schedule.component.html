@@ -8,12 +8,13 @@
       <th>Fight No.</th>
       <th>Red Square</th>
       <th>Blue Square</th>
+      <!-- <th>Timestamp</th> -->
     </tr>
     <tr *ngFor="let match of (schedule | async)">
       <td> </td>
       <td>{{match.redSquare}}</td>
       <td>{{match.blueSquare}}</td>
-      <!-- <td>{{fight.timestamp | date:'medium'}}</td> comment this -->
+      <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
     </tr>
   </table>
 </div>

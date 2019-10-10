@@ -21,7 +21,7 @@ export class FightHistoryComponent implements OnInit {
           winner: e.payload.doc.data()['winner'],
           loser: e.payload.doc.data()['loser'],
           ko: e.payload.doc.data()['ko'],
-          timestamp: e.payload.doc.data()['timestamp'] // TODO: Figure out how to format on the html side
+          timestamp: e.payload.doc.data()['timestamp']
         } as Fight;
       })
     });

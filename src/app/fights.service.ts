@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators/map';
+import * as firebase from 'firebase/app';
+
 import { Fight } from './fight';
 import { Robot } from './robot';
 
-import { map } from 'rxjs/operators/map';
 
 @Injectable()
 export class FightsService {
@@ -15,7 +17,7 @@ export class FightsService {
   }
 
   getFights(){
-    return this.firestore.collection('fightHistory').snapshotChanges();
+    return this.firestore.collection('fightHistory', ref => ref.orderBy('timestamp')).snapshotChanges();
   }
 
   addFight(fight : Fight){
@@ -35,7 +37,7 @@ export class FightsService {
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
             koCount: e.payload.doc.data()['koCount'],
-            //timestamp: e.payload.doc.data()['timestamp']
+            timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
         })
         if (updateWinner) {
@@ -57,7 +59,7 @@ export class FightsService {
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
             koCount: e.payload.doc.data()['koCount'],
-            //timestamp: e.payload.doc.data()['timestamp']
+            timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
         })
         if (updateLoser) {
@@ -82,7 +84,7 @@ export class FightsService {
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
             koCount: e.payload.doc.data()['koCount'],
-            //timestamp: e.payload.doc.data()['timestamp']
+            timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
         })
         if (updateWinner) {
@@ -104,7 +106,7 @@ export class FightsService {
             winCount: e.payload.doc.data()['winCount'],
             lossCount: e.payload.doc.data()['lossCount'],
             koCount: e.payload.doc.data()['koCount'],
-            //timestamp: e.payload.doc.data()['timestamp']
+            timestamp: e.payload.doc.data()['timestamp']
           } as Robot;
         })
         if (updateLoser) {
@@ -129,7 +131,8 @@ export class FightsService {
         fightCount : robot.fightCount + val,
         winCount : robot.winCount + val,
         koCount : robot.koCount + (val * +ko),
-        state: newState
+        state: newState,
+        lastFought: firebase.firestore.Timestamp.fromDate(new Date())
         // TODO: Append a new array item to 'fightHistory'
       })
       .then(function() {
@@ -154,7 +157,8 @@ export class FightsService {
       .update({
         fightCount : robot.fightCount + val,
         lossCount : robot.lossCount + val,
-        state: newState
+        state: newState,
+        lastFought: firebase.firestore.Timestamp.fromDate(new Date())
         // TODO: Pop fight from bot's history
       })
       .then(function() {

@@ -3,8 +3,8 @@ export class Fight {
   weightClass : number;
   winner : String;
   loser : String;
-  ko? : boolean;
-  timestamp? : string;
+  ko : boolean;
+  timestamp : string;
   completed? : boolean;
   //TODO: Fill in the rest
 }
