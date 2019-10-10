@@ -1,33 +1,62 @@
-// const EVENTID = 580;
+const firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
 
-// const BOTS15 = 142;
-// const BOTS30 = 123;
-// const BOTSHW = 7;
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+    
+  });
 
-// Images can be at botpics/thumbs/13516.jpg
-// or at botpics/13516.jpg
+const rp = require('request-promise');
+const $ = require('cheerio');
 
-module.exports = function importRobots(){
-  console.log("Got here");
-  const rp = require('request-promise');
-  const $ = require('cheerio');
-  const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + 580 + '&sort=&classid=' + 7;
+var db = firebase.firestore();
 
-  rp(path)
+const weightId = 7; // 7, 123, 142
+const weight = 250; // 250, 30, 15
+
+const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + 580 + '&sort=&classid=' + weightId;
+
+rp(path)
     .then(function(html){
-      //success!
-      var numBots = $('td > font > b', html).length;
-      var botInfo = [];
-      var botName;
-      var botImgURL;
-      $('table > tbody > tr > td > font > b', html).each(function(i, elem){
-          botName=$(this).text();
-          botImgURL=$(this).parent().prev().prev().attr('src');
-          botInfo[botName] = [botImgURL];
-      });
-      console.log(botInfo);
+        //success!
+        var botInfo = [];
+        var botName;
+        var botImgURL;
+        var botImgId;
+        $('table > tbody > tr > td > font > b', html).each(function(i, elem){
+            botName=$(this).text();
+            botImgURL=$(this).parent().prev().prev().attr('src');
+            botImgId = botImgURL.substring(15);                        //botpics/thumbs/
+            botInfo[botName] = [botImgId];
+
+            // Add a new document with a generated id.
+            var newRobotRef = db.collection("robots").doc();
+
+            newRobotRef.set({
+                name: botName,
+                weightClass: weight,
+                imgID: botImgId,
+                alive: true,  // Still participating (or intending to) in the competition
+                inAttendance : false, // Arrived & checked in
+                passedSafety : false, // Passed safety
+                state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
+                fightCount : 0, 
+                winCount : 0,
+                lossCount : 0, 
+                koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
+                timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                matches : {} // History of matches for the robot
+            })
+            .then(function() {
+                console.log("Document successfully written!");
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+        });
+        console.log(botInfo);
     })
     .catch(function(err){
-      //handle error
+        console.log("Error occured: " + err);
     });
-}

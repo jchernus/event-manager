@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { Robot } from './robot';
-
+import * as firebase from 'firebase/app';
 import { map } from 'rxjs/operators/map';
+
+import { Robot } from './robot';
 
 declare var require: any;
 
@@ -79,8 +80,8 @@ export class RobotsService {
         winCount : 0,
         lossCount : 0, 
         koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
-        //timestamp: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815"))
-        //timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        //timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         matches : {} // History of matches for the robot
       })
       .then(function() {
