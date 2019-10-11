@@ -16,7 +16,7 @@ export class RobotListComponent implements OnInit {
   constructor(private robotService: RobotsService){}
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(250);
+    this.robots = this.robotService.getRobotsObservable(this.viewMode);
   }
   
 
