@@ -1,16 +1,16 @@
 <h2>Robot Standings</h2>
 
 <ul class="nav nav-pills">
-  <li [class.active]="viewMode==250"><a (click)="changeViewMode(250)">Heavyweight</a></li>
-  <li [class.active]="viewMode==30"><a (click)="changeViewMode(30)">Sportsman</a></li>
-  <li [class.active]="viewMode==15"><a (click)="changeViewMode(15)">Dogeweight</a></li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
+  </li>
 </ul>
-
-<div [ngSwitch]="viewMode">
-  <h3 *ngSwitchCase="250">Heavyweight Robots:</h3>
-  <h3 *ngSwitchCase="30">Sportsman Robots:</h3>
-  <h3 *ngSwitchCase="15">Dogeweight Robots:</h3>
-</div>
 
 <div>
 	<table>

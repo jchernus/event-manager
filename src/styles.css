@@ -1,1 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+
+.nav-pills {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
