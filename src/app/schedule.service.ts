@@ -13,7 +13,7 @@ export class ScheduleService {
   constructor(private firestore: AngularFirestore) { }
 
   getSchedule(){
-    return this.firestore.collection('fightSchedule', ref => ref.orderBy('timestamp')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
+    return this.firestore.collection('fightSchedule', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }
 
   addMatch(redBot: string, blueBot: string){

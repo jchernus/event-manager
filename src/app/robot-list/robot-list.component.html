@@ -13,7 +13,7 @@
 </div>
 
 <div *ngFor="let robot of (robots | async)">
-  <h3>
+  <!-- <h3>
     <a [title]="robot.name + ' details'" [routerLink]="['/robot', robot.id]">
       {{ robot.name }}
     </a>
@@ -21,7 +21,7 @@
 
   <p *ngIf="robot.state">
     <b>State:</b> {{ robot.state }}
-  </p>
+  </p> -->
 
   <!-- <button (click)="initializeBot(robot.id)">Initialize Bot</button> -->
 
@@ -29,17 +29,16 @@
     <img src={{ robot.imgURL | async }}>
   </div> -->
 
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{ robot.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">State: {{robot.state}}</h6>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <a [routerLink]="['/robot', robot.id]" class="card-link">Details</a>
+      <!-- <a href="#" class="card-link">Another link</a> -->
+    </div>
+  </div>
+
 </div>
 
 <!-- <button (click)="initializeBots()">Initialize All Bots</button> -->
-
-
-<!-- <div *ngFor="let robot of (robots | async)" class="media">
-  <img src= "www.buildersdb.com/botpics/thumbs/{{ robot.imgID }}.jpg" class="mr-3" alt="...">
-  <div class="media-body">
-    <h5 class="mt-0">{{ robot.name }}</h5>
-    <p *ngIf="robot.state">
-      <b>State:</b> {{ robot.state }}
-    </p>
-  </div>
-</div> -->
