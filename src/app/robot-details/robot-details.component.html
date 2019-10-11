@@ -1,61 +1,63 @@
-<h2>Robot Details</h2>
+<h2>Robot List</h2>
+
+<ul class="nav nav-pills">
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
+  </li>
+</ul>
 
 <div>
-  <h3>{{robot.name}}</h3>
-  <p><b>Weight Class: </b> {{ robot.weightClass }} </p>
-
-  <p *ngIf="robot.inAttendance; else notInAttendance">
-    <b>Attendance:</b> Present
-  </p>
-  <ng-template #notInAttendance>
-    <p><b>Attendance:</b> Awaiting</p>
-  </ng-template>
-
-  <p *ngIf="robot.passedSafety; else noSafety">
-    <b>Safety:</b> Passed
-  </p>
-  <ng-template #noSafety>
-    <p><b>Safety:</b> Awaiting</p>
-  </ng-template>
-  
-  <p *ngIf="robot.state">
-    <b>State:</b> {{ robot.state }}
-  </p>
-
-  <!-- <ng-template #noImage>
-    <p>No image to display.</p>
-  </ng-template> -->
-
-  <p><b>Fight History:</b></p>
-  <div *ngIf="robot.fights; else noFightsYet">
-    <!-- <table>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      <tr> *ngFor=""
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table> -->
-  </div>
-  <ng-template #noFightsYet>
-    <p>This robot has not had any fights yet.</p>
-  </ng-template>
-
-  <!-- <div *ngIf="">
-    <p></p>
-    <table>
-      <tr>
-        <th></th>
-      </tr>
-      <tr *ngFor="">
-      </tr>
-    </table>
-  </div> -->
-  <br>
-  <h3> Temp Controls: </h3>
-  <button (click)="initializeRobot(robotID)">Initialize Bot</button>
+	<table>
+		<tr>
+      <th>Bot</th>
+      <th>Arrived</th>
+      <th>Passed Safety</th>
+      <th>State</th>
+      <th>Number of Fights</th>
+      <th>Last Fought</th>
+    </tr>
+		<tr *ngFor="let robot of (robots | async)">
+      <td>{{ robot.name }} </td>
+      <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
+      <ng-template #notPresent>
+        <td>&#x274C;</td>
+      </ng-template>
+      <td *ngIf="robot.passedSafety; else notSafetied">&#x2714;</td>
+      <ng-template #notSafetied>
+        <td>&#x274C;</td>
+      </ng-template>
+      <td 
+        [class.ready]="robot.state=='Ready'"
+        [class.repairing]="robot.state=='Repairing'"
+        [class.scheduled]="robot.state=='Scheduled'">
+          {{ robot.state }} 
+      </td>
+      <td>{{ robot.fightCount }} </td>
+      <td *ngIf="robot.lastFought!== undefined">{{ robot.lastFought.toDate() | timeAgo}} </td>
+    </tr>
+	</table>
 </div>
+<br>
+
+<!-- <div class="row">
+  <ng-container *ngFor="let robot of (robots | async); let i = index" >
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ robot.name }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">State: {{robot.state}}</h6>
+          <a [routerLink]="['/robot', robot.id]" class="card-link">Details</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="(i+1) % 2 === 0" class="w-100"></div>
+</div> -->
+	
+<!-- <button (click)="initializeBots()">Initialize All Bots</button> -->

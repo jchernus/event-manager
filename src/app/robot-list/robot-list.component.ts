@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { RobotsService } from '../robots.service';
 

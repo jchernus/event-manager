@@ -40,12 +40,13 @@ rp(path)
                 alive: true,  // Still participating (or intending to) in the competition
                 inAttendance : false, // Arrived & checked in
                 passedSafety : false, // Passed safety
-                state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
+                state : "N/A", // Repairing, Ready, Scheduled, Dead
                 fightCount : 0, 
                 winCount : 0,
                 lossCount : 0, 
                 koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
                 timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                lastFought: 0,
                 matches : {} // History of matches for the robot
             })
             .then(function() {

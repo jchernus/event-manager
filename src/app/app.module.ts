@@ -9,6 +9,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -33,7 +34,8 @@ import { AuthService } from './auth.service';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: RobotListComponent },
+      { path: '', component: FightScheduleComponent },
+      { path: 'robots', component: RobotListComponent },
       { path: 'robot/:robotId', component: RobotDetailsComponent },
       { path: 'schedule', component: FightScheduleComponent },
       { path: 'results', component: FightHistoryComponent },
@@ -58,7 +60,8 @@ import { AuthService } from './auth.service';
     ScheduleFightComponent,
     FightHistoryComponent,
     RecordResultComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    TimeAgoPipe,
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService]

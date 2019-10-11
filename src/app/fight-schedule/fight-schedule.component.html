@@ -1,6 +1,6 @@
 <app-schedule-fight></app-schedule-fight>
 
-<h2>Fight Schedule</h2>
+<h2>Upcoming Matches</h2>
 
 <div>
   <table class="table"> 
@@ -10,8 +10,8 @@
       <th>Blue Square</th>
       <!-- <th>Timestamp</th> -->
     </tr>
-    <tr *ngFor="let match of (schedule | async)">
-      <td> </td>
+    <tr *ngFor="let match of (schedule | async); let i = index">
+      <td>{{i+1}}</td>
       <td>{{match.redSquare}}</td>
       <td>{{match.blueSquare}}</td>
       <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->

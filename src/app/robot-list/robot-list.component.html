@@ -12,33 +12,52 @@
   </li>
 </ul>
 
-<div *ngFor="let robot of (robots | async)">
-	<!-- <h3>
-    <a [title]="robot.name + ' details'" [routerLink]="['/robot', robot.id]">
-      {{ robot.name }}
-    </a>
-  </h3>
-
-  <p *ngIf="robot.state">
-    <b>State:</b> {{ robot.state }}
-  </p> -->
-
-	<!-- <button (click)="initializeBot(robot.id)">Initialize Bot</button> -->
-
-	<!-- <div *ngIf="robot.imgID">
-    <img src={{ robot.imgURL | async }}>
-  </div> -->
-
-	<div class="card" style="width: 18rem;">
-		<div class="card-body">
-			<h5 class="card-title">{{ robot.name }}</h5>
-			<h6 class="card-subtitle mb-2 text-muted">State: {{robot.state}}</h6>
-			<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-			<a [routerLink]="['/robot', robot.id]" class="card-link">Details</a>
-			<!-- <a href="#" class="card-link">Another link</a> -->
-		</div>
-	</div>
-
+<div>
+	<table>
+		<tr>
+      <th>Bot</th>
+      <th>Arrived</th>
+      <th>Passed Safety</th>
+      <th>State</th>
+      <th>Number of Fights</th>
+      <th>Last Fought</th>
+    </tr>
+		<tr *ngFor="let robot of (robots | async)">
+      <td>{{ robot.name }} </td>
+      <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
+      <ng-template #notPresent>
+        <td>&#x274C;</td>
+      </ng-template>
+      <td *ngIf="robot.passedSafety; else notSafetied">&#x2714;</td>
+      <ng-template #notSafetied>
+        <td>&#x274C;</td>
+      </ng-template>
+      <td 
+        [class.ready]="robot.state=='Ready'"
+        [class.repairing]="robot.state=='Repairing'"
+        [class.scheduled]="robot.state=='Scheduled'">
+          {{ robot.state }} 
+      </td>
+      <td>{{ robot.fightCount }} </td>
+      <td *ngIf="robot.lastFought!== undefined">{{ robot.lastFought.toDate() | timeAgo}} </td>
+    </tr>
+	</table>
 </div>
+<br>
 
+<!-- <div class="row">
+  <ng-container *ngFor="let robot of (robots | async); let i = index" >
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ robot.name }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">State: {{robot.state}}</h6>
+          <a [routerLink]="['/robot', robot.id]" class="card-link">Details</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="(i+1) % 2 === 0" class="w-100"></div>
+</div> -->
+	
 <!-- <button (click)="initializeBots()">Initialize All Bots</button> -->

@@ -1,2 +1,11 @@
+.ready{
+  color:green;
+}
 
+.repairing{
+  color:orange;
+}
 
+.scheduled{
+  color:purple;
+}
