@@ -9,15 +9,17 @@ import { Robot } from './robot';
 
 @Injectable()
 export class FightsService {
-  fights = [];
+  fights;
   bots = [];
 
   constructor(private firestore: AngularFirestore) { 
 
   }
 
-  getFights(){
-    return this.firestore.collection('fightHistory', ref => ref.orderBy('timestamp')).snapshotChanges();
+  getFightsObservable(weightClass: number){
+    this.fights = this.firestore.collection('fightHistory', ref => ref.where('weightClass', '==', weightClass).orderBy('timestamp')).snapshotChanges();
+
+    return this.fights;
   }
 
   addFight(fight : Fight){

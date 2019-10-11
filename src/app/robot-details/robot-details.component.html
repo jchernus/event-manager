@@ -1,4 +1,4 @@
-<h2>Robot List</h2>
+<h2>Robots</h2>
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
@@ -23,7 +23,11 @@
       <th>Last Fought</th>
     </tr>
 		<tr *ngFor="let robot of (robots | async)">
-      <td>{{ robot.name }} </td>
+      <td>
+        <a [title]="robot.name + ' details'" [routerLink]="['/robot', robot.id]">
+          {{ robot.name }}
+        </a>
+      </td>
       <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
       <ng-template #notPresent>
         <td>&#x274C;</td>

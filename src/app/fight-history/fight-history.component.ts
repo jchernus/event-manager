@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { FightsService } from '../fights.service';
 import { Fight } from '../fight';
@@ -9,23 +10,15 @@ import { Fight } from '../fight';
   styleUrls: ['./fight-history.component.css']
 })
 export class FightHistoryComponent implements OnInit {
-  fights:Fight[];
+  fights : Observable<any[]>;
+  viewMode = 250;
 
   constructor(private fightService: FightsService) { }
 
   ngOnInit() {
-    this.fightService.getFights().subscribe(data => {
-      this.fights = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          winner: e.payload.doc.data()['winner'],
-          loser: e.payload.doc.data()['loser'],
-          ko: e.payload.doc.data()['ko'],
-          timestamp: e.payload.doc.data()['timestamp']
-        } as Fight;
-      })
-    });
+    this.fightService.getFightsObservable(this.viewMode);
   }
+  
 
   create(fight: Fight){
     this.fightService.addFight(fight);
@@ -33,5 +26,11 @@ export class FightHistoryComponent implements OnInit {
 
   delete(id: string) {
     // this.fightService.deleteFight(id);
+  }
+
+  changeViewMode(weight: number){
+    this.fights = this.fightService.getFightsObservable(weight);
+    this.viewMode = weight;
+    console.log(this.fights);
   }
 }

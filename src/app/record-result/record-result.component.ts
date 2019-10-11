@@ -55,7 +55,7 @@ export class RecordResultComponent implements OnInit {
       loser: this.loserBot,
       ko: wonByKO,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-      // TODO: Weight class
+      weightClass: 250 // TODO: Fix
     });
 
     console.log(fight);

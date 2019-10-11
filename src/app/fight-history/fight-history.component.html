@@ -1,4 +1,17 @@
+<ul class="nav nav-pills">
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
+  </li>
+</ul>
+
 <app-record-result></app-record-result>
+
 
 <br>
 <h2>Fight Results</h2>
@@ -15,16 +28,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let fight of fights">
-        <td>{{fight.winner}}</td>
-        <td>{{fight.loser}}</td>
+      <tr *ngFor="let fight of (fights | async)">
+        <td>{{ fight.winner }}</td>
+        <td>{{ fight.loser }}</td>
         <td *ngIf="fight.ko; else jd">KO</td>
         <ng-template #jd>
           <td>JD</td>
         </ng-template>
-        <td>{{fight.timestamp.toDate() | date:'medium'}}</td>
+        <td *ngIf="fight.timestamp !== undefined; else noTime">{{ fight.timestamp.toDate() | date:'medium' }}</td>
+        <ng-template #noTime><td> </td></ng-template>
         <!-- <td><a (click)="deleteFight()">Delete Fight</a></td> -->
       </tr>
     </tbody>
   </table>
 </div>
+
+

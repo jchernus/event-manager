@@ -13,7 +13,7 @@
 </ul>
 
 <div>
-	<table>
+	<table class="table">
 		<tr>
       <th>Bot</th>
       <th>Arrived</th>
@@ -39,7 +39,8 @@
           {{ robot.state }} 
       </td>
       <td>{{ robot.fightCount }} </td>
-      <td *ngIf="robot.lastFought!== undefined">{{ robot.lastFought.toDate() | timeAgo}} </td>
+      <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
+      <ng-template #noTimestamp><td></td></ng-template>
     </tr>
 	</table>
 </div>
