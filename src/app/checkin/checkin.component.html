@@ -1,0 +1,47 @@
+<h2>Check-In</h2>
+
+<ul class="nav nav-pills">
+	<li class="nav-item">
+		<a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">Sportsman</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
+	</li>
+</ul>
+
+<div>
+	<table class="table">
+		<tr>
+			<th>Bot</th>
+			<th>Attendance</th>
+			<th>Arrival Time</th>
+			<th>Control</th>
+		</tr>
+		<tr *ngFor="let robot of (robots | async)">
+			<td>{{ robot.name }} </td>
+
+			<td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
+			<ng-template #notPresent>
+				<td>&#x274C;</td>
+			</ng-template>
+
+			<td *ngIf="robot.arrivalTime !== undefined; else noTimestamp">{{ robot.arrivalTime.toDate() | timeAgo}}
+			</td>
+			<ng-template #noTimestamp>
+				<td></td>
+			</ng-template>
+
+			<td *ngIf="robot.inAttendance; else markPresent">
+				<button (click)="robotService.markPresent(robot.id, false)" type="button" class="btn btn-outline-danger">Mark Absent</button>
+			</td>
+			<ng-template #markPresent>
+				<td><button (click)="robotService.markPresent(robot.id, true)" type="button" class="btn btn-outline-success">Mark Present</button>
+				</td>
+			</ng-template>
+		</tr>
+	</table>
+</div>
+<br>

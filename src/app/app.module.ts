@@ -26,6 +26,8 @@ import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
+import { CheckinComponent } from './checkin/checkin.component';
+import { SafetyComponent } from './safety/safety.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { AuthService } from './auth.service';
       { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
       { path: 'import', component: ImportBotsComponent },
+      { path: 'check-in', component: CheckinComponent },
+      { path: 'safety', component: SafetyComponent },
       { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -62,6 +66,8 @@ import { AuthService } from './auth.service';
     RecordResultComponent,
     NotFoundComponent,
     TimeAgoPipe,
+    CheckinComponent,
+    SafetyComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService]

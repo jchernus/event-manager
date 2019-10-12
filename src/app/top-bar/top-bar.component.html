@@ -5,6 +5,8 @@
     <a class="p-2 text-dark" [routerLink]="['/standings']">Standings</a>
     <a class="p-2 text-dark" [routerLink]="['/results']">Results</a>
     <a class="p-2 text-dark" [routerLink]="['/robots']">Overview</a>
+    <a class="p-2 text-dark" [routerLink]="['/check-in']">Check-In</a>
+    <a class="p-2 text-dark" [routerLink]="['/safety']">Safety</a>
   </nav>
   <div *ngIf="auth.user | async; else login">
     <a class="btn btn-outline-primary" (click)="auth.signOut()">Sign Out</a>

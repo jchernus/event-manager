@@ -39,31 +39,6 @@ export class RobotsService {
     const ref = this.storage.ref('botPhotos/' + imgID + '.jpg');
     return ref.getDownloadURL();
   }
-  
-  importBots(){
-    console.log("Importing bots n' shit");
-    // const rp = require('request-promise');
-    // const $ = require('cheerio');
-    // const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + 580 + '&sort=&classid=' + 7;
-
-    // rp(path)
-    //   .then(function(html){
-    //     //success!
-    //     var numBots = $('td > font > b', html).length;
-    //     var botInfo = [];
-    //     var botName;
-    //     var botImgURL;
-    //     $('table > tbody > tr > td > font > b', html).each(function(i, elem){
-    //         botName=$(this).text();
-    //         botImgURL=$(this).parent().prev().prev().attr('src');
-    //         botInfo[botName] = [botImgURL];
-    //     });
-    //     console.log(botInfo);
-    //   })
-    //   .catch(function(err){
-    //     //handle error
-    //   });
-  }
 
   initializeBot(robotId : string){
     // Add all of the other fields to the documents & initialize
@@ -145,7 +120,21 @@ export class RobotsService {
   }
 
   deleteRobot(robotId: string){
-      this.firestore.doc('robots/' + robotId).delete();
+    this.firestore.doc('robots/' + robotId).delete();
+  }
+
+  markPresent(robotId: string, present: boolean){
+    this.firestore.doc('robots/' + robotId).update({
+      inAttendance: present,
+      arrivalTime: firebase.firestore.Timestamp.fromDate(new Date())
+    });
+  }
+
+  markSafety(robotId: string, safe: boolean){
+    this.firestore.doc('robots/' + robotId).update({
+      passedSafety: safe,
+      safetyTime: firebase.firestore.Timestamp.fromDate(new Date())
+    });
   }
 
   documentToDomainObject = _ => {
