@@ -62,5 +62,11 @@ export class RecordResultComponent implements OnInit {
 
     // Send 'er off
     this.fightService.addFight(fight);
+
+    // Clear form
+    this.winnerBot = "";
+    this.loserBot = "";
+    this.jd = "";
+    this.ko = "";
   }
 }
