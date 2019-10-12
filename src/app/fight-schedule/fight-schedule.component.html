@@ -9,12 +9,21 @@
       <th>Red Square</th>
       <th>Blue Square</th>
       <!-- <th>Timestamp</th> -->
+      <th></th>
     </tr>
     <tr *ngFor="let match of (schedule | async); let i = index">
       <td>{{i+1}}</td>
       <td>{{match.redSquare}}</td>
       <td>{{match.blueSquare}}</td>
       <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
+      <td>
+        <button 
+          (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
+          type="button" 
+          class="btn btn-outline-danger">
+            Delete Match
+        </button>
+      </td>
     </tr>
   </table>
 </div>

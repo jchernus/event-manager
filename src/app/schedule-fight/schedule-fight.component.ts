@@ -39,5 +39,9 @@ export class ScheduleFightComponent implements OnInit {
 
     // Schedule a fight
     this.scheduleService.addMatch(this.redBot, this.blueBot);
+
+    // Clear the form
+    this.redBot = "";
+    this.blueBot = "";
   }
 }

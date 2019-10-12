@@ -38,7 +38,13 @@
 				<button (click)="robotService.markPresent(robot.id, false)" type="button" class="btn btn-outline-danger">Mark Absent</button>
 			</td>
 			<ng-template #markPresent>
-				<td><button (click)="robotService.markPresent(robot.id, true)" type="button" class="btn btn-outline-success">Mark Present</button>
+				<td>
+          <button 
+            (click)="robotService.markPresent(robot.id, true)" 
+            type="button" 
+            class="btn btn-outline-success">
+              Mark Present
+          </button>
 				</td>
 			</ng-template>
 		</tr>

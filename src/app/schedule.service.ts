@@ -13,7 +13,7 @@ export class ScheduleService {
   constructor(private firestore: AngularFirestore) { }
 
   getSchedule(){
-    return this.firestore.collection('fightSchedule', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
+    return this.firestore.collection('fightSchedule', ref => ref.orderBy('timestamp', 'asc')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }
 
   addMatch(redBot: string, blueBot: string){
@@ -39,7 +39,7 @@ export class ScheduleService {
           } as Robot;
         })
         if (updateRed) {
-          this.updateBotSchedule(this.bots[0]);
+          this.updateBotSchedule(this.bots[0], true);
           updateRed = false;
         }
     });
@@ -57,16 +57,20 @@ export class ScheduleService {
           } as Robot;
         })
         if (updateBlue) {
-          this.updateBotSchedule(this.bots[0]);
+          this.updateBotSchedule(this.bots[0], true);
           updateBlue = false;
         }
     });
   }
 
-  updateBotSchedule(robot: Robot) {
+  updateBotSchedule(robot: Robot, schedule: boolean) {
+    let newState = "Scheduled";
+    if (!schedule){
+      newState = "Ready";
+    }
     this.firestore.doc('robots/' + robot.id)
       .update({
-        state: "Scheduled"
+        state: newState
         // TODO: Append a new array item to 'scheduledFights'
       })
       .then(function() {
@@ -77,8 +81,47 @@ export class ScheduleService {
       });
   }
 
-  deleteMatch(id: string){
-    
+  deleteMatch(redBot: string, blueBot: string, matchId: string){
+    // Change robot statuses to 'ready' instead of 'scheduled'
+    // TODO: Combine the following two, if possible - use forEach?
+    // Update the robot's states to "Scheduled"
+    let updateRed = true;
+    this.firestore.collection('robots', ref => ref.where('name', '==', redBot)).snapshotChanges()
+      .subscribe(data => {
+        this.bots = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state']
+            //timestamp: e.payload.doc.data()['timestamp']
+          } as Robot;
+        })
+        if (updateRed) {
+          this.updateBotSchedule(this.bots[0], false);
+          updateRed = false;
+        }
+    });
+
+    // Update the robot's states to "Scheduled"
+    let updateBlue = true;
+    this.firestore.collection('robots', ref => ref.where('name', '==', blueBot)).snapshotChanges()
+      .subscribe(data => {
+        this.bots = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            state: e.payload.doc.data()['state']
+            //timestamp: e.payload.doc.data()['timestamp']
+          } as Robot;
+        })
+        if (updateBlue) {
+          this.updateBotSchedule(this.bots[0], false);
+          updateBlue = false;
+        }
+    });
+
+    // Delete match from fightSchedule
+    this.firestore.doc('fightSchedule/' + matchId).delete()
   }
 
   documentToDomainObject = _ => {
