@@ -26,6 +26,7 @@ import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
+import { AuthGuard} from './auth.guard';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
 
@@ -37,14 +38,14 @@ import { SafetyComponent } from './safety/safety.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: FightScheduleComponent },
-      { path: 'robots', component: RobotListComponent },
+      { path: 'overview', component: RobotListComponent }, //canActivate: [AuthGuard] },
       { path: 'robot/:robotId', component: RobotDetailsComponent },
       { path: 'schedule', component: FightScheduleComponent },
       { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
       { path: 'import', component: ImportBotsComponent },
-      { path: 'check-in', component: CheckinComponent },
-      { path: 'safety', component: SafetyComponent },
+      { path: 'check-in', component: CheckinComponent }, //canActivate: [AuthGuard] },
+      { path: 'safety', component: SafetyComponent }, //canActivate: [AuthGuard] },
       { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -70,6 +71,6 @@ import { SafetyComponent } from './safety/safety.component';
     SafetyComponent,
   ],
   bootstrap: [ AppComponent ],
-  providers: [FightsService, RobotsService, ScheduleService, AuthService]
+  providers: [FightsService, RobotsService, ScheduleService, AuthService, AuthGuard]
 })
 export class AppModule { }
