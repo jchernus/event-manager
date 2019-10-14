@@ -14,6 +14,7 @@ interface User {
   photoURL?: string;
   displayName?: string;
   favoriteColor?: string;
+  admin?:boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -70,5 +71,13 @@ export class AuthService {
     this.afAuth.auth.signOut().then(() => {
         this.router.navigate(['/']);
     });
+  }
+
+  isLoggedIn() : boolean {
+    return false;
+  }
+
+  isAdmin() : boolean {
+    return false;
   }
 }

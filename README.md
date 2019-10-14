@@ -10,7 +10,6 @@ Items that will be worked on, or are under consideration, for Robot Ruckus 2019.
 
 #### Must Haves:
 
-- Add route guards so unauthorized users cannot access admin pages through URL
 - Add the ability to move matches up or down in the schedule
 - Create a "Currently Fighting" section,
   - Only one match can be scheduled at a time. Must resolve that match to put a new match into it's place
@@ -38,7 +37,7 @@ Items that will be worked on, or are under consideration, for Robot Ruckus 2019.
 
 ### Completed (since migration of this list from Google Keep to GitHub on 14/10/2019)
 
-- ...
+- Add route guards so unauthorized users cannot access admin pages through URL
 
 
 ## V2.0
