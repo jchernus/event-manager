@@ -124,17 +124,31 @@ export class RobotsService {
   }
 
   markPresent(robotId: string, present: boolean){
-    this.firestore.doc('robots/' + robotId).update({
-      inAttendance: present,
-      arrivalTime: firebase.firestore.Timestamp.fromDate(new Date())
-    });
+    if (present) {
+      this.firestore.doc('robots/' + robotId).update({
+        inAttendance: present,
+        arrivalTime: firebase.firestore.Timestamp.fromDate(new Date())
+      });
+    } else {
+      this.firestore.doc('robots/' + robotId).update({
+        inAttendance: present,
+        arrivalTime: firebase.firestore.FieldValue.delete()
+      });
+    }
   }
 
   markSafety(robotId: string, safe: boolean){
-    this.firestore.doc('robots/' + robotId).update({
-      passedSafety: safe,
-      safetyTime: firebase.firestore.Timestamp.fromDate(new Date())
-    });
+    if (safe) {
+      this.firestore.doc('robots/' + robotId).update({
+        passedSafety: safe,
+        safetyTime: firebase.firestore.Timestamp.fromDate(new Date())
+      });
+    } else {
+      this.firestore.doc('robots/' + robotId).update({
+        passedSafety: safe,
+        safetyTime: firebase.firestore.FieldValue.delete()
+      });
+    }
   }
 
   documentToDomainObject = _ => {
