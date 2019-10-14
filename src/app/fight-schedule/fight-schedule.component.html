@@ -9,21 +9,25 @@
       <th>Red Square</th>
       <th>Blue Square</th>
       <!-- <th>Timestamp</th> -->
-      <th></th>
+      <ng-container *ngIf="auth.user | async as user">
+        <th *ngIf="user.admin">Controls</th>
+      </ng-container>
     </tr>
     <tr *ngFor="let match of (schedule | async); let i = index">
       <td>{{i+1}}</td>
       <td>{{match.redSquare}}</td>
       <td>{{match.blueSquare}}</td>
       <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
-      <td>
-        <button 
-          (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
-          type="button" 
-          class="btn btn-outline-danger">
-            Delete Match
-        </button>
-      </td>
+      <ng-container *ngIf="auth.user | async as user">
+        <td *ngIf="user.admin">
+          <button 
+            (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
+            type="button" 
+            class="btn btn-outline-danger">
+              Delete Match
+          </button>
+        </td>
+      </ng-container>
     </tr>
   </table>
 </div>

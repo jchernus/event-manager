@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService} from '../auth.service';
 import { FightsService } from '../fights.service';
 import { Fight } from '../fight';
 
@@ -11,7 +12,7 @@ import { Fight } from '../fight';
 export class FightHistoryComponent implements OnInit {
   fights:Fight[];
 
-  constructor(private fightService: FightsService) { }
+  constructor(public auth: AuthService, private fightService: FightsService) { }
 
   ngOnInit() {
     this.fightService.getFights().subscribe(data => {
@@ -21,6 +22,7 @@ export class FightHistoryComponent implements OnInit {
           winner: e.payload.doc.data()['winner'],
           loser: e.payload.doc.data()['loser'],
           ko: e.payload.doc.data()['ko'],
+          weightClass: e.payload.doc.data()['weightClass'],
           timestamp: e.payload.doc.data()['timestamp']
         } as Fight;
       })
