@@ -28,12 +28,4 @@ export class FightHistoryComponent implements OnInit {
       })
     });
   }
-
-  create(fight: Fight){
-    this.fightService.addFight(fight);
-  }
-
-  delete(id: string) {
-    // this.fightService.deleteFight(id);
-  }
 }

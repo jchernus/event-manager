@@ -14,40 +14,44 @@
 
 <div>
 	<table class="table">
-		<tr>
-			<th>Bot</th>
-			<th>Attendance</th>
-			<th>Arrival Time</th>
-			<th>Control</th>
-		</tr>
-		<tr *ngFor="let robot of (robots | async)">
-			<td>{{ robot.name }} </td>
+    <thead>
+      <tr>
+        <th>Bot</th>
+        <th>Attendance</th>
+        <th>Arrival Time</th>
+        <th>Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let robot of (robots | async)">
+        <td>{{ robot.name }} </td>
 
-			<td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
-			<ng-template #notPresent>
-				<td>&#x274C;</td>
-			</ng-template>
+        <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
+        <ng-template #notPresent>
+          <td>&#x274C;</td>
+        </ng-template>
 
-			<td *ngIf="robot.arrivalTime !== undefined; else noTimestamp">{{ robot.arrivalTime.toDate() | timeAgo}}
-			</td>
-			<ng-template #noTimestamp>
-				<td></td>
-			</ng-template>
+        <td *ngIf="robot.arrivalTime !== undefined; else noTimestamp">{{ robot.arrivalTime.toDate() | timeAgo}}
+        </td>
+        <ng-template #noTimestamp>
+          <td></td>
+        </ng-template>
 
-			<td *ngIf="robot.inAttendance; else markPresent">
-				<button (click)="robotService.markPresent(robot.id, false)" type="button" class="btn btn-outline-danger">Mark Absent</button>
-			</td>
-			<ng-template #markPresent>
-				<td>
-          <button 
-            (click)="robotService.markPresent(robot.id, true)" 
-            type="button" 
-            class="btn btn-outline-success">
-              Mark Present
-          </button>
-				</td>
-			</ng-template>
-		</tr>
+        <td *ngIf="robot.inAttendance; else markPresent">
+          <button (click)="robotService.markPresent(robot.id, false)" type="button" class="btn btn-outline-danger">Mark Absent</button>
+        </td>
+        <ng-template #markPresent>
+          <td>
+            <button 
+              (click)="robotService.markPresent(robot.id, true)" 
+              type="button" 
+              class="btn btn-outline-success">
+                Mark Present
+            </button>
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>
 	</table>
 </div>
 <br>

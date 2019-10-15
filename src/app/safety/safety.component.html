@@ -14,30 +14,34 @@
 
 <div>
 	<table class="table">
-		<tr>
-      <th>Bot</th>
-      <th>Safety</th>
-      <th>Passed Safety Time</th>
-      <th>Control</th>
-    </tr>
-		<tr *ngFor="let robot of (robots | async)">
-      <td>{{ robot.name }} </td>
+    <thead>
+      <tr>
+        <th>Bot</th>
+        <th>Safety</th>
+        <th>Passed Safety Time</th>
+        <th>Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let robot of (robots | async)">
+        <td>{{ robot.name }} </td>
 
-      <td *ngIf="robot.passedSafety; else notPassedSafety">&#x2714;</td>
-      <ng-template #notPassedSafety>
-        <td>&#x274C;</td>
-      </ng-template>
+        <td *ngIf="robot.passedSafety; else notPassedSafety">&#x2714;</td>
+        <ng-template #notPassedSafety>
+          <td>&#x274C;</td>
+        </ng-template>
 
-      <td *ngIf="robot.safetyTime !== undefined; else noTimestamp">{{ robot.safetyTime.toDate() | timeAgo}} </td>
-      <ng-template #noTimestamp><td></td></ng-template>
+        <td *ngIf="robot.safetyTime !== undefined; else noTimestamp">{{ robot.safetyTime.toDate() | timeAgo}} </td>
+        <ng-template #noTimestamp><td></td></ng-template>
 
-      <td *ngIf="robot.passedSafety; else markSafety">
-        <button (click)="robotService.markSafety(robot.id, false)" type="button" class="btn btn-outline-danger">Revoke Safety</button>
-      </td>
-      <ng-template #markSafety>
-        <td><button (click)="robotService.markSafety(robot.id, true)" type="button" class="btn btn-outline-success">Pass Safety</button></td>
-      </ng-template>
-    </tr>
+        <td *ngIf="robot.passedSafety; else markSafety">
+          <button (click)="robotService.markSafety(robot.id, false)" type="button" class="btn btn-outline-danger">Revoke Safety</button>
+        </td>
+        <ng-template #markSafety>
+          <td><button (click)="robotService.markSafety(robot.id, true)" type="button" class="btn btn-outline-success">Pass Safety</button></td>
+        </ng-template>
+      </tr>
+    </tbody>
 	</table>
 </div>
 <br>

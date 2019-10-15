@@ -16,7 +16,6 @@
         </ng-container>
       </tr>
     </thead>
-    <tbody>
       <tr *ngFor="let fight of fights">
         <td>{{fight.winner}}</td>
         <td>{{fight.loser}}</td>
@@ -28,7 +27,7 @@
         <ng-container *ngIf="auth.user | async as user">
           <td *ngIf="user.admin">
             <button 
-              (click)="fightService.deleteFight(fight.id)"  
+              (click)="fightService.deleteFight(fight)"  
               type="button" 
               class="btn btn-outline-danger">
                 Delete Fight
@@ -36,6 +35,5 @@
           </td>
         </ng-container>
       </tr>
-    </tbody>
   </table>
 </div>

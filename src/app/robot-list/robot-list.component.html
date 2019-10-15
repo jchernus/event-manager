@@ -14,34 +14,38 @@
 
 <div>
 	<table class="table">
-		<tr>
-      <th>Bot</th>
-      <th>Arrived</th>
-      <th>Passed Safety</th>
-      <th>State</th>
-      <th>Number of Fights</th>
-      <th>Last Fought</th>
-    </tr>
-		<tr *ngFor="let robot of (robots | async)">
-      <td>{{ robot.name }} </td>
-      <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
-      <ng-template #notPresent>
-        <td>&#x274C;</td>
-      </ng-template>
-      <td *ngIf="robot.passedSafety; else notSafetied">&#x2714;</td>
-      <ng-template #notSafetied>
-        <td>&#x274C;</td>
-      </ng-template>
-      <td 
-        [class.ready]="robot.state=='Ready'"
-        [class.repairing]="robot.state=='Repairing'"
-        [class.scheduled]="robot.state=='Scheduled'">
-          {{ robot.state }} 
-      </td>
-      <td>{{ robot.fightCount }} </td>
-      <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
-      <ng-template #noTimestamp><td></td></ng-template>
-    </tr>
+    <thead>
+      <tr>
+        <th>Bot</th>
+        <th>Arrived</th>
+        <th>Passed Safety</th>
+        <th>State</th>
+        <th>Number of Fights</th>
+        <th>Last Fought</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let robot of (robots | async)">
+        <td>{{ robot.name }} </td>
+        <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
+        <ng-template #notPresent>
+          <td>&#x274C;</td>
+        </ng-template>
+        <td *ngIf="robot.passedSafety; else notSafetied">&#x2714;</td>
+        <ng-template #notSafetied>
+          <td>&#x274C;</td>
+        </ng-template>
+        <td 
+          [class.ready]="robot.state=='Ready'"
+          [class.repairing]="robot.state=='Repairing'"
+          [class.scheduled]="robot.state=='Scheduled'">
+            {{ robot.state }} 
+        </td>
+        <td>{{ robot.fightCount }} </td>
+        <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
+        <ng-template #noTimestamp><td></td></ng-template>
+      </tr>
+    </tbody>
 	</table>
 </div>
 <br>

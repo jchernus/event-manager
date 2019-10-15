@@ -41,7 +41,7 @@ export class FightsService {
           } as Robot;
         })
         if (updateWinner) {
-          this.incrementWinCount(this.bots[0], 1, fight.ko);
+          this.incrementWinCount(this.bots[0], fight.ko);
           updateWinner = false;
         }
     });
@@ -63,14 +63,16 @@ export class FightsService {
           } as Robot;
         })
         if (updateLoser) {
-          this.incrementLossCount(this.bots[0], 1);
+          this.incrementLossCount(this.bots[0]);
           updateLoser = false;
         }
     });
   }
 
   deleteFight(fight: Fight){
-    //this.firestore.doc('fightHistory/' + fight.id).delete();
+   // Delete the fight from fightHistory
+   this.firestore.doc('fightHistory/' + fight.id).delete();
+
     // Update the winning robot's doc
     let updateWinner = true;
     this.firestore.collection('robots', ref => ref.where('name', '==', fight.winner)).snapshotChanges()
@@ -88,7 +90,7 @@ export class FightsService {
           } as Robot;
         })
         if (updateWinner) {
-          this.incrementWinCount(this.bots[0], -1, true);
+          this.decrementWinCount(this.bots[0], fight.ko);
           updateWinner = false;
         }
     });
@@ -110,28 +112,19 @@ export class FightsService {
           } as Robot;
         })
         if (updateLoser) {
-          this.incrementLossCount(this.bots[0], -1);
+          this.decrementLossCount(this.bots[0]);
           updateLoser = false;
         }
     });
   }
 
-  incrementWinCount(robot: Robot, val: number, ko : boolean) {
-    let newState = "";
-    if (val === 1) {
-      newState = "Repairing";
-    } else if (val === -1){
-      newState = "N/A";
-    } else {
-      console.log("Incorrect value provided for incrementLossCount.");
-      return;
-    }
+  incrementWinCount(robot: Robot, ko : boolean) {
     this.firestore.doc('robots/' + robot.id)
       .update({
-        fightCount : robot.fightCount + val,
-        winCount : robot.winCount + val,
-        koCount : robot.koCount + (val * +ko),
-        state: newState,
+        fightCount : robot.fightCount + 1,
+        winCount : robot.winCount + 1,
+        koCount : robot.koCount + +ko,
+        state: "Repairing",
         lastFought: firebase.firestore.Timestamp.fromDate(new Date())
         // TODO: Append a new array item to 'fightHistory'
       })
@@ -143,22 +136,48 @@ export class FightsService {
       });
   }
 
-  incrementLossCount(robot: Robot, val: number) {
-    let newState = "";
-    if (val === 1) {
-      newState = "Repairing";
-    } else if (val === -1){
-      newState = "N/A";
-    } else {
-      console.log("Incorrect value provided for incrementLossCount.");
-      return;
-    }
+  incrementLossCount(robot: Robot) {
     this.firestore.doc('robots/' + robot.id)
       .update({
-        fightCount : robot.fightCount + val,
-        lossCount : robot.lossCount + val,
-        state: newState,
+        fightCount : robot.fightCount + 1,
+        lossCount : robot.lossCount + 1,
+        state: "Repairing",
         lastFought: firebase.firestore.Timestamp.fromDate(new Date())
+        // TODO: Pop fight from bot's history
+      })
+      .then(function() {
+          console.log("Losing robot successfully updated!");
+      })
+      .catch(function(error) {
+          console.error("Error updating losing robot: ", error);
+      });
+  }
+
+  decrementWinCount(robot: Robot, ko : boolean){
+    this.firestore.doc('robots/' + robot.id)
+      .update({
+        fightCount : robot.fightCount - 1,
+        winCount : robot.winCount - 1,
+        koCount : robot.koCount - +ko,
+        state: "N/A",
+        lastFought: firebase.firestore.FieldValue.delete(),
+        // TODO: Append a new array item to 'fightHistory'
+      })
+      .then(function() {
+          console.log("Winning robot successfully updated! KO: " + ko);
+      })
+      .catch(function(error) {
+          console.error("Error updating winning robot: ", error);
+      });
+  }
+
+  decrementLossCount(robot: Robot) {
+    this.firestore.doc('robots/' + robot.id)
+      .update({
+        fightCount : robot.fightCount - 1,
+        lossCount : robot.lossCount - 1,
+        state: "N/A",
+        lastFought: firebase.firestore.FieldValue.delete(),
         // TODO: Pop fight from bot's history
       })
       .then(function() {
