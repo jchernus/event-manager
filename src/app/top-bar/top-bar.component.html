@@ -4,9 +4,11 @@
     <a class="p-2 text-dark" [routerLink]="['/schedule']" >Schedule</a>
     <a class="p-2 text-dark" [routerLink]="['/standings']">Standings</a>
     <a class="p-2 text-dark" [routerLink]="['/results']">Results</a>
-    <a *ngIf="auth.canEdit(user)" class="p-2 text-dark" [routerLink]="['/overview']">Overview</a>
-    <a *ngIf="auth.canEdit(user)" class="p-2 text-dark" [routerLink]="['/check-in']">Check-In</a>
-    <a *ngIf="auth.canEdit(user)" class="p-2 text-dark" [routerLink]="['/safety']">Safety</a>
+    <ng-container *ngIf="auth.user | async as user">
+      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/overview']">Overview</a>
+      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/check-in']">Check-In</a>
+      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/safety']">Safety</a>
+    </ng-container>
   </nav>
   <div *ngIf="auth.user | async; else login">
     <a class="btn btn-outline-primary" (click)="auth.signOut()">Sign Out</a>

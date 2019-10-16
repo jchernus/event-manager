@@ -21,6 +21,7 @@ export class AuthService {
     private router: Router) {
 
       //// Get auth data, then get firestore user document || null
+
       this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if (user) {
@@ -30,16 +31,7 @@ export class AuthService {
           }
         })
       )
-
-      // this.user = this.afAuth.authState
-      //   .switchMap(user => {
-      //     if (user) {
-      //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-      //     } else {
-      //       return Observable.of(null)
-      //     }
-      //   })
-    }   
+  }   
 
   googleLogin() {
     const provider = new auth.GoogleAuthProvider()
@@ -77,19 +69,19 @@ export class AuthService {
   }
 
 
-  canRead(user: User): boolean {
-    const allowed = ['admin', 'moderator', 'viewer']
-    return this.checkAuthorization(user, allowed)
+  isViewer(user: User): boolean {
+    const allowed = ['admin', 'moderator', 'viewer'];
+    return this.checkAuthorization(user, allowed);
   }
 
-  canEdit(user: User): boolean {
-    const allowed = ['admin', 'moderator']
-    return this.checkAuthorization(user, allowed)
+  isModerator(user: User): boolean {
+    const allowed = ['admin', 'moderator'];
+    return this.checkAuthorization(user, allowed);
   }
 
-  canDelete(user: User): boolean {
-    const allowed = ['admin']
-    return this.checkAuthorization(user, allowed)
+  isAdmin(user: User): boolean {
+    const allowed = ['admin'];
+    return this.checkAuthorization(user, allowed);
   }
 
   // determines if user has matching role

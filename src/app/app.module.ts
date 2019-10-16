@@ -26,7 +26,8 @@ import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
-import { AuthGuard} from './auth.guard';
+import { AdminGuard } from './admin.guard';
+import { ModeratorGuard } from './moderator.guard';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
 
@@ -38,14 +39,14 @@ import { SafetyComponent } from './safety/safety.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: FightScheduleComponent },
-      { path: 'overview', component: RobotListComponent, canActivate: [AuthGuard] },
+      { path: 'overview', component: RobotListComponent, canActivate: [ModeratorGuard] },
       { path: 'robot/:robotId', component: RobotDetailsComponent },
       { path: 'schedule', component: FightScheduleComponent },
       { path: 'results', component: FightHistoryComponent },
       { path: 'standings', component: RobotStandingsComponent },
-      { path: 'import', component: ImportBotsComponent },
-      { path: 'check-in', component: CheckinComponent , canActivate: [AuthGuard] },
-      { path: 'safety', component: SafetyComponent , canActivate: [AuthGuard] },
+      { path: 'import', component: ImportBotsComponent , canActivate: [AdminGuard] },
+      { path: 'check-in', component: CheckinComponent , canActivate: [ModeratorGuard] },
+      { path: 'safety', component: SafetyComponent , canActivate: [ModeratorGuard] },
       { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -71,6 +72,6 @@ import { SafetyComponent } from './safety/safety.component';
     SafetyComponent,
   ],
   bootstrap: [ AppComponent ],
-  providers: [FightsService, RobotsService, ScheduleService, AuthService, AuthGuard]
+  providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard]
 })
 export class AppModule { }

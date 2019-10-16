@@ -1,7 +1,7 @@
 export interface Roles { 
-  viewer?: boolean;
-  moderator?: boolean;
-  admin?: boolean;
+  viewer? : boolean;
+  moderator? : boolean;
+  admin? : boolean;
 }
   
 export interface User {

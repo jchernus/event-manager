@@ -1,4 +1,4 @@
-<div *ngIf="auth.canEdit(user)">
+<div *ngIf="auth.isAdmin(auth.user | async)">
   <h2>Record Results</h2>
   <div *ngIf="resultsForm.errors" class="alert alert-danger">
     <p>You must select two unique bots.</p>

@@ -10,7 +10,7 @@
         <th>Red Square</th>
         <th>Blue Square</th>
         <!-- <th>Timestamp</th> -->
-        <th *ngIf="auth.canEdit(user)">Controls</th>
+        <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
         <td>{{match.redSquare}}</td>
         <td>{{match.blueSquare}}</td>
         <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
-        <td *ngIf="auth.canEdit(user)">
+        <td *ngIf="auth.isAdmin(auth.user | async)">
           <button 
             (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
             type="button" 
