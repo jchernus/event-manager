@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+// import * as firebase from 'firebase/app';
+
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
 import { switchMap} from 'rxjs/operators';
-
-interface User {
-  uid: string;
-  email: string;
-  photoURL?: string;
-  displayName?: string;
-  favoriteColor?: string;
-  admin?:boolean;
-}
+import { User } from './user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,8 +18,7 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
-  ) {
+    private router: Router) {
 
       //// Get auth data, then get firestore user document || null
       this.user = this.afAuth.authState.pipe(
@@ -37,7 +30,16 @@ export class AuthService {
           }
         })
       )
-    }
+
+      // this.user = this.afAuth.authState
+      //   .switchMap(user => {
+      //     if (user) {
+      //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+      //     } else {
+      //       return Observable.of(null)
+      //     }
+      //   })
+    }   
 
   googleLogin() {
     const provider = new auth.GoogleAuthProvider()
@@ -51,6 +53,12 @@ export class AuthService {
       })
   }
 
+  signOut() {
+    this.afAuth.auth.signOut() //.then(() => {
+    //     this.router.navigate(['/']);
+    // });
+  }
+
   private updateUserData(user) {
     // Sets user data to firestore on login
 
@@ -60,24 +68,39 @@ export class AuthService {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
+      roles: {
+        viewer: true
+      }
     }
-
     return userRef.set(data, { merge: true })
-
   }
 
-  signOut() {
-    this.afAuth.auth.signOut().then(() => {
-        this.router.navigate(['/']);
-    });
+
+  canRead(user: User): boolean {
+    const allowed = ['admin', 'moderator', 'viewer']
+    return this.checkAuthorization(user, allowed)
   }
 
-  isLoggedIn() : boolean {
-    return false;
+  canEdit(user: User): boolean {
+    const allowed = ['admin', 'moderator']
+    return this.checkAuthorization(user, allowed)
   }
 
-  isAdmin() : boolean {
-    return false;
+  canDelete(user: User): boolean {
+    const allowed = ['admin']
+    return this.checkAuthorization(user, allowed)
   }
+
+  // determines if user has matching role
+  private checkAuthorization(user: User, allowedRoles: string[]): boolean {
+    if (!user) return false
+    for (const role of allowedRoles) {
+      if ( user.roles[role] ) {
+        return true
+      }
+    }
+    return false
+  }
+
 }

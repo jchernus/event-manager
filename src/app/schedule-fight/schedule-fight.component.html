@@ -1,42 +1,40 @@
-<div *ngIf="auth.user | async as user">
-  <div *ngIf="user.admin">
-    <h2>Schedule a Fight</h2>
-    <div *ngIf="scheduleForm.errors" class="alert alert-danger">
-      <p>You must select two unique bots.</p>
-    </div>
-    <form [formGroup]="scheduleForm" (ngSubmit)="scheduleFight()">
-      <div class="form-row align-items-center">
-        <div class="form-group">
-          <label for="red">Red Square:</label>
-          <select
-            required
-            [(ngModel)]="redBot"
-            name="red"
-            formControlName="red"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
-            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-          </select>
-        </div>
-        <div class="vs">vs.</div>
-        <div class="form-group">
-          <label for="blue">Blue Square:</label>
-          <select
-            required
-            [(ngModel)]="blueBot" 
-            name="blue"
-            formControlName="blue"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
-            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn btn-primary">Schedule</button>
-    </form>
+<div *ngIf="auth.canEdit(user)">
+  <h2>Schedule a Fight</h2>
+  <div *ngIf="scheduleForm.errors" class="alert alert-danger">
+    <p>You must select two unique bots.</p>
   </div>
+  <form [formGroup]="scheduleForm" (ngSubmit)="scheduleFight()">
+    <div class="form-row align-items-center">
+      <div class="form-group">
+        <label for="red">Red Square:</label>
+        <select
+          required
+          [(ngModel)]="redBot"
+          name="red"
+          formControlName="red"
+          id=""
+          type="select"
+          class="form-control"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+      <div class="vs">vs.</div>
+      <div class="form-group">
+        <label for="blue">Blue Square:</label>
+        <select
+          required
+          [(ngModel)]="blueBot" 
+          name="blue"
+          formControlName="blue"
+          id=""
+          type="select"
+          class="form-control"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary">Schedule</button>
+  </form>
 </div>

@@ -11,9 +11,7 @@
         <th>Loser</th>
         <th>Win Condition</th>
         <th>Date/Time</th>
-        <ng-container *ngIf="auth.user | async as user">
-          <th *ngIf="user.admin">Controls</th>
-        </ng-container>
+        <th *ngIf="auth.canEdit(user)">Controls</th>
       </tr>
     </thead>
       <tr *ngFor="let fight of fights">
@@ -24,16 +22,14 @@
           <td>JD</td>
         </ng-template>
         <td>{{fight.timestamp.toDate() | date:'medium'}}</td>
-        <ng-container *ngIf="auth.user | async as user">
-          <td *ngIf="user.admin">
-            <button 
-              (click)="fightService.deleteFight(fight)"  
-              type="button" 
-              class="btn btn-outline-danger">
-                Delete Fight
-            </button>
-          </td>
-        </ng-container>
+        <td *ngIf="auth.canEdit(user)">
+          <button 
+            (click)="fightService.deleteFight(fight)"  
+            type="button" 
+            class="btn btn-outline-danger">
+              Delete Fight
+          </button>
+        </td>
       </tr>
   </table>
 </div>

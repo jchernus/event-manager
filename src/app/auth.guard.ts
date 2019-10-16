@@ -6,24 +6,27 @@ import { AuthService } from './auth.service';
 import { tap, map, take } from 'rxjs/operators';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  constructor (private auth: AuthService, private router: Router){}
+export class AdminGuard implements CanActivate {
+
+  constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
-      return this.auth.user.pipe(
-        take(1),
-        map(user => !!user),
-        map(loggedIn => {
-          if (loggedIn){
-            return true;
-          } else {
-            console.log('Access denied.');
-            this.router.navigate(['/']);
-            return false;
-          }
-        })
-      )
+
+    return this.auth.user$.pipe(
+      take(1),
+      map(user => user && this.auth.canRead(user) ? true : false),
+      tap(isAdmin => {
+        if (isAdmin) {
+          return true;
+        } else {
+          console.error('Access denied.');
+          this.router.navigate(['/']);
+          return false;
+        }
+      })
+    );
+
   }
 }
