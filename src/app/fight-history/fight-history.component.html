@@ -1,4 +1,4 @@
-<!-- <h1>Results</h1>
+<h1>Results</h1>
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
@@ -10,9 +10,79 @@
 	<li class="nav-item">
     <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
   </li>
-</ul> -->
+</ul>
 
 <br>
+
+<div *ngIf="auth.isAdmin(auth.user | async)">
+  <h2>Record Results</h2>
+  <div *ngIf="resultsForm.errors" class="alert alert-danger">
+    <p>You must select two unique bots.</p>
+  </div>
+
+  <form [formGroup]="resultsForm" (ngSubmit)="addFight()">
+    <div class="form-row align-items-center">
+      <div class="form-group">
+        <label for="winner">Winner:</label>
+        <select
+          required
+          [(ngModel)]="winnerBot"
+          name="winner"
+          formControlName="winner"
+          id=""
+          type="select"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="loser">Loser:</label>
+        <select
+          required
+          [(ngModel)]="loserBot" 
+          name="loser"
+          formControlName="loser"
+          id=""
+          type="select"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <p>Win Condition:</p>
+      <div class="form-check form-check-inline">
+        <input 
+          [(ngModel)]="ko" 
+          formControlName="ko"
+          id="ko"
+          name="ko"
+          value="ko" 
+          type="radio"
+          class="form-check-input">
+        <label class="form-check-label" for="ko">KO</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input 
+          [(ngModel)]="ko" 
+          formControlName="jd"
+          id="jd"
+          name="jd"
+          value="jd" 
+          type="radio"
+          class="form-check-input">
+        <label class="form-check-label" for="jd">JD</label>
+      </div>
+      <div>
+        <button class="btn btn-primary">Enter Results</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br>
+
 <h2>Fight Results</h2>
 <br>
 <div>
@@ -26,7 +96,7 @@
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
     </thead>
-      <tr *ngFor="let fight of fights">
+      <tr *ngFor="let fight of fights | async">
         <td>{{fight.winner}}</td>
         <td>{{fight.loser}}</td>
         <td *ngIf="fight.ko; else jd">KO</td>

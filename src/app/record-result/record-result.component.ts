@@ -58,8 +58,6 @@ export class RecordResultComponent implements OnInit {
       // TODO: Weight class
     });
 
-    console.log(fight);
-
     // Send 'er off
     this.fightService.addFight(fight);
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase/app';
 
-import { AuthService} from '../auth.service';
 import { RobotsService } from '../robots.service';
 import { FightsService } from '../fights.service';
+import { AuthService} from '../auth.service';
 import { Fight } from '../fight';
 
 @Component({
@@ -12,29 +14,66 @@ import { Fight } from '../fight';
   styleUrls: ['./fight-history.component.css']
 })
 export class FightHistoryComponent implements OnInit {
-  robots : Observable<any[]>;
-  fights:Fight[];
   viewMode = 250;
+  robots : Observable<any[]>;
+  fights : Observable<any[]>;
+  winnerBot : string;
+  loserBot : string;
+  ko : string;
+  jd : string;
 
   constructor(public auth: AuthService, private robotService: RobotsService, private fightService: FightsService) { }
 
+  resultsForm = new FormGroup({
+    winner: new FormControl(),
+    loser: new FormControl(),
+    ko: new FormControl(),
+    jd: new FormControl()
+    // TODO: Add weight class
+  });
+
   ngOnInit() {
-    this.fightService.getFights().subscribe(data => {
-      this.fights = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          winner: e.payload.doc.data()['winner'],
-          loser: e.payload.doc.data()['loser'],
-          ko: e.payload.doc.data()['ko'],
-          weightClass: e.payload.doc.data()['weightClass'],
-          timestamp: e.payload.doc.data()['timestamp']
-        } as Fight;
-      })
+    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.fights = this.fightService.getFightsObservable(this.viewMode);
+  }
+
+  addFight(){
+    // Check the form
+    if (this.winnerBot === this.loserBot){
+      this.resultsForm.setErrors({
+        botValues: true
+      });
+      return;
+    }
+    
+    // Populate fight from information entered in the form
+
+    let wonByKO : boolean = false;
+    if (this.ko === "ko"){
+      wonByKO = true;
+    }
+
+    let fight = <Fight>({
+      winner: this.winnerBot,
+      loser: this.loserBot,
+      ko: wonByKO,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      weightClass: this.viewMode,
     });
+
+    // Send 'er off
+    this.fightService.addFight(fight);
+
+    // Clear form
+    this.winnerBot = "";
+    this.loserBot = "";
+    this.jd = "";
+    this.ko = "";
   }
 
   changeViewMode(weight: number){
-    this.robots = this.robotService.getRobotsObservable(weight);
     this.viewMode = weight;
+    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.fights = this.fightService.getFightsObservable(this.viewMode);
   }
 }

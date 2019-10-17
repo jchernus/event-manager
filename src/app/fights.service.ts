@@ -12,12 +12,10 @@ export class FightsService {
   fights = [];
   bots = [];
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor(private firestore: AngularFirestore) { }
 
-  }
-
-  getFights(){
-    return this.firestore.collection('fightHistory', ref => ref.orderBy('timestamp')).snapshotChanges();
+  getFightsObservable(weightClass: number){
+    return this.firestore.collection('fightHistory', ref => ref.where('weightClass', "==", weightClass).orderBy('timestamp')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }
 
   addFight(fight : Fight){
