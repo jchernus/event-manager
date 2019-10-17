@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { AuthService} from '../auth.service';
+import { RobotsService } from '../robots.service';
 import { FightsService } from '../fights.service';
 import { Fight } from '../fight';
 
@@ -10,9 +12,11 @@ import { Fight } from '../fight';
   styleUrls: ['./fight-history.component.css']
 })
 export class FightHistoryComponent implements OnInit {
+  robots : Observable<any[]>;
   fights:Fight[];
+  viewMode = 250;
 
-  constructor(public auth: AuthService, private fightService: FightsService) { }
+  constructor(public auth: AuthService, private robotService: RobotsService, private fightService: FightsService) { }
 
   ngOnInit() {
     this.fightService.getFights().subscribe(data => {
@@ -27,5 +31,10 @@ export class FightHistoryComponent implements OnInit {
         } as Fight;
       })
     });
+  }
+
+  changeViewMode(weight: number){
+    this.robots = this.robotService.getRobotsObservable(weight);
+    this.viewMode = weight;
   }
 }

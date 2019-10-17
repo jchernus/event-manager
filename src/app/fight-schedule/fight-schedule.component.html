@@ -1,4 +1,61 @@
-<app-schedule-fight></app-schedule-fight>
+<h1>Schedule</h1>
+
+<ul class="nav nav-pills">
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">Dogeweight</a>
+  </li>
+</ul>
+
+<br>
+
+<div *ngIf="auth.isAdmin(auth.user | async)">
+  <h2>Schedule a Fight</h2>
+  <div *ngIf="scheduleForm.errors" class="alert alert-danger">
+    <p>You must select two unique bots.</p>
+  </div>
+  <form [formGroup]="scheduleForm" (ngSubmit)="scheduleFight()">
+    <div class="form-row align-items-center">
+      <div class="form-group">
+        <label for="red">Red Square:</label>
+        <select
+          required
+          [(ngModel)]="redBot"
+          name="red"
+          formControlName="red"
+          id=""
+          type="select"
+          class="form-control"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+      <div class="vs">vs.</div>
+      <div class="form-group">
+        <label for="blue">Blue Square:</label>
+        <select
+          required
+          [(ngModel)]="blueBot" 
+          name="blue"
+          formControlName="blue"
+          id=""
+          type="select"
+          class="form-control"
+          class="custom-select mr-sm-2">
+          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary">Schedule</button>
+  </form>
+</div>
+
+<br>
 
 <h2>Upcoming Matches</h2>
 
