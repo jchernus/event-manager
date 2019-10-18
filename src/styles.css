@@ -10,13 +10,6 @@
   margin: 5px;
 }
 
-th, td {
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 form {
   padding: 15px;
 }
@@ -29,4 +22,8 @@ form {
 .form-group{
   padding-right: 20px;
   padding-bottom: 10px;
+}
+
+.info{
+  background-color: #daeef8;
 }

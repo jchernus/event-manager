@@ -17,12 +17,19 @@ export class FightScheduleComponent implements OnInit {
   schedule : Observable<any[]>;
   redBot : string;
   blueBot : string;
+  breakDuration : number;
+
+  durations = [5, 10, 15, 30, 60];
 
   constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService) { }
 
   scheduleForm = new FormGroup({
     red: new FormControl(),
     blue: new FormControl()
+  });
+
+  breakForm = new FormGroup({
+    breakTime: new FormControl()
   });
 
   ngOnInit() {
@@ -45,6 +52,10 @@ export class FightScheduleComponent implements OnInit {
     // Clear the form
     this.redBot = "";
     this.blueBot = "";
+  }
+
+  scheduleBreak(){
+    this.scheduleService.addBreak(this.viewMode, this.breakDuration);
   }
 
   changeViewMode(weight: number){

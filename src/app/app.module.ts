@@ -20,9 +20,7 @@ import { RobotStandingsComponent } from './robot-standings/robot-standings.compo
 import { FightsService } from './fights.service';
 import { RobotsService } from './robots.service';
 import { ImportBotsComponent } from './import-bots/import-bots.component';
-import { ScheduleFightComponent } from './schedule-fight/schedule-fight.component';
 import { FightHistoryComponent } from './fight-history/fight-history.component';
-import { RecordResultComponent } from './record-result/record-result.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
@@ -63,9 +61,7 @@ import { SafetyComponent } from './safety/safety.component';
     FightScheduleComponent,
     RobotStandingsComponent,
     ImportBotsComponent,
-    ScheduleFightComponent,
     FightHistoryComponent,
-    RecordResultComponent,
     NotFoundComponent,
     TimeAgoPipe,
     CheckinComponent,

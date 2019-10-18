@@ -17,7 +17,7 @@ export class ScheduleService {
   }
 
   addMatch(weightClass: number, redBot: string, blueBot: string){
-    // Update the fights collection
+    // Update the fightSchedule collection
     this.firestore.collection('fightSchedule').add({
       redSquare: redBot,
       blueSquare: blueBot,
@@ -61,6 +61,16 @@ export class ScheduleService {
           this.updateBotSchedule(this.bots[0], true);
           updateBlue = false;
         }
+    });
+  }
+
+  addBreak(weightClass: number, breakDuration: number){
+    // Update the fightSchedule collection
+    this.firestore.collection('fightSchedule').add({
+      weightClass: weightClass,
+      breakDuration: breakDuration,
+      //timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     });
   }
 
@@ -122,7 +132,12 @@ export class ScheduleService {
     });
 
     // Delete match from fightSchedule
-    this.firestore.doc('fightSchedule/' + matchId).delete()
+    this.firestore.doc('fightSchedule/' + matchId).delete();
+  }
+
+  deleteBreak(matchId: number){
+    // Delete match from fightSchedule
+    this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
   documentToDomainObject = _ => {

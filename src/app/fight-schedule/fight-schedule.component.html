@@ -15,7 +15,9 @@
 <br>
 
 <div *ngIf="auth.isAdmin(auth.user | async)">
-  <h2>Schedule a Fight</h2>
+  <h2>Add to Schedule</h2>
+  <br>
+  <h3>Fight:</h3>
   <div *ngIf="scheduleForm.errors" class="alert alert-danger">
     <p>You must select two unique bots.</p>
   </div>
@@ -53,6 +55,31 @@
     </div>
     <button class="btn btn-primary">Schedule</button>
   </form>
+  <br>
+  <h3>Break:</h3>
+  <form [formGroup]="breakForm" (ngSubmit)="scheduleBreak()">
+    <div class="form-row align-items-center">
+      <div class="form-group">
+        <label for="breakTime">Duration:</label>
+        <select
+          required
+          [(ngModel)]="breakDuration"
+          name="breakTime"
+          formControlName="breakTime"
+          id=""
+          type="select"
+          class="form-control"
+          class="custom-select mr-sm-2">
+          <!-- <option *ngFor="let duration of durations" value="{{duration}}">{{duration}} minutes</option> -->
+          <option value="5">5 minutes</option>
+          <option value="10">10 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">60 minutes</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary">Add Break</button>
+  </form>
 </div>
 
 <br>
@@ -60,10 +87,10 @@
 <h2>Upcoming Matches</h2>
 
 <div>
-  <table class="table"> 
+  <table class="table table-striped"> 
     <thead>
       <tr>
-        <th>Fight No.</th>
+        <th>No.</th>
         <th>Red Square</th>
         <th>Blue Square</th>
         <!-- <th>Timestamp</th> -->
@@ -71,20 +98,40 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let match of (schedule | async); let i = index">
-        <td>{{i+1}}</td>
-        <td>{{match.redSquare}}</td>
-        <td>{{match.blueSquare}}</td>
-        <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
-        <td *ngIf="auth.isAdmin(auth.user | async)">
-          <button 
-            (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
-            type="button" 
-            class="btn btn-outline-danger">
-              Delete Match
-          </button>
-        </td>
-      </tr>
+      <ng-container *ngFor="let match of (schedule | async); let i = index">
+        <tr *ngIf="match.breakDuration !== undefined; else isFight">
+          <td class="info">{{i+1}}</td>
+          <td  class="info"colspan="2" align="center">
+            {{match.breakDuration}} Minute Break
+          </td>
+          <td class="info" *ngIf="auth.isAdmin(auth.user | async)">
+            <button 
+              (click)="scheduleService.deleteBreak(match.id)"
+              type="button" 
+              class="btn btn-outline-danger">
+                Delete Break
+            </button>
+          </td>
+        </tr>
+        <ng-template #isFight>
+        <!-- <ng-container *ngIf="match.redSquare !== undefined"> -->
+        <tr>
+          <td>{{i+1}}</td>
+          <td>{{match.redSquare}}</td>
+          <td>{{match.blueSquare}}</td>
+          <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
+          <td *ngIf="auth.isAdmin(auth.user | async)">
+            <button 
+              (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
+              type="button" 
+              class="btn btn-outline-danger">
+                Delete Match
+            </button>
+          </td>
+        </tr>
+        <!-- </ng-container> -->
+        </ng-template>
+      </ng-container>
     </tbody>
   </table>
 </div>
