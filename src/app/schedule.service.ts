@@ -17,6 +17,8 @@ export class ScheduleService {
   }
 
   addMatch(weightClass: number, redBot: string, blueBot: string){
+    var db = firebase.firestore();
+
     // Update the fightSchedule collection
     this.firestore.collection('fightSchedule').add({
       redSquare: redBot,
@@ -26,42 +28,109 @@ export class ScheduleService {
       timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     });
 
-    // TODO: Combine the following two, if possible - use forEach?
     // Update the robot's states to "Scheduled"
-    let updateRed = true;
-    this.firestore.collection('robots', ref => ref.where('name', '==', redBot)).snapshotChanges()
-      .subscribe(data => {
-        this.bots = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            name: e.payload.doc.data()['name'],
-            state: e.payload.doc.data()['state']
-            //timestamp: e.payload.doc.data()['timestamp']
-          } as Robot;
-        })
-        if (updateRed) {
-          this.updateBotSchedule(this.bots[0], true);
-          updateRed = false;
-        }
-    });
+    db.collection("robots").where('name', '==', redBot)
+      .get()
+      .then((snapshots) => {
+        snapshots.forEach((robot) => 
+          robot.ref.update({
+            state: "Scheduled"
+          })
+          .then(function() {
+              console.log("Robot successfully updated with new schedule!");
+          })
+          .catch(function(error) {
+              console.error("Error updating schedule of robot: ", error);
+          })
+        )
+      })
 
     // Update the robot's states to "Scheduled"
-    let updateBlue = true;
-    this.firestore.collection('robots', ref => ref.where('name', '==', blueBot)).snapshotChanges()
-      .subscribe(data => {
-        this.bots = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            name: e.payload.doc.data()['name'],
-            state: e.payload.doc.data()['state']
-            //timestamp: e.payload.doc.data()['timestamp']
-          } as Robot;
-        })
-        if (updateBlue) {
-          this.updateBotSchedule(this.bots[0], true);
-          updateBlue = false;
-        }
-    });
+    db.collection("robots").where('name', '==', blueBot)
+      .get()
+      .then((snapshots) => {
+        snapshots.forEach((robot) => 
+          robot.ref.update({
+            state: "Scheduled"
+          })
+          .then(function() {
+              console.log("Robot successfully updated with new schedule!");
+          })
+          .catch(function(error) {
+              console.error("Error updating schedule of robot: ", error);
+          })
+        )
+      })
+  }
+
+  deleteMatch(redBot: string, blueBot: string, matchId: string){
+    var db = firebase.firestore();
+
+    // Change robot statuses to 'ready' instead of 'scheduled'
+    db.collection("robots").where('name', '==', redBot)
+      .get()
+      .then((snapshots) => {
+        snapshots.forEach((robot) => 
+          robot.ref.update({
+            state: "Ready" // Should this be "N/A" or "Ready"?
+          })
+          .then(function() {
+              console.log("Robot successfully updated with new schedule!");
+          })
+          .catch(function(error) {
+              console.error("Error updating schedule of robot: ", error);
+          })
+        )
+      })
+
+    db.collection("robots").where('name', '==', blueBot)
+      .get()
+      .then((snapshots) => {
+        snapshots.forEach((robot) => 
+          robot.ref.update({
+            state: "Ready" // Should this be "N/A" or "Ready"?
+          })
+          .then(function() {
+              console.log("Robot successfully updated with new schedule!");
+          })
+          .catch(function(error) {
+              console.error("Error updating schedule of robot: ", error);
+          })
+        )
+      })
+
+    // Delete match from fightSchedule
+    this.firestore.doc('fightSchedule/' + matchId).delete();
+  }
+
+  moveMatch(match1ID: string, match1Timestamp: any, match2ID: string, match2Timestamp: any){
+    var db = firebase.firestore();
+
+    console.log(match1ID, match2ID, match1Timestamp, match2Timestamp);
+
+    db.collection("fightSchedule").doc(match1ID)
+      .update({
+        timestamp: match2Timestamp
+      })
+      .then(function() {
+          console.log("Match successfully moved!");
+      })
+      .catch(function(error) {
+          console.error("Error updating match order: ", error);
+      })
+
+    db.collection("fightSchedule").doc(match2ID)
+      .update({
+        timestamp: match1Timestamp
+      })
+      .then(function() {
+          console.log("Match successfully moved!");
+      })
+      .catch(function(error) {
+          console.error("Error updating match order: ", error);
+      })
+  
+
   }
 
   addBreak(weightClass: number, breakDuration: number){
@@ -72,67 +141,6 @@ export class ScheduleService {
       //timestamp: firebase.firestore.FieldValue.serverTimestamp()
       timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     });
-  }
-
-  updateBotSchedule(robot: Robot, schedule: boolean) {
-    let newState = "Scheduled";
-    if (!schedule){
-      newState = "Ready";
-    }
-    this.firestore.doc('robots/' + robot.id)
-      .update({
-        state: newState
-        // TODO: Append a new array item to 'scheduledFights'
-      })
-      .then(function() {
-          console.log("Robot successfully updated with new schedule!");
-      })
-      .catch(function(error) {
-          console.error("Error updating schedule of robot: ", error);
-      });
-  }
-
-  deleteMatch(redBot: string, blueBot: string, matchId: string){
-    // Change robot statuses to 'ready' instead of 'scheduled'
-    // TODO: Combine the following two, if possible - use forEach?
-    // Update the robot's states to "Scheduled"
-    let updateRed = true;
-    this.firestore.collection('robots', ref => ref.where('name', '==', redBot)).snapshotChanges()
-      .subscribe(data => {
-        this.bots = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            name: e.payload.doc.data()['name'],
-            state: e.payload.doc.data()['state']
-            //timestamp: e.payload.doc.data()['timestamp']
-          } as Robot;
-        })
-        if (updateRed) {
-          this.updateBotSchedule(this.bots[0], false);
-          updateRed = false;
-        }
-    });
-
-    // Update the robot's states to "Scheduled"
-    let updateBlue = true;
-    this.firestore.collection('robots', ref => ref.where('name', '==', blueBot)).snapshotChanges()
-      .subscribe(data => {
-        this.bots = data.map(e => {
-          return {
-            id: e.payload.doc.id,
-            name: e.payload.doc.data()['name'],
-            state: e.payload.doc.data()['state']
-            //timestamp: e.payload.doc.data()['timestamp']
-          } as Robot;
-        })
-        if (updateBlue) {
-          this.updateBotSchedule(this.bots[0], false);
-          updateBlue = false;
-        }
-    });
-
-    // Delete match from fightSchedule
-    this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
   deleteBreak(matchId: number){

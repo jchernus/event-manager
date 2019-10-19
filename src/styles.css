@@ -27,3 +27,7 @@ form {
 .info{
   background-color: #daeef8;
 }
+
+button {
+  margin-right: 5px;
+}

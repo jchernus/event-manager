@@ -98,7 +98,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let match of (schedule | async); let i = index">
+      <ng-container *ngFor="let match of schedule | async as matches; let i = index;">
         <tr *ngIf="match.breakDuration !== undefined; else isFight">
           <td class="info">{{i+1}}</td>
           <td  class="info"colspan="2" align="center">
@@ -128,19 +128,21 @@
                 Delete Match
             </button>
             
-            <!-- <button 
+            <button 
+              (click)="scheduleService.moveMatch(match.id, match.timestamp, matches[i-1].id, matches[i-1].timestamp)"
               type="button" 
+              id="moveUp"
               class="btn btn-outline-info">
-              <span class="glyphicon glyphicon-triangle-top"></span> 
-              Move Up
+              &#9650;
             </button>
             
             <button 
+              (click)="scheduleService.moveMatch(match.id, match.timestamp, matches[i+1].id, matches[i+1].timestamp)"
               type="button" 
+              id="moveDown"
               class="btn btn-outline-info">
-              <span class="glyphicon glyphicon-triangle-bottom"></span> 
-              Move Down
-            </button> -->
+              &#9660;
+            </button>
           </td>
         </tr>
         <!-- </ng-container> -->
