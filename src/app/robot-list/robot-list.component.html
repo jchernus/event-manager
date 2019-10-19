@@ -29,7 +29,7 @@
         <td>
           <a 
             [title]="robot.name + ' details'"
-            [routerLink]="['/robot', robot.id]">
+            (click)="openRobotDetails(content, robot.id)">
               {{ robot.name }} 
           </a>
         </td>

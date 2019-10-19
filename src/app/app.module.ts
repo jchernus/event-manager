@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -28,6 +29,7 @@ import { AdminGuard } from './admin.guard';
 import { ModeratorGuard } from './moderator.guard';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
+import { RobotModalComponent } from './robot-modal/robot-modal.component';
 
 @NgModule({
   imports: [
@@ -52,6 +54,7 @@ import { SafetyComponent } from './safety/safety.component';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    NgbModule,
   ],
   declarations: [
     AppComponent,
@@ -66,6 +69,7 @@ import { SafetyComponent } from './safety/safety.component';
     TimeAgoPipe,
     CheckinComponent,
     SafetyComponent,
+    RobotModalComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard]
