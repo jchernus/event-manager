@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import { map } from 'rxjs/operators/map';
 
 import { RobotsService } from '../robots.service';
+import { Robot } from '../robot';
 import { RobotModalComponent } from '../robot-modal/robot-modal.component';
 
 @Component({
@@ -17,16 +18,16 @@ export class RobotListComponent implements OnInit {
   robots : Observable<any[]>;
   viewMode = 250;
 
-  @Input() public bot = {
-    name: 'Robot Name',
-    weightClass: 250
+  @Input() public bot : Robot = {
+    name : "N/A",
+    weightClass : 250
   };
 
   constructor(private robotService: RobotsService, private modalService: NgbModal){}
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
-    console.log(this.bot);
+    // console.log(this.bot);
   }
   
 
@@ -44,9 +45,14 @@ export class RobotListComponent implements OnInit {
   }
 
   openRobotDetails(content, robotId : string) {
+    this.robotService.getRobotDocData(robotId)
+      .subscribe(documentSnapshot => {
+        this.bot = documentSnapshot.data();
+        const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+        modalRef.componentInstance.bot = this.bot;
+      });
 
-    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
-    modalRef.componentInstance.bot = this.bot;
+    // modalRef.componentInstance.bot = this.robotService.getRobotDocData(robotId);
   }
 
   // create(robot: Robot){

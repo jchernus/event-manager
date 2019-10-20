@@ -69,7 +69,7 @@
     <h3>{{bot.name}}</h3>
     <p><b>Weight Class: </b> {{ bot.weightClass }} </p>
 
-    <!-- <p *ngIf="bot.inAttendance; else notInAttendance">
+    <p *ngIf="bot.inAttendance; else notInAttendance">
       <b>Attendance:</b> Present
     </p>
     <ng-template #notInAttendance>
@@ -85,8 +85,7 @@
 
     <p *ngIf="bot.state">
       <b>State:</b> {{ bot.state }}
-    </p> -->
-
+    </p>
 
   </div>
   <div class="modal-footer">

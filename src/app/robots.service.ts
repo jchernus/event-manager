@@ -35,8 +35,8 @@ export class RobotsService {
     return this.firestore.doc('robots/' + robotId).valueChanges();
   }
 
-  getRobotDoc2(robotId : string) {
-    return this.firestore.doc('robots/' + robotId).snapshotChanges();
+  getRobotDocData(robotId : string) {
+    return this.firestore.doc('robots/' + robotId).get();
   }
 
   getRobotImage(imgID : number){

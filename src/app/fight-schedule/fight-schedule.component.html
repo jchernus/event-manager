@@ -15,9 +15,7 @@
 <br>
 
 <div *ngIf="auth.isAdmin(auth.user | async)">
-  <h2>Add to Schedule</h2>
-  <br>
-  <h3>Fight:</h3>
+  <h3>Add Fight:</h3>
   <div *ngIf="scheduleForm.errors" class="alert alert-danger">
     <p>You must select two unique bots.</p>
   </div>
@@ -56,7 +54,7 @@
     <button class="btn btn-primary">Schedule</button>
   </form>
   <br>
-  <h3>Break:</h3>
+  <h3>Add Break:</h3>
   <form [formGroup]="breakForm" (ngSubmit)="scheduleBreak()">
     <div class="form-row align-items-center">
       <div class="form-group">
