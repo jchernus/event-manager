@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as firebase from 'firebase/app';
+import { map } from 'rxjs/operators/map';
 
 import { RobotsService } from '../robots.service';
-import { RobotModalComponent } from './robot-modal/robot-modal.component';
+import { RobotModalComponent } from '../robot-modal/robot-modal.component';
 
 @Component({
   selector: 'app-robot-list',
@@ -15,10 +17,16 @@ export class RobotListComponent implements OnInit {
   robots : Observable<any[]>;
   viewMode = 250;
 
+  @Input() public bot = {
+    name: 'Robot Name',
+    weightClass: 250
+  };
+
   constructor(private robotService: RobotsService, private modalService: NgbModal){}
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    console.log(this.bot);
   }
   
 
@@ -35,8 +43,10 @@ export class RobotListComponent implements OnInit {
     this.viewMode = weight;
   }
 
-  openRobotDetails(content, robotId : number) {
-    this.modalService.open(RobotModalComponent, {ariaLabelledBy: 'modal-basic-title'});
+  openRobotDetails(content, robotId : string) {
+
+    const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    modalRef.componentInstance.bot = this.bot;
   }
 
   // create(robot: Robot){

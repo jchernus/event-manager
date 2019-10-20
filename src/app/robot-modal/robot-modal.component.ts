@@ -6,11 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './robot-modal.component.html',
   styleUrls: ['./robot-modal.component.css']
 })
-export class RobotModalComponent implements OnInit {
+export class RobotModalComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(private modalService: NgbModal) { }
 
 }

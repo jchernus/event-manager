@@ -35,6 +35,10 @@ export class RobotsService {
     return this.firestore.doc('robots/' + robotId).valueChanges();
   }
 
+  getRobotDoc2(robotId : string) {
+    return this.firestore.doc('robots/' + robotId).snapshotChanges();
+  }
+
   getRobotImage(imgID : number){
     const ref = this.storage.ref('botPhotos/' + imgID + '.jpg');
     return ref.getDownloadURL();
@@ -69,40 +73,16 @@ export class RobotsService {
 
   initializeAllBots(){
     // Initialize all existing robots to starting config
-    // this.robots = this.firestore.collection('robots').
     console.log("Initializing bots...");
+    
+    var db = firebase.firestore();
 
-    this.firestore.collection('robots').snapshotChanges()
-      .subscribe(data => {
-        data.map(e => {
-          return {
-            id: e.payload.doc.id
-          } as Robot;
-        }).forEach(function(docRef) {
-            console.log("Initializing bot with ID: " + docRef.id);
-            this.initializeBot(docRef.id);
+    db.collection("robots").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
         });
     });
-
-    const query = this.firestore.collection('robots');
-
-    // query.snapshotChanges().map(changes => {
-    //   changes.map(a => {
-    //     const id = a.payload.doc.id; 
-    //     this.firestore.collection('robots').doc(id).update({
-    //       weightClass : 250, // TODO: Remove
-    //       alive: true,  // Still participating (or intending to) in the competition
-    //       inAttendance : false, // Arrived & checked in
-    //       passedSafety : false, // Passed safety
-    //       state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
-    //       fightCount : 0, 
-    //       winCount : 0,
-    //       lossCount : 0, 
-    //       koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
-    //       matches : {} // History of matches for the robot
-    //     })
-    //   })
-    // }).subscribe();
   }
 
   addRobot(botName: String, weight: number){

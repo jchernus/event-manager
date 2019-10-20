@@ -55,3 +55,40 @@
 	</table>
 </div>
 <br>
+
+<!-- <app-robot-modal></app-robot-modal> -->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Robot Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>{{bot.name}}</h3>
+    <p><b>Weight Class: </b> {{ bot.weightClass }} </p>
+
+    <!-- <p *ngIf="bot.inAttendance; else notInAttendance">
+      <b>Attendance:</b> Present
+    </p>
+    <ng-template #notInAttendance>
+      <p><b>Attendance:</b> Awaiting</p>
+    </ng-template>
+
+    <p *ngIf="bot.passedSafety; else noSafety">
+      <b>Safety:</b> Passed
+    </p>
+    <ng-template #noSafety>
+      <p><b>Safety:</b> Awaiting</p>
+    </ng-template>
+
+    <p *ngIf="bot.state">
+      <b>State:</b> {{ bot.state }}
+    </p> -->
+
+
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
