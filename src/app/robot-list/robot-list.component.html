@@ -95,9 +95,9 @@
       <p>No image to display.</p>
     </ng-template> -->
 
-    <p><b>Fight History:</b></p>
+    <!-- <p><b>Fight History:</b></p>
     <div *ngIf="bot.fights; else noFightsYet">
-      <!-- <table>
+      <table>
         <tr>
           <th></th>
           <th></th>
@@ -108,12 +108,12 @@
           <td></td>
           <td></td>
         </tr>
-      </table> -->
+      </table>
     </div>
     <ng-template #noFightsYet>
       <p>This robot has not had any fights yet.</p>
       <p><i>This section still under construction.</i></p>
-    </ng-template>
+    </ng-template> -->
 
     <!-- <div *ngIf="">
       <p></p>
@@ -125,9 +125,25 @@
         </tr>
       </table>
     </div> -->
-    <br>
-    <p><b> Temporary Controls: </b></p>
+
+    <p><b> Controls: </b></p>
     <button (click)="initializeRobot(bot.id)" class="btn btn-primary">Initialize Bot</button>
+    <form [formGroup]="changeStateForm" (ngSubmit)="changeState()">
+      <div>
+        <p><b> Change State: </b></p>
+        <select
+            required
+            [(ngModel)]="selectedState"
+            name="stateSelection"
+            formControlName="stateSelection"
+            id=""
+            type="select"
+            class="form-control"
+            class="custom-select mr-sm-2">
+            <option *ngFor="let state of states " value="{{state}}">{{state}}</option>
+          </select>
+      </div>
+    </form>
 
   </div>
   <div class="modal-footer">

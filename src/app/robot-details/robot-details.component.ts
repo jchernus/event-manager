@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component,} from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RobotsService } from '../robots.service';
 
@@ -9,29 +8,14 @@ import { RobotsService } from '../robots.service';
   templateUrl: './robot-details.component.html',
   styleUrls: ['./robot-details.component.css']
 })
-export class RobotDetailsComponent implements OnInit {
-  robotID : string;
-  robot : Observable<any>;
-  robotPhotoURL : Observable<any>;
+export class RobotDetailsComponent {
   
   constructor(
-    private route: ActivatedRoute,
-    private robotService: RobotsService
+    private robotService: RobotsService, 
+    private modalService: NgbModal
   ) { }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.robotID = params.get('robotId');
-    });
-    this.robotService.getRobotDoc(this.robotID)
-        .subscribe(bot => this.robot = bot);
-
-    // TODO: Images   
-    // this.robotService.getRobotImage(13526)
-    //     .subscribe(photoURL => this.robotPhotoURL = photoURL);
-  }
-
-  initializeRobot(bot){
-    this.robotService.initializeBot(bot);
+  initializeRobot(botId){
+    this.robotService.initializeBot(botId);
   }
 }

@@ -1,57 +1,75 @@
-<h3>{{robot.name}}</h3>
-<p><b>Weight Class: </b> {{ robot.weightClass }} </p>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="bot !== undefined" class="modal-title" id="modal-basic-title">{{bot.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="bot !== undefined">
+    <p><b>Weight Class: </b> {{ bot.weightClass }} </p>
 
-<p *ngIf="robot.inAttendance; else notInAttendance">
-  <b>Attendance:</b> Present
-</p>
-<ng-template #notInAttendance>
-  <p><b>Attendance:</b> Awaiting</p>
+    <p *ngIf="bot.inAttendance; else notInAttendance">
+      <b>Attendance:</b> &#x2714;
+    </p>
+    <ng-template #notInAttendance>
+      <p><b>Attendance:</b> &#x274C;</p>
+    </ng-template>
+
+    <p *ngIf="bot.passedSafety; else noSafety">
+      <b>Safety:</b> &#x2714;
+    </p>
+    <ng-template #noSafety>
+      <p><b>Safety:</b> &#x274C;</p>
+    </ng-template>
+
+    <p *ngIf="bot.state">
+      <b>State:</b> <span 
+      [class.ready]="bot.state=='Ready'"
+      [class.repairing]="bot.state=='Repairing'"
+      [class.scheduled]="bot.state=='Scheduled'">
+      {{ bot.state }}
+      </span>
+    </p>
+
+    <!-- <ng-template #noImage>
+      <p>No image to display.</p>
+    </ng-template> -->
+
+    <p><b>Fight History:</b></p>
+    <div *ngIf="bot.fights; else noFightsYet">
+      <!-- <table>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr> *ngFor=""
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table> -->
+    </div>
+    <ng-template #noFightsYet>
+      <p>This robot has not had any fights yet.</p>
+      <p><i>This section still under construction.</i></p>
+    </ng-template>
+
+    <!-- <div *ngIf="">
+      <p></p>
+      <table>
+        <tr>
+          <th></th>
+        </tr>
+        <tr *ngFor="">
+        </tr>
+      </table>
+    </div> -->
+    <br>
+    <p><b> Temporary Controls: </b></p>
+    <button (click)="initializeRobot(bot.id)" class="btn btn-primary">Initialize Bot</button>
+
+  </div>
+  <div class="modal-footer">
+  </div>
 </ng-template>
-
-<p *ngIf="robot.passedSafety; else noSafety">
-  <b>Safety:</b> Passed
-</p>
-<ng-template #noSafety>
-  <p><b>Safety:</b> Awaiting</p>
-</ng-template>
-
-<p *ngIf="robot.state">
-  <b>State:</b> {{ robot.state }}
-</p>
-
-<!-- <ng-template #noImage>
-  <p>No image to display.</p>
-</ng-template> -->
-
-<p><b>Fight History:</b></p>
-<div *ngIf="robot.fights; else noFightsYet">
-  <!-- <table>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    <tr> *ngFor=""
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  </table> -->
-</div>
-<ng-template #noFightsYet>
-  <p>This robot has not had any fights yet.</p>
-</ng-template>
-
-<!-- <div *ngIf="">
-  <p></p>
-  <table>
-    <tr>
-      <th></th>
-    </tr>
-    <tr *ngFor="">
-    </tr>
-  </table>
-</div> -->
-<br>
-<h3> Temp Controls: </h3>
-<button (click)="initializeRobot(robotID)">Initialize Bot</button>

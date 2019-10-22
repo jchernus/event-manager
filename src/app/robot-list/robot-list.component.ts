@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +8,7 @@ import { map } from 'rxjs/operators/map';
 
 import { RobotsService } from '../robots.service';
 import { Robot } from '../robot';
-import { RobotModalComponent } from '../robot-modal/robot-modal.component';
+// import { RobotModalComponent } from '../robot-modal/robot-modal.component';
 
 @Component({
   selector: 'app-robot-list',
@@ -17,17 +18,28 @@ import { RobotModalComponent } from '../robot-modal/robot-modal.component';
 export class RobotListComponent implements OnInit {
   robots : Observable<any[]>;
   viewMode = 250;
+  selectedState : string;
 
   @Input() public bot : Robot = {
     name : "N/A",
-    weightClass : 250
+    weightClass : 250,
   };
+
+  states = [
+  "Ready for Safety",
+  "Ready",
+  "Repairing",
+  "Scheduled"
+]
 
   constructor(private robotService: RobotsService, private modalService: NgbModal){}
 
+  changeStateForm = new FormGroup({
+    stateSelection: new FormControl()
+  });
+
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
-    // console.log(this.bot);
   }
   
 
@@ -51,15 +63,9 @@ export class RobotListComponent implements OnInit {
         const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
         modalRef.componentInstance.bot = this.bot;
       });
-
-    // modalRef.componentInstance.bot = this.robotService.getRobotDocData(robotId);
   }
 
-  // create(robot: Robot){
-  //   this.robotService.addRobot(robot, weightClass);
-  // }
+  changeState(){
 
-  // delete(id: string) {
-  //   this.robotService.deleteRobot(id);
-  // }
+  }
 }
