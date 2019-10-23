@@ -13,6 +13,19 @@ select {
   margin-bottom: 15px;
 }
 
+a:not([href]):not([tabindex]).underlined {
+  color: #007bff;
+}
+
+a:not([href]):not([tabindex]):hover {
+  cursor: pointer;
+}
+
+a:not([href]):not([tabindex]):hover.underlined {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 .nav-pills {
   padding-top: 20px;
   padding-bottom: 20px;

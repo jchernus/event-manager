@@ -5,9 +5,6 @@ import * as firebase from 'firebase/app';
 
 import { Robot } from './robot';
 
-
-var db = firebase.firestore();
-
 @Injectable()
 export class ScheduleService {
   schedule;
@@ -20,6 +17,7 @@ export class ScheduleService {
   }
 
   addMatch(weightClass: number, redBot: string, blueBot: string){
+    var db = firebase.firestore();
     // Update the fightSchedule collection
     this.firestore.collection('fightSchedule').add({
       redSquare: redBot,
@@ -65,6 +63,7 @@ export class ScheduleService {
   }
 
   deleteMatch(redBot: string, blueBot: string, matchId: string){
+    var db = firebase.firestore();
     // Change robot statuses to 'ready' instead of 'scheduled'
     db.collection("robots").where('name', '==', redBot)
       .get()
@@ -103,6 +102,7 @@ export class ScheduleService {
   }
 
   moveMatch(match1ID: string, match1Timestamp: any, match2ID: string, match2Timestamp: any){
+    var db = firebase.firestore();
     console.log(match1ID, match2ID, match1Timestamp, match2Timestamp);
 
     db.collection("fightSchedule").doc(match1ID)

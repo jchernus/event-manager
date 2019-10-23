@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators/map';
 import { Robot } from './robot';
 
 declare var require: any;
-var db = firebase.firestore();
 
 @Injectable()
 export class RobotsService {
@@ -33,7 +32,7 @@ export class RobotsService {
   }
 
   getRobotDoc(robotId : string) {
-    return this.firestore.doc('robots/' + robotId).snapshotChanges();
+    return this.firestore.doc('robots/' + robotId).valueChanges();
   }
 
   getRobotDocData(robotId : string) {
@@ -133,6 +132,7 @@ export class RobotsService {
   }
 
   changeState(robotId: string, newState: string) {
+    var db = firebase.firestore();
     db.collection("robots").doc(robotId)
       .update({
         state: newState
