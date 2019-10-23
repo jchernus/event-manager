@@ -27,11 +27,12 @@
     <tbody>
       <tr *ngFor="let robot of (robots | async)">
         <td>
-          <a 
+          <a *ngIf="auth.isAdmin(auth.user | async); else botName"
             [title]="robot.name + ' details'"
             (click)="openRobotDetails(content, robot.id)">
               {{ robot.name }} 
           </a>
+          <ng-template #botName> {{ robot.name }} </ng-template>
         </td>
         <td *ngIf="robot.inAttendance; else notPresent">&#x2714;</td>
         <ng-template #notPresent>
@@ -126,26 +127,24 @@
       </table>
     </div> -->
 
-    <p><b> Controls: </b></p>
-    <button (click)="initializeRobot(bot.id)" class="btn btn-primary">Initialize Bot</button>
-    <form [formGroup]="changeStateForm" (ngSubmit)="changeState()">
-      <div>
-        <p><b> Change State: </b></p>
-        <select
-            required
-            [(ngModel)]="selectedState"
-            name="stateSelection"
-            formControlName="stateSelection"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
-            <option *ngFor="let state of states " value="{{state}}">{{state}}</option>
-          </select>
-      </div>
-    </form>
+    <p><b> Change State: </b></p>
+    <select
+        [(ngModel)]="bot.state"
+        name="stateSelection"
+        id=""
+        type="select"
+        class="form-control"
+        class="custom-select mr-sm-2"
+        (change)="robotService.changeState(bot.id, bot.state)">
+      <option *ngFor="let state of states " value="{{state}}">{{state}}</option>
+    </select>
+
+    <p><b> Admin Controls: </b></p>
+    <button (click)="robotService.initializeBot(bot.id)" class="btn btn-success">Initialize Bot</button>
+    <button (click)="robotService.deleteRobot(bot.id); modal.dismiss()" class="btn btn-danger">Delete Bot</button>
 
   </div>
   <div class="modal-footer">
+    <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
   </div>
 </ng-template>

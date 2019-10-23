@@ -3,9 +3,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 
+import { AuthService} from '../auth.service';
 import { RobotsService } from '../robots.service';
 import { FightsService } from '../fights.service';
-import { AuthService} from '../auth.service';
 import { Fight } from '../fight';
 
 @Component({

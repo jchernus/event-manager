@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as firebase from 'firebase/app';
 import { map } from 'rxjs/operators/map';
 
+import { AuthService} from '../auth.service';
 import { RobotsService } from '../robots.service';
 import { Robot } from '../robot';
 // import { RobotModalComponent } from '../robot-modal/robot-modal.component';
@@ -26,17 +27,13 @@ export class RobotListComponent implements OnInit {
   };
 
   states = [
-  "Ready for Safety",
-  "Ready",
-  "Repairing",
-  "Scheduled"
-]
+    "Ready for Safety",
+    "Ready",
+    "Repairing",
+    "Scheduled"
+  ]
 
-  constructor(private robotService: RobotsService, private modalService: NgbModal){}
-
-  changeStateForm = new FormGroup({
-    stateSelection: new FormControl()
-  });
+  constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
@@ -57,15 +54,11 @@ export class RobotListComponent implements OnInit {
   }
 
   openRobotDetails(content, robotId : string) {
-    this.robotService.getRobotDocData(robotId)
-      .subscribe(documentSnapshot => {
+    this.robotService.getRobotDocData(robotId).subscribe(documentSnapshot => {
         this.bot = documentSnapshot.data();
+        this.bot.id = documentSnapshot.id;
         const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
         modalRef.componentInstance.bot = this.bot;
       });
-  }
-
-  changeState(){
-
   }
 }

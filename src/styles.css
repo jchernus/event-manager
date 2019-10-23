@@ -1,5 +1,18 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
+
+form {
+  padding: 15px;
+}
+
+button {
+  margin-right: 5px;
+}
+
+select {
+  margin-bottom: 15px;
+}
+
 .nav-pills {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -8,10 +21,6 @@
 .card {
   padding: 5px;
   margin: 5px;
-}
-
-form {
-  padding: 15px;
 }
 
 .form-check-inline {
@@ -26,8 +35,4 @@ form {
 
 .info{
   background-color: #daeef8;
-}
-
-button {
-  margin-right: 5px;
 }
