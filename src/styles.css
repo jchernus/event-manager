@@ -9,10 +9,6 @@ button {
   margin-right: 5px;
 }
 
-select {
-  margin-bottom: 15px;
-}
-
 a:not([href]):not([tabindex]).underlined {
   color: #007bff;
 }

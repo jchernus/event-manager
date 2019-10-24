@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RobotsService } from '../robots.service';
 import { ScheduleService } from '../schedule.service';
@@ -21,7 +22,7 @@ export class FightScheduleComponent implements OnInit {
 
   durations = [5, 10, 15, 30, 60];
 
-  constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService) { }
+  constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService, private modalService: NgbModal) { }
 
   scheduleForm = new FormGroup({
     red: new FormControl(),
@@ -35,6 +36,14 @@ export class FightScheduleComponent implements OnInit {
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
+  }
+
+  openScheduleFightModal(scheduleFightModal) {
+    const modalRef = this.modalService.open(scheduleFightModal, {ariaLabelledBy: 'schedule-fight-modal'});
+  }
+
+  openScheduleBreakModal(scheduleBreakModal) {
+    const modalRef = this.modalService.open(scheduleBreakModal, {ariaLabelledBy: 'schedule-break-modal'});
   }
 
   scheduleFight(){

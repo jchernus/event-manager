@@ -53,11 +53,11 @@ export class RobotListComponent implements OnInit {
     this.viewMode = weight;
   }
 
-  openRobotDetails(content, robotId : string) {
+  openRobotDetails(robotDetails, robotId : string) {
     this.robotService.getRobotDocData(robotId).subscribe(documentSnapshot => {
         this.bot = documentSnapshot.data();
         this.bot.id = documentSnapshot.id;
-        const modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+        const modalRef = this.modalService.open(robotDetails, {ariaLabelledBy: 'modal-basic-title'});
         modalRef.componentInstance.bot = this.bot;
       });
   }

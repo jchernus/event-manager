@@ -14,7 +14,7 @@ export class RobotModalComponent {
   ngOnInit() {
   }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  open(robotDetails) {
+    this.modalService.open(robotDetails, {ariaLabelledBy: 'modal-basic-title'});
   }
 }
