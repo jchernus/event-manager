@@ -12,81 +12,19 @@
   </li>
 </ul>
 
-<br>
-
 <div *ngIf="auth.isAdmin(auth.user | async)">
-  <h2>Enter Results</h2>
-  <div *ngIf="resultsForm.errors" class="alert alert-danger">
-    <p>You must select two unique bots.</p>
-  </div>
-
-  <form [formGroup]="resultsForm" (ngSubmit)="addFight()">
-    <div class="form-row align-items-center">
-      <div class="form-group">
-        <label for="winner">Winner:</label>
-        <select
-          required
-          [(ngModel)]="winnerBot"
-          name="winner"
-          formControlName="winner"
-          id=""
-          type="select"
-          class="custom-select mr-sm-2">
-          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="loser">Loser:</label>
-        <select
-          required
-          [(ngModel)]="loserBot" 
-          name="loser"
-          formControlName="loser"
-          id=""
-          type="select"
-          class="custom-select mr-sm-2">
-          <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-        </select>
-      </div>
-    </div>
-    <div>
-      <p>Win Condition:</p>
-      <div class="form-check form-check-inline">
-        <input 
-          [(ngModel)]="ko" 
-          formControlName="ko"
-          id="ko"
-          name="ko"
-          value="ko" 
-          type="radio"
-          class="form-check-input">
-        <label class="form-check-label" for="ko">KO</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input 
-          [(ngModel)]="ko" 
-          formControlName="jd"
-          id="jd"
-          name="jd"
-          value="jd" 
-          type="radio"
-          class="form-check-input">
-        <label class="form-check-label" for="jd">JD</label>
-      </div>
-      <div>
-        <button class="btn btn-primary">Enter Results</button>
-      </div>
-    </div>
-  </form>
+  <h4> Admin Controls</h>
+  <button class="btn btn-info" (click)="openResultsModal(resultsModal)">Add Result</button>
+  <br>
+  <br>
 </div>
 
-<br>
+<!-- <br> -->
 
-<h2>Fight Results</h2>
-<br>
+<!-- <h2>Fight Results</h2> -->
+<!-- <br> -->
 <div>
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Winner</th>
@@ -96,6 +34,7 @@
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
     </thead>
+    <tbody>
       <tr *ngFor="let fight of fights | async">
         <td>{{fight.winner}}</td>
         <td>{{fight.loser}}</td>
@@ -113,5 +52,82 @@
           </button>
         </td>
       </tr>
+    </tbody>
   </table>
 </div>
+
+<ng-template #resultsModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="results-modal">Add Result</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="resultsForm.errors" class="alert alert-danger">
+      <p>You must select two unique bots.</p>
+    </div>
+    <form [formGroup]="resultsForm" (ngSubmit)="addFight()">
+      <div class="form-row align-items-center">
+        <div class="form-group">
+          <label for="winner">Winner:</label>
+          <select
+            required
+            [(ngModel)]="winnerBot"
+            name="winner"
+            formControlName="winner"
+            id=""
+            type="select"
+            class="custom-select mr-sm-2">
+            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="loser">Loser:</label>
+          <select
+            required
+            [(ngModel)]="loserBot" 
+            name="loser"
+            formControlName="loser"
+            id=""
+            type="select"
+            class="custom-select mr-sm-2">
+            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <p>Win Condition:</p>
+        <div class="form-check form-check-inline">
+          <input 
+            [(ngModel)]="ko" 
+            formControlName="ko"
+            id="ko"
+            name="ko"
+            value="ko" 
+            type="radio"
+            class="form-check-input">
+          <label class="form-check-label" for="ko">KO</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input 
+            [(ngModel)]="ko" 
+            formControlName="jd"
+            id="jd"
+            name="jd"
+            value="jd" 
+            type="radio"
+            class="form-check-input">
+          <label class="form-check-label" for="jd">JD</label>
+        </div>
+        <div>
+          <button class="btn btn-primary">Enter Results</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
+  </div>
+</ng-template>

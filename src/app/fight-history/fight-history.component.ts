@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthService} from '../auth.service';
 import { RobotsService } from '../robots.service';
@@ -22,7 +23,7 @@ export class FightHistoryComponent implements OnInit {
   ko : string;
   jd : string;
 
-  constructor(public auth: AuthService, private robotService: RobotsService, private fightService: FightsService) { }
+  constructor(public auth: AuthService, private robotService: RobotsService, private fightService: FightsService, private modalService: NgbModal) { }
 
   resultsForm = new FormGroup({
     winner: new FormControl(),
@@ -69,6 +70,10 @@ export class FightHistoryComponent implements OnInit {
     this.loserBot = "";
     this.jd = "";
     this.ko = "";
+  }
+
+  openResultsModal(resultsModal) {
+    const modalRef = this.modalService.open(resultsModal, {ariaLabelledBy: 'results-modal'});
   }
 
   changeViewMode(weight: number){

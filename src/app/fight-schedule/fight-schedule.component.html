@@ -12,18 +12,15 @@
   </li>
 </ul>
 
-<br>
-
 <div *ngIf="auth.isAdmin(auth.user | async)">
-  <h2> Admin Controls</h2>
-  <button class="btn btn-primary" (click)="openScheduleFightModal(scheduleFightModal)">Schedule Fight</button>
-  <button class="btn btn-primary" (click)="openScheduleBreakModal(scheduleBreakModal)">Schedule Break</button>
+  <h4> Admin Controls</h4>
+  <button class="btn btn-info" (click)="openScheduleFightModal(scheduleFightModal)">Schedule Fight</button>
+  <button class="btn btn-info" (click)="openScheduleBreakModal(scheduleBreakModal)">Schedule Break</button>
+  <br>
   <br>
 </div>
 
-<br>
-
-<h2>Upcoming Matches</h2>
+<!-- <h2>Upcoming Matches</h2> -->
 
 <div>
   <table class="table table-striped"> 

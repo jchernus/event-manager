@@ -1,4 +1,4 @@
-<h2>Robot Standings</h2>
+<h1>Standings</h1>
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
@@ -13,20 +13,24 @@
 </ul>
 
 <div>
-	<table class="table">
-		<tr>
-      <th>Bot</th>
-      <th>Fights</th>
-      <th>Wins</th>
-      <th>Losses</th>
-      <th>KOs</th>
-    </tr>
-		<tr *ngFor="let robot of (robots | async)">
-      <td>{{ robot.name }} </td>
-      <td>{{ robot.fightCount }} </td>
-      <td>{{ robot.winCount }} </td>
-      <td>{{ robot.lossCount }} </td>
-      <td>{{ robot.koCount }} </td>
-    </tr>
+	<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bot</th>
+        <th>Fights</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>KOs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let robot of (robots | async)">
+        <td>{{ robot.name }} </td>
+        <td>{{ robot.fightCount }} </td>
+        <td>{{ robot.winCount }} </td>
+        <td>{{ robot.lossCount }} </td>
+        <td>{{ robot.koCount }} </td>
+      </tr>
+    </tbody>
 	</table>
 </div>
