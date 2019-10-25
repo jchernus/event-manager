@@ -14,7 +14,7 @@ import { Fight } from '../fight';
   templateUrl: './fight-history.component.html',
   styleUrls: ['./fight-history.component.css']
 })
-export class FightHistoryComponent implements OnInit {
+export class ResultsComponent implements OnInit {
   viewMode = 250;
   robots : Observable<any[]>;
   fights : Observable<any[]>;

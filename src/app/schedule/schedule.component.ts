@@ -8,11 +8,11 @@ import { ScheduleService } from '../schedule.service';
 import { AuthService} from '../auth.service';
 
 @Component({
-  selector: 'app-fight-schedule',
-  templateUrl: './fight-schedule.component.html',
-  styleUrls: ['./fight-schedule.component.css']
+  selector: 'app-schedule',
+  templateUrl: './schedule.component.html',
+  styleUrls: ['./schedule.component.css']
 })
-export class FightScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit {
   viewMode = 250;
   robots : Observable<any[]>;
   schedule : Observable<any[]>;

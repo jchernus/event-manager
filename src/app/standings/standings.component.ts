@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { RobotsService } from '../robots.service';
 
 @Component({
-  selector: 'app-robot-standings',
-  templateUrl: './robot-standings.component.html',
-  styleUrls: ['./robot-standings.component.css']
+  selector: 'app-standings',
+  templateUrl: './standings.component.html',
+  styleUrls: ['./standings.component.css']
 })
-export class RobotStandingsComponent implements OnInit {
+export class StandingsComponent implements OnInit {
   robots : Observable<any[]>;
   viewMode = 250;
 

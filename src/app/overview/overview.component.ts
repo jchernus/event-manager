@@ -12,11 +12,11 @@ import { Robot } from '../robot';
 // import { RobotModalComponent } from '../robot-modal/robot-modal.component';
 
 @Component({
-  selector: 'app-robot-list',
-  templateUrl: './robot-list.component.html',
-  styleUrls: ['./robot-list.component.css']
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.css']
 })
-export class RobotListComponent implements OnInit {
+export class OverviewComponent implements OnInit {
   robots : Observable<any[]>;
   viewMode = 250;
   selectedState : string;

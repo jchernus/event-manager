@@ -13,15 +13,15 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
-import { RobotListComponent } from './robot-list/robot-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { OverviewComponent } from './overview/overview.component';
 import { RobotDetailsComponent } from './robot-details/robot-details.component';
-import { FightScheduleComponent } from './fight-schedule/fight-schedule.component';
-import { RobotStandingsComponent } from './robot-standings/robot-standings.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+import { StandingsComponent } from './standings/standings.component';
 import { FightsService } from './fights.service';
 import { RobotsService } from './robots.service';
-import { ImportBotsComponent } from './import-bots/import-bots.component';
-import { FightHistoryComponent } from './fight-history/fight-history.component';
+import { SetupComponent } from './setup/setup.component';
+import { ResultsComponent } from './results/results.component';
 import { ScheduleService } from './schedule.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthService } from './auth.service';
@@ -29,7 +29,6 @@ import { AdminGuard } from './admin.guard';
 import { ModeratorGuard } from './moderator.guard';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
-import { RobotModalComponent } from './robot-modal/robot-modal.component';
 
 @NgModule({
   imports: [
@@ -38,13 +37,12 @@ import { RobotModalComponent } from './robot-modal/robot-modal.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: FightScheduleComponent },
-      { path: 'overview', component: RobotListComponent, canActivate: [ModeratorGuard] },
-      { path: 'robot/:robotId', component: RobotDetailsComponent },
-      { path: 'schedule', component: FightScheduleComponent },
-      { path: 'results', component: FightHistoryComponent },
-      { path: 'standings', component: RobotStandingsComponent },
-      { path: 'import', component: ImportBotsComponent , canActivate: [AdminGuard] },
+      { path: '', component: ScheduleComponent },
+      { path: 'overview', component: OverviewComponent, canActivate: [ModeratorGuard] },
+      { path: 'schedule', component: ScheduleComponent },
+      { path: 'results', component: ResultsComponent },
+      { path: 'standings', component: StandingsComponent },
+      { path: 'setup', component: SetupComponent , canActivate: [AdminGuard] },
       { path: 'check-in', component: CheckinComponent , canActivate: [ModeratorGuard] },
       { path: 'safety', component: SafetyComponent , canActivate: [ModeratorGuard] },
       { path: '**', component: NotFoundComponent },
@@ -58,18 +56,17 @@ import { RobotModalComponent } from './robot-modal/robot-modal.component';
   ],
   declarations: [
     AppComponent,
-    TopBarComponent,
-    RobotListComponent,
+    NavbarComponent,
+    OverviewComponent,
     RobotDetailsComponent,
-    FightScheduleComponent,
-    RobotStandingsComponent,
-    ImportBotsComponent,
-    FightHistoryComponent,
+    ScheduleComponent,
+    StandingsComponent,
+    SetupComponent,
+    ResultsComponent,
     NotFoundComponent,
     TimeAgoPipe,
     CheckinComponent,
     SafetyComponent,
-    RobotModalComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard]

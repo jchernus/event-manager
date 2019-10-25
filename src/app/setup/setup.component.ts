@@ -9,7 +9,7 @@ import { RobotsService } from '../robots.service';
   templateUrl: './import-bots.component.html',
   styleUrls: ['./import-bots.component.css']
 })
-export class ImportBotsComponent implements OnInit {
+export class SetupComponent implements OnInit {
   myEventID : number;
   myClassID : number;
   
@@ -37,7 +37,7 @@ export class ImportBotsComponent implements OnInit {
   }
 
   importBots(){
-    this.robotService.importBots();
+    // this.robotService.importBots();
 
     /*
       this.importRobotsForm.setErrors({
