@@ -9,3 +9,7 @@
 .scheduled{
   color:purple;
 }
+
+select {
+  margin-bottom: 15px;
+}

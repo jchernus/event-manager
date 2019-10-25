@@ -22,6 +22,10 @@ a:not([href]):not([tabindex]):hover.underlined {
   text-decoration: underline;
 }
 
+h1 {
+  font-size: 2.2rem;
+}
+
 .nav-pills {
   padding-top: 20px;
   padding-bottom: 20px;
