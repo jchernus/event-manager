@@ -5,9 +5,9 @@ import { eventIdValidators } from './eventIdValidators';
 import { RobotsService } from '../robots.service';
 
 @Component({
-  selector: 'app-import-bots',
-  templateUrl: './import-bots.component.html',
-  styleUrls: ['./import-bots.component.css']
+  selector: 'app-setup',
+  templateUrl: './setup.component.html',
+  styleUrls: ['./setup.component.css']
 })
 export class SetupComponent implements OnInit {
   myEventID : number;

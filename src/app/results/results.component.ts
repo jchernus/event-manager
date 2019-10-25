@@ -10,9 +10,9 @@ import { FightsService } from '../fights.service';
 import { Fight } from '../fight';
 
 @Component({
-  selector: 'app-fight-history',
-  templateUrl: './fight-history.component.html',
-  styleUrls: ['./fight-history.component.css']
+  selector: 'app-results',
+  templateUrl: './results.component.html',
+  styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit {
   viewMode = 250;
