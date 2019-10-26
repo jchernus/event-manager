@@ -54,9 +54,9 @@ export class OverviewComponent implements OnInit {
   }
 
   openRobotDetails(robotDetails, robotId : string) {
-    this.robotService.getRobotDocData(robotId).subscribe(documentSnapshot => {
-        this.bot = documentSnapshot.data();
-        this.bot.id = documentSnapshot.id;
+    this.robotService.getRobotDocData(robotId).subscribe(bot => {
+        this.bot = bot;
+        this.bot.id = robotId;
         const modalRef = this.modalService.open(robotDetails, {ariaLabelledBy: 'modal-basic-title'});
         modalRef.componentInstance.bot = this.bot;
       });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ export class ScheduleComponent implements OnInit {
   viewMode = 250;
   robots : Observable<any[]>;
   schedule : Observable<any[]>;
+  currentlyFighting;
   redBot : string;
   blueBot : string;
   breakDuration : number;
@@ -36,6 +37,7 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
+    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentlyFighting = match);
   }
 
   openScheduleFightModal(scheduleFightModal) {
@@ -71,5 +73,6 @@ export class ScheduleComponent implements OnInit {
     this.viewMode = weight;
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
+    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentlyFighting = match);
   }
 }

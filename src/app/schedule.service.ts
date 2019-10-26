@@ -12,6 +12,10 @@ export class ScheduleService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  getCurrentFight(weightClass: number){
+    return this.firestore.doc('currentlyFighting/' + ""+weightClass).valueChanges();
+  }
+
   getSchedule(weightClass: number){
     return this.firestore.collection('fightSchedule', ref => ref.where('weightClass', "==", weightClass).orderBy('timestamp', 'asc')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }

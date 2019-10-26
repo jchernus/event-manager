@@ -31,12 +31,8 @@ export class RobotsService {
     return this.robots;
   }
 
-  getRobotDoc(robotId : string) {
-    return this.firestore.doc('robots/' + robotId).valueChanges();
-  }
-
   getRobotDocData(robotId : string) {
-    return this.firestore.doc('robots/' + robotId).get();
+    return this.firestore.doc('robots/' + robotId).valueChanges();
   }
 
   getRobotImage(imgID : number){
