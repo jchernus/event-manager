@@ -147,6 +147,15 @@ export class ScheduleService {
     this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
+  promoteToCurrent(weightClass: number, redBot: string, blueBot: string, matchId: string){
+    this.firestore.doc('currentlyFighting/' + weightClass).update({
+      redSquare: redBot,
+      blueSquare: blueBot,
+      active: true
+    });
+    this.firestore.doc('fightSchedule/' + matchId).delete();
+  }
+
   documentToDomainObject = _ => {
     const object = _.payload.doc.data();
     object.id = _.payload.doc.id;

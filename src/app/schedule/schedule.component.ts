@@ -47,6 +47,10 @@ export class ScheduleComponent implements OnInit {
   openScheduleBreakModal(scheduleBreakModal) {
     const modalRef = this.modalService.open(scheduleBreakModal, {ariaLabelledBy: 'schedule-break-modal'});
   }
+  
+  openResultsModal(resultsModal) {
+    const modalRef = this.modalService.open(resultsModal, {ariaLabelledBy: 'results-modal'});
+  }
 
   scheduleFight(){
     // Check the form
