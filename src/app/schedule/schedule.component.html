@@ -156,86 +156,74 @@
   </table>
 </div>
 
+
 <ng-template #scheduleFightModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="schedule-fight-modal">Schedule Fight</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+    <h4 class="modal-title">Schedule Fight</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">×</span>
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="scheduleForm" (ngSubmit)="scheduleFight()">
-      <div class="form-row align-items-center">
-        <div class="form-group">
-          <label for="red">Red Square:</label>
-          <select
-            required
-            [(ngModel)]="redBot"
-            name="red"
-            formControlName="red"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
+    <form [formGroup]="scheduleForm">
+      <div class="form-group">
+        <label>Red Square:</label>
+        <select 
+          class="form-control" 
+          style="margin-bottom: 15px;"
+          required
+          [(ngModel)]="redBot"
+          name="red"
+          formControlName="red">
             <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="blue">Blue Square:</label>
-          <select
-            required
-            [(ngModel)]="blueBot" 
-            name="blue"
-            formControlName="blue"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
+        </select>
+        <label>Blue Square:</label>
+        <select 
+          class="form-control" 
+          style="margin-bottom: 15px;"
+          required
+          [(ngModel)]="blueBot" 
+          name="blue"
+          formControlName="blue">
             <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-          </select>
-        </div>
+        </select>
       </div>
-      <button class="btn btn-primary">Add to Schedule</button>
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
+    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="scheduleFight(); modal.dismiss()">Add to Schedule</button>
   </div>
 </ng-template>
 
-<ng-template #scheduleBreakModal let-modal>
+<ng-template #scheduleBreakModal let-modal class="schedule-modal">
   <div class="modal-header">
-    <h4 class="modal-title" id="schedule-break-modal">Schedule Break</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+    <h4 class="modal-title">Schedule Break</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">×</span>
     </button>
-  </div>
-  <div class="modal-body">
-  <form [formGroup]="breakForm" (ngSubmit)="scheduleBreak()">
-      <div class="form-row align-items-center">
-        <div class="form-group">
-          <label for="breakTime">Duration:</label>
-          <select
-            required
-            [(ngModel)]="breakDuration"
-            name="breakTime"
-            formControlName="breakTime"
-            id=""
-            type="select"
-            class="form-control"
-            class="custom-select mr-sm-2">
-            <!-- <option *ngFor="let duration of durations" value="{{duration}}">{{duration}} minutes</option> -->
-            <option value="5">5 minutes</option>
-            <option value="10">10 minutes</option>
-            <option value="30">30 minutes</option>
-            <option value="60">60 minutes</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn btn-primary">Add to Schedule</button>
-    </form>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="breakForm" (ngSubmit)="scheduleBreak()">
+          <div class="form-group">
+              <label>Duration:</label>
+              <select 
+                  class="form-control" 
+                  required
+                  [(ngModel)]="breakDuration"
+                  name="breakTime"
+                  formControlName="breakTime">
+                      <option value="5">5 minutes</option>
+                      <option value="10">10 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="60">1 hour</option>
+              </select>
+          </div>
+      </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
+      <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
+      <button class="btn btn-primary" type="button" (click)="scheduleBreak(); modal.dismiss()">Add to Schedule</button>
   </div>
 </ng-template>
+

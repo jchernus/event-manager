@@ -33,6 +33,14 @@ export class ScheduleComponent implements OnInit {
   breakForm = new FormGroup({
     breakTime: new FormControl()
   });
+  
+  resultsForm = new FormGroup({
+    winner: new FormControl(),
+    loser: new FormControl(),
+    ko: new FormControl(),
+    jd: new FormControl()
+    // TODO: Add weight class
+  });
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
