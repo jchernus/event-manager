@@ -201,3 +201,11 @@
   background: #269d9d;
 }
 
+/* Custom::after */
+
+@media(max-width:767px){
+  .dropdown-menu{
+    border:none !important;
+  }
+}
+

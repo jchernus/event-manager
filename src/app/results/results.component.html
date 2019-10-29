@@ -42,13 +42,13 @@
         <ng-template #jd>
           <td>JD</td>
         </ng-template>
-        <td>{{fight.timestamp.toDate() | date:'medium'}}</td>
+        <td>{{fight.timestamp.toDate() | date:'short'}}</td>
         <td *ngIf="auth.isAdmin(auth.user | async)">
           <button 
             (click)="fightService.deleteFight(fight)"  
             type="button" 
             class="btn btn-outline-danger">
-              Delete Fight
+              &#x2715;
           </button>
         </td>
       </tr>
