@@ -30,7 +30,7 @@
         <th>Winner</th>
         <th>Loser</th>
         <th>Win Condition</th>
-        <th>Date/Time</th>
+        <th class="hide-timestamp">Date/Time</th>
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
     </thead>
@@ -42,7 +42,7 @@
         <ng-template #jd>
           <td>JD</td>
         </ng-template>
-        <td>{{fight.timestamp.toDate() | date:'short'}}</td>
+        <td class="hide-timestamp">{{fight.timestamp.toDate() | date:'short'}}</td>
         <td *ngIf="auth.isAdmin(auth.user | async)">
           <button 
             (click)="fightService.deleteFight(fight)"  

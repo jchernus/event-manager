@@ -1,5 +1,11 @@
-table, th, td {
-  padding-left: 20px;
-  padding-right: 20px;
-  border-spacing: 5px;
+/* Bootstrap Studio CSS */
+
+
+
+/* Custom CSS */
+
+@media(max-width:767px){
+  .hide-timestamp {
+    display: none;
+  }
 }

@@ -1,12 +1,28 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
-
 form {
   padding: 15px;
 }
 
 button {
+  margin: 2px;
   margin-right: 5px;
+}
+
+select {
+  margin-bottom: 15px;
+}
+
+table {
+  padding-left: 15px;
+  padding-right: 15px;
+  border-spacing: 5px;
+}
+
+th, td {
+  padding-left: 15px;
+  padding-right: 15px;
+  border-spacing: 5px;
 }
 
 a:not([href]):not([tabindex]).underlined {
@@ -48,4 +64,16 @@ h1 {
 
 .info{
   background-color: #daeef8;
+}
+
+.ready{
+  color:green;
+}
+
+.repairing{
+  color:orange;
+}
+
+.scheduled{
+  color:purple;
 }

@@ -1,3 +1,5 @@
+/* Bootstrap Studio CSS */
+
 .event-manager-nav {
   background: #fff;
   padding-top: .75rem;
@@ -201,7 +203,7 @@
   background: #269d9d;
 }
 
-/* Custom::after */
+/* Custom CSS */
 
 @media(max-width:767px){
   .dropdown-menu{
