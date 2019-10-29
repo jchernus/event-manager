@@ -1,11 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase/app';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { AuthService} from '../auth.service';
 import { RobotsService } from '../robots.service';
 import { ScheduleService } from '../schedule.service';
-import { AuthService} from '../auth.service';
+import { FightsService } from '../fights.service';
+
+import { Fight } from './fight';
 
 @Component({
   selector: 'app-schedule',
@@ -16,14 +20,18 @@ export class ScheduleComponent implements OnInit {
   viewMode = 250;
   robots : Observable<any[]>;
   schedule : Observable<any[]>;
-  currentlyFighting;
+  currentMatch;
   redBot : string;
   blueBot : string;
   breakDuration : number;
+  winnerBot : string;
+  loserBot : string;
+  ko : string;
+  jd : string;
 
   durations = [5, 10, 15, 30, 60];
 
-  constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService, private modalService: NgbModal) { }
+  constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService, private fightService: FightsService, private modalService: NgbModal) { }
 
   scheduleForm = new FormGroup({
     red: new FormControl(),
@@ -45,7 +53,7 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
-    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentlyFighting = match);
+    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }
 
   openScheduleFightModal(scheduleFightModal) {
@@ -58,6 +66,7 @@ export class ScheduleComponent implements OnInit {
   
   openResultsModal(resultsModal) {
     const modalRef = this.modalService.open(resultsModal, {ariaLabelledBy: 'results-modal'});
+    modalRef.componentInstance.currentMatch = this.currentMatch;
   }
 
   scheduleFight(){
@@ -81,10 +90,48 @@ export class ScheduleComponent implements OnInit {
     this.scheduleService.addBreak(this.viewMode, this.breakDuration);
   }
 
+  addFight(){
+    let weightClass = this.viewMode;
+
+    // Check the form
+    if (this.winnerBot === this.loserBot){
+      this.resultsForm.setErrors({
+        botValues: true
+      });
+      return;
+    }
+    
+    // Populate fight from information entered in the form
+    let wonByKO : boolean = false;
+    if (this.ko === "ko"){
+      wonByKO = true;
+    }
+
+    let fight = <Fight>({
+      winner: this.winnerBot,
+      loser: this.loserBot,
+      ko: wonByKO,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      weightClass: weightClass,
+    });
+
+    // Send 'er off
+    this.fightService.addFight(fight);
+
+    // Clear the currently fighting section
+    this.scheduleService.clearCurrentMatch(weightClass);
+
+    // Clear form
+    this.winnerBot = "";
+    this.loserBot = "";
+    this.jd = "";
+    this.ko = "";
+  }
+
   changeViewMode(weight: number){
     this.viewMode = weight;
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
-    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentlyFighting = match);
+    this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }
 }

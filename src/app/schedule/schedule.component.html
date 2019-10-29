@@ -22,7 +22,7 @@
 
 <!-- <h2>Upcoming Matches</h2> -->
 
-<table *ngIf="currentlyFighting; else noCurrentFight" class="table table-striped">
+<table *ngIf="currentMatch; else noCurrentFight" class="table table-striped">
   <thead>
     <tr>
       <th>Red Square</th>
@@ -33,8 +33,8 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{currentlyFighting.redSquare}}</td>
-      <td>{{currentlyFighting.blueSquare}}</td>
+      <td>{{currentMatch.redSquare}}</td>
+      <td>{{currentMatch.blueSquare}}</td>
       <td *ngIf="auth.isAdmin(auth.user | async)">
         <button 
           [disabled]="isFirst"
@@ -99,12 +99,12 @@
               class="btn btn-outline-danger">
                 &#x2715;
             </button>
-            <button
-              (click)="scheduleService.promoteToCurrent(match.redSquare, match.blueSquare, match.id)" 
+            <!-- <button
+              (click)="scheduleService.promoteToCurrent(match.id)" 
               type="button" 
               class="btn btn-outline-success">
               &#9655;
-            </button>
+            </button> -->
           </td>
         </tr>
         <ng-template #isFight>
@@ -141,12 +141,12 @@
               class="btn btn-outline-danger">
               &#x2715;
             </button>
-            <button
+            <!-- <button
               (click)="scheduleService.promoteToCurrent(viewMode, match.redSquare, match.blueSquare, match.id)" 
               type="button" 
               class="btn btn-outline-success">
               &#9655;
-            </button>
+            </button> -->
           </td>
         </tr>
         <!-- </ng-container> -->
@@ -158,42 +158,42 @@
 
 
 <ng-template #scheduleFightModal let-modal class="schedule-modal">
-  <div class="modal-header">
-    <h4 class="modal-title">Schedule Fight</h4>
-    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="scheduleForm">
-      <div class="form-group">
-        <label>Red Square:</label>
-        <select 
-          class="form-control" 
-          style="margin-bottom: 15px;"
-          required
-          [(ngModel)]="redBot"
-          name="red"
-          formControlName="red">
-            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-        </select>
-        <label>Blue Square:</label>
-        <select 
-          class="form-control" 
-          style="margin-bottom: 15px;"
-          required
-          [(ngModel)]="blueBot" 
-          name="blue"
-          formControlName="blue">
-            <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
-        </select>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
-    <button class="btn btn-primary" type="button" (click)="scheduleFight(); modal.dismiss()">Add to Schedule</button>
-  </div>
+    <div class="modal-header">
+      <h4 class="modal-title">Schedule Fight</h4>
+      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="scheduleForm">
+        <div class="form-group">
+          <label>Red Square:</label>
+          <select 
+            class="form-control" 
+            style="margin-bottom: 15px;"
+            required
+            [(ngModel)]="redBot"
+            name="red"
+            formControlName="red">
+              <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+          </select>
+          <label>Blue Square:</label>
+          <select 
+            class="form-control" 
+            style="margin-bottom: 15px;"
+            required
+            [(ngModel)]="blueBot" 
+            name="blue"
+            formControlName="blue">
+              <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
+      <button class="btn btn-primary" type="button" (click)="scheduleFight(); modal.dismiss()">Add to Schedule</button>
+    </div>
 </ng-template>
 
 <ng-template #scheduleBreakModal let-modal class="schedule-modal">
@@ -227,3 +227,70 @@
   </div>
 </ng-template>
 
+
+<ng-template #resultsModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Record Result</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="resultsForm.errors" class="alert alert-danger">
+      <p>You must select two unique bots.</p>
+    </div>
+    <form [formGroup]="resultsForm">
+      <div class="form-group">
+        <label>Winner:</label>
+        <select 
+            class="form-control" 
+            style="margin-bottom: 15px;"
+            required
+            [(ngModel)]="winnerBot"
+            name="winner"
+            formControlName="winner">
+              <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
+              <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
+        </select>
+        <label>Loser:</label>
+        <select 
+            class="form-control" 
+            style="margin-bottom: 15px;"
+            required
+            [(ngModel)]="loserBot" 
+            name="loser"
+            formControlName="loser">
+          <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
+          <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
+        </select>
+        <p>Win Condition:</p>
+        <div class="form-check">
+          <input 
+              class="form-check-input" 
+              type="radio" 
+              id="ko"  
+              [(ngModel)]="ko" 
+              formControlName="ko"
+              name="ko"
+              value="ko" >
+          <label class="form-check-label" for="formCheck-1">KO</label>
+        </div>
+        <div class="form-check">
+          <input 
+              class="form-check-input" 
+              type="radio" 
+              id="jd"
+              [(ngModel)]="ko" 
+              formControlName="jd"
+              name="jd"
+              value="jd">
+          <label class="form-check-label" for="formCheck-2">JD</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="addFight(); modal.dismiss()">Add Result</button>
+  </div>
+</ng-template>

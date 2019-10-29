@@ -156,6 +156,10 @@ export class ScheduleService {
     this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
+  clearCurrentMatch(weightClass: number){
+    this.firestore.doc('currentlyFighting/' + weightClass).delete();
+  }
+
   documentToDomainObject = _ => {
     const object = _.payload.doc.data();
     object.id = _.payload.doc.id;

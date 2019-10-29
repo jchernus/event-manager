@@ -48,7 +48,6 @@ export class ResultsComponent implements OnInit {
     }
     
     // Populate fight from information entered in the form
-
     let wonByKO : boolean = false;
     if (this.ko === "ko"){
       wonByKO = true;
