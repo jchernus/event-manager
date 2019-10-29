@@ -1,0 +1,203 @@
+.event-manager-nav {
+  background: #fff;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  color: #333;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  margin-bottom: 0;
+}
+
+@media (min-width:768px) {
+  .event-manager-nav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.event-manager-nav .navbar-brand {
+  font-weight: bold;
+  color: inherit;
+}
+
+.event-manager-nav .navbar-brand:hover {
+  color: #222;
+}
+
+.event-manager-nav.navbar-dark .navbar-brand:hover {
+  color: #f0f0f0;
+}
+
+.event-manager-nav .navbar-brand img {
+  height: 100%;
+  display: inline-block;
+  margin-right: 10px;
+  width: auto;
+}
+
+.event-manager-nav .navbar-toggler {
+  border-color: #ddd;
+}
+
+.event-manager-nav .navbar-toggler:hover, .event-manager-nav .navbar-toggler:focus {
+  background: none;
+}
+
+.event-manager-nav.navbar-dark .navbar-toggler {
+  border-color: #555;
+}
+
+.event-manager-nav .navbar-toggler {
+  color: #888;
+}
+
+.event-manager-nav.navbar-dark .navbar-toggler {
+  color: #eee;
+}
+
+.event-manager-nav .navbar-collapse, .event-manager-nav .form-inline {
+  border-top-color: #ddd;
+}
+
+.event-manager-nav.navbar-dark .navbar-collapse, .event-manager-nav.navbar-dark .form-inline {
+  border-top-color: #333;
+}
+
+.event-manager-nav .navbar-nav a.active, .event-manager-nav .navbar-nav > .show > a {
+  background: none;
+  box-shadow: none;
+}
+
+.event-manager-nav.navbar-light .navbar-nav a.active, .event-manager-nav.navbar-light .navbar-nav a.active:focus, .event-manager-nav.navbar-light .navbar-nav a.active:hover {
+  color: #8f8f8f;
+  box-shadow: none;
+  background: none;
+  pointer-events: none;
+}
+
+.event-manager-nav.navbar .navbar-nav .nav-link {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.event-manager-nav.navbar-light .navbar-nav .nav-link {
+  color: #465765;
+}
+
+.event-manager-nav.navbar-light .navbar-nav .nav-link:focus, .event-manager-nav.navbar-light .navbar-nav .nav-link:hover {
+  color: #37434d !important;
+  background-color: transparent;
+}
+
+.event-manager-nav .navbar-nav > li > .dropdown-menu {
+  margin-top: -5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.event-manager-nav .dropdown-menu .dropdown-item:focus, .event-manager-nav .dropdown-menu .dropdown-item {
+  line-height: 2;
+  font-size: 14px;
+  color: #37434d;
+}
+
+.event-manager-nav .dropdown-menu .dropdown-item:focus, .event-manager-nav .dropdown-menu .dropdown-item:hover {
+  background: #eee;
+  color: inherit;
+}
+
+@media (max-width:767px) {
+  .event-manager-nav .navbar-nav .show .dropdown-menu {
+    box-shadow: none;
+  }
+}
+
+@media (max-width:767px) {
+  .event-manager-nav .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #37434d;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    line-height: 1;
+  }
+}
+
+.event-manager-nav.navbar-dark {
+  background-color: #1f2021;
+  color: #fff;
+}
+
+.event-manager-nav.navbar-dark .navbar-nav a.active, .event-manager-nav.navbar-dark .navbar-nav a.active:focus, .event-manager-nav.navbar-dark .navbar-nav a.active:hover {
+  color: #8f8f8f;
+  box-shadow: none;
+  background: none;
+  pointer-events: none;
+}
+
+.event-manager-nav.navbar-dark .navbar-nav .nav-link {
+  color: #dfe8ee;
+}
+
+.event-manager-nav.navbar-dark .navbar-nav .nav-link:focus, .event-manager-nav.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff !important;
+  background-color: transparent;
+}
+
+.event-manager-nav.navbar-dark .navbar-nav > li > .dropdown-menu {
+  background-color: #1f2021;
+}
+
+.event-manager-nav.navbar-dark .dropdown-menu .dropdown-item:focus, .event-manager-nav.navbar-dark .dropdown-menu .dropdown-item {
+  color: #f2f5f8;
+}
+
+.event-manager-nav.navbar-dark .dropdown-menu .dropdown-item:focus, .event-manager-nav.navbar-dark .dropdown-menu .dropdown-item:hover {
+  background: #363739;
+}
+
+@media (max-width:767px) {
+  .event-manager-nav.navbar-dark .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #fff;
+  }
+}
+
+.event-manager-nav .actions .login {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #465765;
+}
+
+.event-manager-nav.navbar-dark .actions .login {
+  color: #dfe8ee;
+}
+
+.event-manager-nav.navbar-dark .actions .login:hover {
+  color: #fff;
+}
+
+.event-manager-nav .navbar-text .action-button, .event-manager-nav .navbar-text .action-button:active, .event-manager-nav .navbar-text .action-button:hover {
+  background: #007BFF;
+  border-radius: 20px;
+  font-size: inherit;
+  color: #fff;
+  box-shadow: none;
+  border: none;
+  text-shadow: none;
+  padding: .5rem 1rem;
+  transition: background-color 0.25s;
+  font-size: inherit;
+}
+
+.event-manager-nav .navbar-text .action-button:hover {
+  background: #66d7d7;
+}
+
+.event-manager-nav.navbar-dark .action-button, .event-manager-nav.navbar-dark .action-button:active {
+  background: #208f8f;
+}
+
+.event-manager-nav.navbar-dark .action-button:hover {
+  background: #269d9d;
+}
+

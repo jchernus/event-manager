@@ -1,46 +1,35 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 class="my-0 mr-md-auto font-weight-normal"><a [routerLink]="['/']">Event Manager</a></h5>
-  <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-dark" >Schedule</a>
-    <a class="p-2 text-dark">Standings</a>
-    <a class="p-2 text-dark">Results</a>
-    <ng-container *ngIf="auth.user | async as user">
-      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/overview']">Overview</a>
-      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/check-in']">Check-In</a>
-      <a *ngIf="auth.isModerator(user)" class="p-2 text-dark" [routerLink]="['/safety']">Safety</a>
-    </ng-container>
-  </nav>
-  <div *ngIf="auth.user | async; else login">
-    <a class="btn btn-outline-primary" (click)="auth.signOut()">Sign Out</a>
-  </div>
-  <ng-template #login>
-    <button class="btn btn-outline-primary" (click)="auth.googleLogin()">Login with Google</button>
-  </ng-template>
-</div>
-
-<!-- <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-  <div class="container"><a class="navbar-brand">Event Manager</a><button data-toggle="collapse" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse">
+<nav class="navbar navbar-light navbar-expand-md event-manager-nav">
+  <div class="container">
+    <a class="navbar-brand">Event Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav navbar-nav mr-auto">
-        <li class="nav-item" role="presentation"><a class="nav-link active" [routerLink]="['/schedule']">Schedule</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/schedule']">Schedule</a></li>
         <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/standings']">Standings</a></li>
-        <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/results']">Results</a></li> -->
+        <li class="nav-item" role="presentation"><a class="nav-link" [routerLink]="['/results']">Results</a></li>
       
-        <!-- <ng-container *ngIf="auth.user | async as user">
-          <li *ngIf="auth.isModerator(user)" class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Admin</a>
-              <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">Overview</a><a class="dropdown-item" role="presentation" href="#">Check-In</a><a class="dropdown-item" role="presentation" href="#">Safety</a></div>
+        <ng-container *ngIf="auth.user | async as user">
+          <li *ngIf="auth.isModerator(user)" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" role="presentation" [routerLink]="['/overview']">Overview</a>
+              <a class="dropdown-item" role="presentation" [routerLink]="['/check-in']">Check-In</a>
+              <a class="dropdown-item" role="presentation" [routerLink]="['/safety']">Safety</a>
+            </div>
           </li>
-        </ng-container> -->
-      <!-- </ul> -->
-
-      <!-- <span *ngIf="auth.user | async; else login" class="navbar-text actions"> 
+        </ng-container>
+      </ul>
+      <span *ngIf="auth.user | async; else login" class="navbar-text actions"> 
         <a class="btn btn-light action-button" (click)="auth.signOut()" role="button">Sign Out</a>
       </span>
       <ng-template #login>
         <span class="navbar-text actions"> 
           <a class="btn btn-light action-button" (click)="auth.googleLogin()" role="button">Sign In</a>
         </span>
-      </ng-template> -->
-    <!-- </div>
+      </ng-template>
+    </div>
   </div>
-</nav> -->
+</nav>
