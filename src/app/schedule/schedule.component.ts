@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -23,30 +23,33 @@ export class ScheduleComponent implements OnInit {
   currentMatch;
   redBot : string;
   blueBot : string;
-  breakDuration : number;
+  breakDuration : number = 30;
   winnerBot : string;
   loserBot : string;
   ko : string;
   jd : string;
 
-  durations = [5, 10, 15, 30, 60];
+  durations = [5, 15, 30, 60];
 
   constructor(public auth: AuthService, private robotService: RobotsService, private scheduleService: ScheduleService, private fightService: FightsService, private modalService: NgbModal) { }
 
   scheduleForm = new FormGroup({
-    red: new FormControl(),
-    blue: new FormControl()
+    red: new FormControl('', Validators.required),
+    blue: new FormControl('', Validators.required)
   });
 
   breakForm = new FormGroup({
-    breakTime: new FormControl()
+    breakTime: new FormControl('', Validators.required)
   });
   
   resultsForm = new FormGroup({
-    winner: new FormControl(),
-    loser: new FormControl(),
-    ko: new FormControl(),
-    jd: new FormControl()
+    winner: new FormControl('', [
+      Validators.required,
+      
+    ]),
+    loser: new FormControl('', Validators.required),
+    ko: new FormControl('', Validators.required),
+    jd: new FormControl('', Validators.required)
     // TODO: Add weight class
   });
 
@@ -69,12 +72,37 @@ export class ScheduleComponent implements OnInit {
     modalRef.componentInstance.currentMatch = this.currentMatch;
   }
 
-  scheduleFight(){
-    // Check the form
+  clearScheduleFightForm(){
+    this.redBot = "";
+    this.blueBot = "";
+  }
+
+  scheduleFight(close : boolean){
+    // Validation
     if (this.redBot === this.blueBot){
       this.scheduleForm.setErrors({
         botValues: true
       });
+      console.log("Red square bot & blue square bot should be different.");
+      return;
+    }
+
+    console.log(this.redBot);
+    console.log(this.blueBot);
+
+    if (this.redBot === undefined || this.redBot === ""){
+      this.scheduleForm.get('red').setErrors({
+        required: true
+      });
+      console.log("Red bot is undefined.");
+      return;
+    }
+
+    if (this.blueBot === undefined || this.blueBot === ""){
+      this.scheduleForm.get('blue').setErrors({
+        required: true
+      });
+      console.log("Blue bot is undefined.");
       return;
     }
 
@@ -82,21 +110,43 @@ export class ScheduleComponent implements OnInit {
     this.scheduleService.addMatch(this.viewMode, this.redBot, this.blueBot);
 
     // Clear the form
-    this.redBot = "";
-    this.blueBot = "";
+    this.clearScheduleFightForm();
+
+    // Close the modal?
+    if (close){
+      this.modalService.dismissAll();
+    }
   }
 
   scheduleBreak(){
+    // Don't need validation, because an option is selected initially
     this.scheduleService.addBreak(this.viewMode, this.breakDuration);
+    this.breakDuration = 30; // default duration
+    this.modalService.dismissAll();
   }
 
-  addFight(){
+  clearRecordResultForm(){
+    this.winnerBot = "";
+    this.loserBot = "";
+    this.jd = "";
+    this.ko = "";
+  }
+
+  recordResult(){
     let weightClass = this.viewMode;
 
     // Check the form
     if (this.winnerBot === this.loserBot){
       this.resultsForm.setErrors({
         botValues: true
+      });
+      return;
+    }
+
+    if (this.ko === this.jd){
+      console.log("KO & JD not filled out");
+      this.resultsForm.setErrors({
+        winCondition: true
       });
       return;
     }
@@ -122,10 +172,10 @@ export class ScheduleComponent implements OnInit {
     this.scheduleService.clearCurrentMatch(weightClass);
 
     // Clear form
-    this.winnerBot = "";
-    this.loserBot = "";
-    this.jd = "";
-    this.ko = "";
+    this.clearRecordResultForm();
+
+    // Close modal
+    this.modalService.dismissAll();
   }
 
   promoteToCurrentMatch(redSquare, blueSquare, matchID){
@@ -134,18 +184,24 @@ export class ScheduleComponent implements OnInit {
       // TODO: Throw an error
     } else {
       // Make it so!
-      this.scheduleService.promoteToCurrent(this.viewMode, redSquare, blueSquare, matchID);
+      this.scheduleService.promoteToCurrentMatch(this.viewMode, redSquare, blueSquare, matchID);
     }
   }
 
-  updateSelection(){
-    if (this.winnerBot != ""){
+  postponeMatch(){
+    let weightClass = this.viewMode;
+    this.scheduleService.addMatch(weightClass, this.currentMatch.redSquare, this.currentMatch.blueSquare);
+    this.scheduleService.clearCurrentMatch(weightClass);
+  }
+
+  updateSelection(optionChanged){
+    if (optionChanged == "winner"){
       if (this.winnerBot == this.currentMatch.redSquare){
         this.loserBot = this.currentMatch.blueSquare;
       } else {
         this.loserBot = this.currentMatch.redSquare;
       }
-    } else if (this.loserBot != ""){
+    } else if (optionChanged == "loser"){
       if (this.loserBot == this.currentMatch.redSquare){
         this.winnerBot = this.currentMatch.blueSquare;
       } else {

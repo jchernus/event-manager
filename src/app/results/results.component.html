@@ -59,13 +59,16 @@
 <ng-template #resultsModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Record Result</h4>
-    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    <button type="button" class="close" (click)="clearRecordResultForm(); modal.dismiss('Cross click')" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div *ngIf="resultsForm.errors" class="alert alert-danger">
-      <p>You must select two unique bots.</p>
+      <p *ngIf="resultsForm.get('winner').invalid">You must specify the winner robot.</p>
+      <p *ngIf="resultsForm.get('loser').invalid">You must specify the loser robot.</p>
+      <p *ngIf="resultsForm.get('winner').touched && resultsForm.get('loser').touched && resultsForm.errors.botValues">Winner and loser robots must be unique.</p>
+      <p *ngIf="resultsForm.get('ko').invalid">You must select a win condition (KO or JD).</p>
     </div>
     <form [formGroup]="resultsForm">
       <div class="form-group">
@@ -116,7 +119,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
-    <button class="btn btn-primary" type="button" (click)="addFight(); modal.dismiss()">Add Result</button>
+    <button class="btn btn-light" type="button" (click)="clearRecordResultForm(); modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="addFight()">Add Result</button>
   </div>
 </ng-template>

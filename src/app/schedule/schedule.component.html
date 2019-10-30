@@ -20,8 +20,6 @@
   <br>
 </div>
 
-<!-- <h2>Upcoming Matches</h2> -->
-
 <ng-container *ngIf="currentMatch; else noCurrentMatch" >
   <!-- <h5>Currently fighting are <span style="color:red;">{{currentMatch.redSquare}}</span> vs <span style="color:blue;">{{currentMatch.blueSquare}}</span></h5> -->
   <table class="table table-striped">
@@ -39,14 +37,18 @@
         <td>{{currentMatch.blueSquare}}</td>
         <td *ngIf="auth.isAdmin(auth.user | async)">
           <button 
-            [disabled]="isFirst"
             (click)="openResultsModal(resultsModal)"
             type="button" 
-            id="moveUp"
-            class="btn"
-            [class.btn-outline-info]="! isFirst"
-            [class.btn-outline-secondary]="isFirst">
-          Record Result
+            id="recordResultBtn"
+            class="btn btn-outline-info">
+              Record Result
+          </button >
+          <button
+            (click)="scheduleService.postponeMatch()"
+            type="button" 
+            id="recordResultBtn"
+            class="btn btn-outline-info">
+              Postpone Match
           </button>
         </td>
       </tr>
@@ -56,6 +58,7 @@
 <ng-template #noCurrentMatch><p>
   Noone is currently fighting
 </p></ng-template>
+
 
 <div>
   <table class="table table-striped"> 
@@ -103,7 +106,7 @@
                 &#x2715;
             </button>
             <!-- <button
-              (click)="scheduleService.promoteToCurrent(match.id)" 
+              (click)="scheduleService.promoteToCurrentMatch(match.id)" 
               type="button" 
               class="btn btn-outline-success">
                 &#9655;
@@ -111,7 +114,6 @@
           </td>
         </tr>
         <ng-template #isFight>
-        <!-- <ng-container *ngIf="match.redSquare !== undefined"> -->
         <tr>
           <td>{{i+1}}</td>
           <td>{{match.redSquare}}</td>
@@ -152,39 +154,40 @@
             </button>
           </td>
         </tr>
-        <!-- </ng-container> -->
         </ng-template>
       </ng-container>
     </tbody>
   </table>
 </div>
 
+<!-- // MODALS FOR SCHEDULING AND RESULTS ENTRY -->
 
 <ng-template #scheduleFightModal let-modal class="schedule-modal">
     <div class="modal-header">
       <h4 class="modal-title">Schedule Fight</h4>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <button type="button" class="close" (click)="clearScheduleFightForm(); modal.dismiss('Cross click')" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
+    <div *ngIf="scheduleForm.errors" class="alert alert-danger">
+      <p *ngIf="scheduleForm.get('red').required">You must specify a robot for the red square.</p>
+      <p *ngIf="scheduleForm.get('blue').required">You must specify a robot for the blue square</p>
+      <p *ngIf="scheduleForm.get('red').touched && scheduleForm.get('blue').touched && scheduleForm.errors.botValues">Winner and loser robots must be unique.</p>
+    </div>
       <form [formGroup]="scheduleForm">
         <div class="form-group">
           <label>Red Square:</label>
-          <select 
+          <select
             class="form-control" 
-            style="margin-bottom: 15px;"
-            required
             [(ngModel)]="redBot"
             name="red"
             formControlName="red">
               <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
           </select>
           <label>Blue Square:</label>
-          <select 
+          <select
             class="form-control" 
-            style="margin-bottom: 15px;"
-            required
             [(ngModel)]="blueBot" 
             name="blue"
             formControlName="blue">
@@ -194,8 +197,8 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
-      <button class="btn btn-primary" type="button" (click)="scheduleFight(); modal.dismiss()">Add to Schedule</button>
+      <button class="btn btn-light" type="button" (click)="clearScheduleFightForm(); modal.dismiss()">Close</button>
+      <button class="btn btn-primary" type="button" (click)="scheduleFight(true)">Add to Schedule</button>
     </div>
 </ng-template>
 
@@ -211,22 +214,18 @@
           <div class="form-group">
               <label>Duration:</label>
               <select 
-                  class="form-control" 
-                  required
+                  class="form-control"
                   [(ngModel)]="breakDuration"
                   name="breakTime"
                   formControlName="breakTime">
-                      <option value="5">5 minutes</option>
-                      <option value="10">10 minutes</option>
-                      <option value="30" selected>30 minutes</option>
-                      <option value="60">1 hour</option>
+                      <option *ngFor="let duration of durations" [value]="duration">{{duration}} minutes</option>
               </select>
           </div>
       </form>
   </div>
   <div class="modal-footer">
       <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
-      <button class="btn btn-primary" type="button" (click)="scheduleBreak(); modal.dismiss()">Add to Schedule</button>
+      <button class="btn btn-primary" type="button" (click)="scheduleBreak()">Add to Schedule</button>
   </div>
 </ng-template>
 
@@ -234,54 +233,51 @@
 <ng-template #resultsModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Record Result</h4>
-    <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    <button type="button" class="close" (click)="clearRecordResultForm(); modal.dismiss('Cross click')" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div *ngIf="resultsForm.errors" class="alert alert-danger">
-      <p>You must select two unique bots.</p>
+      <p *ngIf="resultsForm.get('winner').invalid || resultsForm.get('loser').invalid">You must specify the winner & loser robots.</p>
+      <p *ngIf="resultsForm.get('ko').invalid">You must select a win condition (KO or JD).</p>
     </div>
     <form [formGroup]="resultsForm">
       <div class="form-group">
         <label>Winner:</label>
         <select 
-            class="form-control" 
-            style="margin-bottom: 15px;"
-            required
+            class="form-control"
             [(ngModel)]="winnerBot"
             name="winner"
             formControlName="winner"
-            (click)="updateSelection()">
+            (change)="updateSelection('winner')">
               <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
               <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
         </select>
         <label>Loser:</label>
         <select 
-            class="form-control" 
-            style="margin-bottom: 15px;"
-            required
+            class="form-control"
             [(ngModel)]="loserBot" 
             name="loser"
             formControlName="loser"
-            (click)="updateSelection()">
+            (change)="updateSelection('loser')">
           <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
           <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
         </select>
         <p>Win Condition:</p>
         <div class="form-check">
-          <input 
+          <input
               class="form-check-input" 
               type="radio" 
               id="ko"  
               [(ngModel)]="ko" 
               formControlName="ko"
               name="ko"
-              value="ko" >
+              value="ko">
           <label class="form-check-label" for="formCheck-1">KO</label>
         </div>
         <div class="form-check">
-          <input 
+          <input
               class="form-check-input" 
               type="radio" 
               id="jd"
@@ -295,7 +291,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-light" type="button" (click)="modal.dismiss()">Close</button>
-    <button class="btn btn-primary" type="button" (click)="addFight(); modal.dismiss()">Add Result</button>
+    <button class="btn btn-light" type="button" (click)="clearRecordResultForm(); modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="recordResult()">Add Result</button>
   </div>
 </ng-template>

@@ -20,6 +20,7 @@ export class ScheduleService {
     return this.firestore.collection('fightSchedule', ref => ref.where('weightClass', "==", weightClass).orderBy('timestamp', 'asc')).snapshotChanges().pipe(map(actions => actions.map(this.documentToDomainObject)));
   }
 
+  // MATCHES
   addMatch(weightClass: number, redBot: string, blueBot: string){
     var db = firebase.firestore();
     // Update the fightSchedule collection
@@ -27,7 +28,6 @@ export class ScheduleService {
       redSquare: redBot,
       blueSquare: blueBot,
       weightClass: weightClass,
-      //timestamp: firebase.firestore.FieldValue.serverTimestamp()
       timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     });
 
@@ -105,6 +105,22 @@ export class ScheduleService {
     this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
+  // BREAKS
+  addBreak(weightClass: number, breakDuration: number){
+    // Update the fightSchedule collection
+    this.firestore.collection('fightSchedule').add({
+      weightClass: weightClass,
+      breakDuration: breakDuration,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+    });
+  }
+
+  deleteBreak(matchId: number){
+    // Delete match from fightSchedule
+    this.firestore.doc('fightSchedule/' + matchId).delete();
+  }
+
+  // SCHEDULING
   moveMatch(match1ID: string, match1Timestamp: any, match2ID: string, match2Timestamp: any){
     var db = firebase.firestore();
     console.log(match1ID, match2ID, match1Timestamp, match2Timestamp);
@@ -132,22 +148,7 @@ export class ScheduleService {
       })
   }
 
-  addBreak(weightClass: number, breakDuration: number){
-    // Update the fightSchedule collection
-    this.firestore.collection('fightSchedule').add({
-      weightClass: weightClass,
-      breakDuration: breakDuration,
-      //timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-    });
-  }
-
-  deleteBreak(matchId: number){
-    // Delete match from fightSchedule
-    this.firestore.doc('fightSchedule/' + matchId).delete();
-  }
-
-  promoteToCurrent(weightClass: number, redBot: string, blueBot: string, matchId: string){
+  promoteToCurrentMatch(weightClass: number, redBot: string, blueBot: string, matchId: string){
     let myVar = this.firestore.doc('currentlyFighting/' + weightClass).get();
 
     var db = firebase.firestore();
