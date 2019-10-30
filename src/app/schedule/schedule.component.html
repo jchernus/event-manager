@@ -22,35 +22,38 @@
 
 <!-- <h2>Upcoming Matches</h2> -->
 
-<table *ngIf="currentMatch; else noCurrentFight" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Red Square</th>
-      <th>Blue Square</th>
-      <!-- <th>Timestamp</th> -->
-      <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{currentMatch.redSquare}}</td>
-      <td>{{currentMatch.blueSquare}}</td>
-      <td *ngIf="auth.isAdmin(auth.user | async)">
-        <button 
-          [disabled]="isFirst"
-          (click)="openResultsModal(resultsModal)"
-          type="button" 
-          id="moveUp"
-          class="btn"
-          [class.btn-outline-info]="! isFirst"
-          [class.btn-outline-secondary]="isFirst">
-         Record Result
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<ng-template #noCurrentFight><p>
+<ng-container *ngIf="currentMatch; else noCurrentMatch" >
+  <!-- <h5>Currently fighting are <span style="color:red;">{{currentMatch.redSquare}}</span> vs <span style="color:blue;">{{currentMatch.blueSquare}}</span></h5> -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Red Square</th>
+        <th>Blue Square</th>
+        <!-- <th>Timestamp</th> -->
+        <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{currentMatch.redSquare}}</td>
+        <td>{{currentMatch.blueSquare}}</td>
+        <td *ngIf="auth.isAdmin(auth.user | async)">
+          <button 
+            [disabled]="isFirst"
+            (click)="openResultsModal(resultsModal)"
+            type="button" 
+            id="moveUp"
+            class="btn"
+            [class.btn-outline-info]="! isFirst"
+            [class.btn-outline-secondary]="isFirst">
+          Record Result
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+<ng-template #noCurrentMatch><p>
   Noone is currently fighting
 </p></ng-template>
 
@@ -81,7 +84,7 @@
               class="btn"
               [class.btn-outline-info]="! isFirst"
               [class.btn-outline-secondary]="isFirst">
-              &#9650;
+                &#9650;
             </button>
             <button 
               [disabled]="isLast"
@@ -91,7 +94,7 @@
               class="btn"
               [class.btn-outline-info]="! isLast"
               [class.btn-outline-secondary]="isLast">
-              &#9660;
+                &#9660;
             </button>
             <button 
               (click)="scheduleService.deleteBreak(match.id)"
@@ -99,12 +102,12 @@
               class="btn btn-outline-danger">
                 &#x2715;
             </button>
-            <button
+            <!-- <button
               (click)="scheduleService.promoteToCurrent(match.id)" 
               type="button" 
               class="btn btn-outline-success">
-              &#9655;
-            </button>
+                &#9655;
+            </button> -->
           </td>
         </tr>
         <ng-template #isFight>
@@ -123,7 +126,7 @@
               class="btn"
               [class.btn-outline-info]="! isFirst"
               [class.btn-outline-secondary]="isFirst">
-              &#9650;
+                &#9650;
             </button>
             <button 
               [disabled]="isLast"
@@ -133,19 +136,19 @@
               class="btn"
               [class.btn-outline-info]="! isLast"
               [class.btn-outline-secondary]="isLast">
-              &#9660;
+                &#9660;
             </button>
             <button 
               (click)="scheduleService.deleteMatch(match.redSquare, match.blueSquare, match.id)"  
               type="button" 
               class="btn btn-outline-danger">
-              &#x2715;
+                &#x2715;
             </button>
             <button
-              (click)="scheduleService.promoteToCurrent(viewMode, match.redSquare, match.blueSquare, match.id)" 
+              (click)="promoteToCurrentMatch(match.redSquare, match.blueSquare, match.id)"
               type="button" 
               class="btn btn-outline-success">
-              &#9655;
+                &#9655;
             </button>
           </td>
         </tr>

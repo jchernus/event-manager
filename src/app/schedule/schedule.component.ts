@@ -128,6 +128,16 @@ export class ScheduleComponent implements OnInit {
     this.ko = "";
   }
 
+  promoteToCurrentMatch(redSquare, blueSquare, matchID){
+    if (this.currentMatch){
+      // Another match is already marked as current
+      // TODO: Throw an error
+    } else {
+      // Make it so!
+      this.scheduleService.promoteToCurrent(this.viewMode, redSquare, blueSquare, matchID);
+    }
+  }
+
   updateSelection(){
     if (this.winnerBot != ""){
       if (this.winnerBot == this.currentMatch.redSquare){
