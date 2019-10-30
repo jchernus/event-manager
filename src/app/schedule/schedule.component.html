@@ -99,12 +99,12 @@
               class="btn btn-outline-danger">
                 &#x2715;
             </button>
-            <!-- <button
+            <button
               (click)="scheduleService.promoteToCurrent(match.id)" 
               type="button" 
               class="btn btn-outline-success">
               &#9655;
-            </button> -->
+            </button>
           </td>
         </tr>
         <ng-template #isFight>
@@ -141,12 +141,12 @@
               class="btn btn-outline-danger">
               &#x2715;
             </button>
-            <!-- <button
+            <button
               (click)="scheduleService.promoteToCurrent(viewMode, match.redSquare, match.blueSquare, match.id)" 
               type="button" 
               class="btn btn-outline-success">
               &#9655;
-            </button> -->
+            </button>
           </td>
         </tr>
         <!-- </ng-container> -->
@@ -248,7 +248,8 @@
             required
             [(ngModel)]="winnerBot"
             name="winner"
-            formControlName="winner">
+            formControlName="winner"
+            (click)="updateSelection()">
               <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
               <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
         </select>
@@ -259,7 +260,8 @@
             required
             [(ngModel)]="loserBot" 
             name="loser"
-            formControlName="loser">
+            formControlName="loser"
+            (click)="updateSelection()">
           <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
           <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
         </select>

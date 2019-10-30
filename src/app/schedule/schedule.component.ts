@@ -128,6 +128,22 @@ export class ScheduleComponent implements OnInit {
     this.ko = "";
   }
 
+  updateSelection(){
+    if (this.winnerBot != ""){
+      if (this.winnerBot == this.currentMatch.redSquare){
+        this.loserBot = this.currentMatch.blueSquare;
+      } else {
+        this.loserBot = this.currentMatch.redSquare;
+      }
+    } else if (this.loserBot != ""){
+      if (this.loserBot == this.currentMatch.redSquare){
+        this.winnerBot = this.currentMatch.blueSquare;
+      } else {
+        this.winnerBot = this.currentMatch.redSquare;
+      }
+    }
+  }
+
   changeViewMode(weight: number){
     this.viewMode = weight;
     this.robots = this.robotService.getRobotsObservable(this.viewMode);

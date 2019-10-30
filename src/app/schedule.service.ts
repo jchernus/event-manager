@@ -148,12 +148,28 @@ export class ScheduleService {
   }
 
   promoteToCurrent(weightClass: number, redBot: string, blueBot: string, matchId: string){
-    this.firestore.doc('currentlyFighting/' + weightClass).update({
-      redSquare: redBot,
-      blueSquare: blueBot,
-      active: true
+    let myVar = this.firestore.doc('currentlyFighting/' + weightClass).get();
+
+    var db = firebase.firestore();
+    const usersRef = db.collection('currentlyFighting').doc(""+weightClass)
+
+    usersRef.get()
+      .then((docSnapshot) => {
+        if (docSnapshot.exists) {
+          usersRef.onSnapshot((doc) => {
+            console.log("No can do, clear the first one out.");
+          });
+        } else {
+          usersRef.set({
+            redSquare: redBot,
+            blueSquare: blueBot,
+            active: true
+          }).then(function() {
+            console.log("Current match successfully updated!");
+            db.collection('fightSchedule').doc(matchId).delete();
+          });
+        }
     });
-    this.firestore.doc('fightSchedule/' + matchId).delete();
   }
 
   clearCurrentMatch(weightClass: number){
