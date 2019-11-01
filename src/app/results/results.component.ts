@@ -38,7 +38,7 @@ export class ResultsComponent implements OnInit {
     this.fights = this.fightService.getFightsObservable(this.viewMode);
   }
 
-  addFight(){
+  addFight(close: boolean){
     // Check the form
     if (this.winnerBot === this.loserBot){
       this.resultsForm.setErrors({
@@ -69,6 +69,11 @@ export class ResultsComponent implements OnInit {
     this.loserBot = "";
     this.jd = "";
     this.ko = "";
+
+    // Close the modal?
+    if (close){
+      this.modalService.dismissAll();
+    }
   }
 
   openResultsModal(resultsModal) {
