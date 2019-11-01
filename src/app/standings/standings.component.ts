@@ -23,4 +23,8 @@ export class StandingsComponent implements OnInit {
     this.viewMode = weight;
   }
 
+  trackById (index, item) {
+    return item.id;
+  }
+
 }

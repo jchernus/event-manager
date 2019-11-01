@@ -44,7 +44,7 @@
               Record Result
           </button >
           <button
-            (click)="scheduleService.postponeMatch()"
+            (click)="postponeMatch()"
             type="button" 
             id="recordResultBtn"
             class="btn btn-outline-info">
@@ -72,7 +72,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let match of schedule | async as matches; let i = index; first as isFirst; last as isLast;">
+      <ng-container *ngFor="let match of schedule | async as matches; let i = index; first as isFirst; last as isLast; trackBy: trackById;">
         <tr *ngIf="match.breakDuration !== undefined; else isFight">
           <td class="info">{{i+1}}</td>
           <td  class="info"colspan="2" align="center">

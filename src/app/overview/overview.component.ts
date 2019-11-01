@@ -61,4 +61,8 @@ export class OverviewComponent implements OnInit {
         modalRef.componentInstance.bot = this.bot;
       });
   }
+
+  trackById (index, item) {
+    return item.id;
+  }
 }

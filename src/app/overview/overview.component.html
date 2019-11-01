@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let robot of (robots | async)">
+      <tr *ngFor="let robot of (robots | async); trackBy: trackById;">
         <td>
           <a *ngIf="auth.isAdmin(auth.user | async); else botName"
             class="underlined" 

@@ -80,4 +80,8 @@ export class ResultsComponent implements OnInit {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
     this.fights = this.fightService.getFightsObservable(this.viewMode);
   }
+
+  trackById (index, item) {
+    return item.id;
+  }
 }
