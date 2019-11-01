@@ -23,4 +23,8 @@ export class SafetyComponent implements OnInit {
     this.viewMode = weight;
   }
 
+  trackById (index, item) {
+    return item.id;
+  }
+
 }

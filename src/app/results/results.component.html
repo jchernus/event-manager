@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let fight of fights | async">
+      <tr *ngFor="let fight of fights | async; trackBy: trackById;">
         <td>{{fight.winner}}</td>
         <td>{{fight.loser}}</td>
         <td *ngIf="fight.ko; else jd">KO</td>

@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let robot of (robots | async)">
+      <tr *ngFor="let robot of (robots | async); trackBy: trackById;">
         <td>{{ robot.name }} </td>
 
         <td *ngIf="robot.passedSafety; else notPassedSafety">&#x2714;</td>

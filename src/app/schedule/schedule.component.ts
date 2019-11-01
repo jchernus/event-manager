@@ -216,4 +216,8 @@ export class ScheduleComponent implements OnInit {
     this.schedule = this.scheduleService.getSchedule(this.viewMode);
     this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }
+
+  trackById (index, item) {
+    return item.id;
+  }
 }

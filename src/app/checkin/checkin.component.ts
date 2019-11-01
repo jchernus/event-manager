@@ -22,4 +22,8 @@ export class CheckinComponent implements OnInit {
     this.robots = this.robotService.getRobotsObservable(weight);
     this.viewMode = weight;
   }
+
+  trackById (index, item) {
+    return item.id;
+  }
 }
