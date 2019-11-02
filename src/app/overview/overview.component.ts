@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit {
   constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.robots = this.robotService.getRobotsByWeightObservable(this.viewMode);
   }
 
   initializeBots(){
@@ -45,7 +45,7 @@ export class OverviewComponent implements OnInit {
   }
 
   changeViewMode(weight: number){
-    this.robots = this.robotService.getRobotsObservable(weight);
+    this.robots = this.robotService.getRobotsByWeightObservable(weight);
     this.viewMode = weight;
   }
 

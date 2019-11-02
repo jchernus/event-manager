@@ -24,7 +24,14 @@ export class RobotsService {
     return this.robots;
   }
 
-  getRobotsObservable(weightClass:number) {
+  getRobotsByArenaObservable(arena: string) {
+    this.robots = this.firestore.collection('robots', ref => ref.where('arena', "==", arena).orderBy('name', 'asc')).snapshotChanges()
+    .pipe(map(actions => actions.map(this.documentToDomainObject)));
+
+    return this.robots;
+  }
+
+  getRobotsByWeightObservable(weightClass:number) {
     this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('name', 'asc')).snapshotChanges()
     .pipe(map(actions => actions.map(this.documentToDomainObject)));
 

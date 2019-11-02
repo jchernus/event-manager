@@ -54,7 +54,7 @@ export class ScheduleComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.robots = this.robotService.getAllRobotsObservable(this.viewMode);
+    this.robots = this.robotService.getRobotsByArenaObservable(this.viewMode);
     this.schedule = this.scheduleService.getScheduleByArena(this.viewMode);
     this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }

@@ -34,7 +34,7 @@ export class ResultsComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.robots = this.robotService.getRobotsByWeightObservable(this.viewMode);
     this.fights = this.fightService.getFightsObservable(this.viewMode);
   }
 
@@ -85,7 +85,7 @@ export class ResultsComponent implements OnInit {
 
   changeViewMode(weight: number){
     this.viewMode = weight;
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.robots = this.robotService.getRobotsByWeightObservable(this.viewMode);
     this.fights = this.fightService.getFightsObservable(this.viewMode);
   }
 

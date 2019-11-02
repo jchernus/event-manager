@@ -15,11 +15,11 @@ export class Three60Component implements OnInit {
   constructor(private robotService: RobotsService) { }
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
+    this.robots = this.robotService.getRobotsByWeightObservable(this.viewMode);
   }
 
   changeViewMode(weight: number){
-    this.robots = this.robotService.getRobotsObservable(weight);
+    this.robots = this.robotService.getRobotsByWeightObservable(weight);
     this.viewMode = weight;
   }
 
