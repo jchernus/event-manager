@@ -1,0 +1,50 @@
+<h1>360 Photograph</h1>
+
+<ul class="nav nav-pills">
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==1" (click)="changeViewMode(1)">Antweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==3" (click)="changeViewMode(3)">Beetleweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">30lb Sumo</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==150" (click)="changeViewMode(150)">150lb Sumo</a>
+  </li>
+</ul>
+
+<div>
+	<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bot</th>
+        <th>Safety</th>
+        <th>Passed Safety Time</th>
+        <th>Control</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let robot of (robots | async); trackBy: trackById;">
+        <td>{{ robot.name }} </td>
+
+        <td *ngIf="robot.photographed; else notPhotographer">&#x2714;</td>
+        <ng-template #notPhotographer>
+          <td>&#x274C;</td>
+        </ng-template>
+
+        <td *ngIf="robot.safetyTime !== undefined; else noTimestamp">{{ robot.safetyTime.toDate() | timeAgo}} </td>
+        <ng-template #noTimestamp><td></td></ng-template>
+
+        <td *ngIf="robot.photographed; else markPhotographed">
+          <button (click)="robotService.markPhotographed(robot.id, false)" type="button" class="btn btn-outline-danger">Unmark 360ed</button>
+        </td>
+        <ng-template #markPhotographed>
+          <td><button (click)="robotService.markPhotographed(robot.id, true)" type="button" class="btn btn-outline-success">Mark 360ed</button></td>
+        </ng-template>
+      </tr>
+    </tbody>
+	</table>
+</div>
+<br>

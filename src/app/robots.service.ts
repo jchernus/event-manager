@@ -127,6 +127,18 @@ export class RobotsService {
     }
   }
 
+  markPhotographed(robotId: string, photographed: boolean){
+    if (photographed) {
+      this.firestore.doc('robots/' + robotId).update({
+        photographed: photographed
+      });
+    } else {
+      this.firestore.doc('robots/' + robotId).update({
+        photographed: photographed
+      });
+    }
+  }
+
   changeState(robotId: string, newState: string) {
     var db = firebase.firestore();
     db.collection("robots").doc(robotId)

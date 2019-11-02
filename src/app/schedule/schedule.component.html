@@ -24,6 +24,7 @@
 </div>
 
 <ng-container *ngIf="currentMatch; else noCurrentMatch" >
+  <h3>Currently Fighting</h3>
   <!-- <h5>Currently fighting are <span style="color:red;">{{currentMatch.redSquare}}</span> vs <span style="color:blue;">{{currentMatch.blueSquare}}</span></h5> -->
   <table class="table table-striped">
     <thead>
@@ -64,6 +65,7 @@
 
 
 <div>
+  <h3>Scheduled Matches</h3>
   <table class="table table-striped"> 
     <thead>
       <tr>
