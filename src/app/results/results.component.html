@@ -55,6 +55,9 @@
           </button>
         </td>
       </tr>
+      <tr *ngIf='(fights | async)?.length === 0'><td colspan="5">
+        No results to display
+      </td></tr>
     </tbody>
   </table>
 </div>

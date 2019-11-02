@@ -9,6 +9,7 @@ import { RobotsService } from '../robots.service';
   styleUrls: ['./robot-details.component.css']
 })
 export class RobotDetailsComponent {
+  viewMode = 1;
   
   constructor(
     private robotService: RobotsService, 
@@ -16,6 +17,6 @@ export class RobotDetailsComponent {
   ) { }
 
   initializeRobot(botId){
-    this.robotService.initializeBot(botId);
+    this.robotService.initializeBot(botId, this.viewMode);
   }
 }

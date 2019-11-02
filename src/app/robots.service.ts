@@ -40,13 +40,13 @@ export class RobotsService {
     return ref.getDownloadURL();
   }
 
-  initializeBot(robotId : string){
+  initializeBot(robotId : string, weightClass: number){
     // Add all of the other fields to the documents & initialize
     // to something reasonable
     console.log("Initializing bot " + robotId);
     this.firestore.doc('robots/' + robotId)
       .update({
-        weightClass : 250, // TODO: Remove
+        weightClass : weightClass,
         alive: true,  // Still participating (or intending to) in the competition
         inAttendance : false, // Arrived & checked in
         passedSafety : false, // Passed safety
@@ -56,7 +56,7 @@ export class RobotsService {
         lossCount : 0, 
         koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
         timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-        //timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        lastFought: firebase.firestore.FieldValue.delete(),
         matches : {} // History of matches for the robot
       })
       .then(function() {
@@ -88,7 +88,7 @@ export class RobotsService {
     })
     .then(function(docRef) {
       console.log("Robot added with ID: ", docRef.id);
-      this.initializeBot(docRef.id);
+      this.initializeBot(docRef.id, weight);
     })
     .catch(function(error) {
       console.error("Error adding robot: ", error);

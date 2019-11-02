@@ -82,7 +82,7 @@ export class FightsService {
               winCount : robot.data().winCount - 1,
               koCount : robot.data().koCount - +fight.ko,
               state: "N/A",
-              lastFought: firebase.firestore.Timestamp.fromDate(new Date())
+              lastFought: firebase.firestore.FieldValue.delete()
             })
             .then(function() {
                 console.log("Winning robot successfully updated! KO: " + fight.ko);
@@ -102,7 +102,7 @@ export class FightsService {
               fightCount : robot.data().fightCount - 1,
               lossCount : robot.data().lossCount - 1,
               state: "N/A",
-              lastFought: firebase.firestore.Timestamp.fromDate(new Date())
+              lastFought: firebase.firestore.FieldValue.delete()
             })
             .then(function() {
                 console.log("Losing robot successfully updated!");

@@ -74,7 +74,7 @@ export class ScheduleService {
       .then((snapshots) => {
         snapshots.forEach((robot) => 
           robot.ref.update({
-            state: "Ready" // Should this be "N/A" or "Ready"?
+            state: "N/A" // Should this be "N/A" or "Ready"?
           })
           .then(function() {
               console.log("Robot successfully updated with new schedule!");
@@ -90,7 +90,7 @@ export class ScheduleService {
       .then((snapshots) => {
         snapshots.forEach((robot) => 
           robot.ref.update({
-            state: "Ready" // Should this be "N/A" or "Ready"?
+            state: "N/A" // Should this be "N/A" or "Ready"?
           })
           .then(function() {
               console.log("Robot successfully updated with new schedule!");

@@ -144,7 +144,7 @@
     </select>
 
     <p><b> Admin Controls: </b></p>
-    <button (click)="robotService.initializeBot(bot.id)" class="btn btn-success">Initialize Bot</button>
+    <button (click)="robotService.initializeBot(bot.id, viewMode)" class="btn btn-success">Initialize Bot</button>
     <button (click)="robotService.deleteRobot(bot.id); modal.dismiss()" class="btn btn-danger">Delete Bot</button>
 
   </div>

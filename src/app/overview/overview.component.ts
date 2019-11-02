@@ -27,21 +27,17 @@ export class OverviewComponent implements OnInit {
   };
 
   states = [
+    "N/A",
     "Ready for Safety",
     "Ready",
+    "Scheduled",
     "Repairing",
-    "Scheduled"
   ]
 
   constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
 
   ngOnInit() {
     this.robots = this.robotService.getRobotsObservable(this.viewMode);
-  }
-  
-
-  initializeBot(robotId : string){
-    this.robotService.initializeBot(robotId);
   }
 
   initializeBots(){
