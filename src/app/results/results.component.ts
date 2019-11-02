@@ -15,7 +15,7 @@ import { Fight } from '../fight';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit {
-  viewMode = 250;
+  viewMode = 1;
   robots : Observable<any[]>;
   fights : Observable<any[]>;
   winnerBot : string;
@@ -63,12 +63,9 @@ export class ResultsComponent implements OnInit {
 
     // Send 'er off
     this.fightService.addFight(fight);
-
+    
     // Clear form
-    this.winnerBot = "";
-    this.loserBot = "";
-    this.jd = "";
-    this.ko = "";
+    this.clearRecordResultForm();
 
     // Close the modal?
     if (close){
@@ -78,6 +75,13 @@ export class ResultsComponent implements OnInit {
 
   openResultsModal(resultsModal) {
     const modalRef = this.modalService.open(resultsModal, {ariaLabelledBy: 'results-modal'});
+  }
+
+  clearRecordResultForm(){
+    this.winnerBot = "";
+    this.loserBot = "";
+    this.jd = "";
+    this.ko = "";
   }
 
   changeViewMode(weight: number){

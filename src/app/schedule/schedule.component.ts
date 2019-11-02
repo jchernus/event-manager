@@ -17,7 +17,7 @@ import { Fight } from './fight';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  viewMode = 250;
+  viewMode = 1;
   robots : Observable<any[]>;
   schedule : Observable<any[]>;
   currentMatch;

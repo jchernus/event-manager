@@ -18,7 +18,7 @@ import { Robot } from '../robot';
 })
 export class OverviewComponent implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 250;
+  viewMode = 1;
   selectedState : string;
 
   @Input() public bot : Robot = {

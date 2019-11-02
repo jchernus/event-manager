@@ -10,12 +10,12 @@ import { RobotsService } from '../robots.service';
 })
 export class StandingsComponent implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 250;
+  viewMode = 1;
 
   constructor(private robotService: RobotsService){}
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservableByStandings(250);
+    this.robots = this.robotService.getRobotsObservableByStandings(this.viewMode);
   }
 
   changeViewMode(weight: number){

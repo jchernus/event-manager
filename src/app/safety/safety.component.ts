@@ -10,7 +10,7 @@ import { RobotsService } from '../robots.service';
 })
 export class SafetyComponent implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 250;
+  viewMode = 1;
 
   constructor(private robotService: RobotsService) { }
 
