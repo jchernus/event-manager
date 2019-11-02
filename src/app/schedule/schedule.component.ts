@@ -17,7 +17,7 @@ import { Fight } from './fight';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  viewMode = 1;
+  viewMode = "Combat";
   robots : Observable<any[]>;
   schedule : Observable<any[]>;
   currentMatch;
@@ -54,8 +54,8 @@ export class ScheduleComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
-    this.schedule = this.scheduleService.getSchedule(this.viewMode);
+    this.robots = this.robotService.getAllRobotsObservable(this.viewMode);
+    this.schedule = this.scheduleService.getScheduleByArena(this.viewMode);
     this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }
 
@@ -86,9 +86,6 @@ export class ScheduleComponent implements OnInit {
       console.log("Red square bot & blue square bot should be different.");
       return;
     }
-
-    console.log(this.redBot);
-    console.log(this.blueBot);
 
     if (this.redBot === undefined || this.redBot === ""){
       this.scheduleForm.get('red').setErrors({
@@ -133,7 +130,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   recordResult(){
-    let weightClass = this.viewMode;
+    let arena = this.viewMode;
 
     // Check the form
     if (this.winnerBot === this.loserBot){
@@ -162,14 +159,13 @@ export class ScheduleComponent implements OnInit {
       loser: this.loserBot,
       ko: wonByKO,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-      weightClass: weightClass,
     });
 
     // Send 'er off
     this.fightService.addFight(fight);
 
     // Clear the currently fighting section
-    this.scheduleService.clearCurrentMatch(weightClass);
+    this.scheduleService.clearCurrentMatch(arena);
 
     // Clear form
     this.clearRecordResultForm();
@@ -189,9 +185,9 @@ export class ScheduleComponent implements OnInit {
   }
 
   postponeMatch(){
-    let weightClass = this.viewMode;
-    this.scheduleService.addMatch(weightClass, this.currentMatch.redSquare, this.currentMatch.blueSquare);
-    this.scheduleService.clearCurrentMatch(weightClass);
+    let arena = this.viewMode;
+    this.scheduleService.addMatch(arena, this.currentMatch.redSquare, this.currentMatch.blueSquare);
+    this.scheduleService.clearCurrentMatch(arena);
   }
 
   updateSelection(optionChanged){
@@ -210,10 +206,10 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  changeViewMode(weight: number){
-    this.viewMode = weight;
-    this.robots = this.robotService.getRobotsObservable(this.viewMode);
-    this.schedule = this.scheduleService.getSchedule(this.viewMode);
+  changeViewMode(arena: string){
+    this.viewMode = arena;
+    this.robots = this.robotService.getAllRobotsObservable();
+    this.schedule = this.scheduleService.getScheduleByArena(this.viewMode);
     this.scheduleService.getCurrentFight(this.viewMode).subscribe(match => this.currentMatch = match);
   }
 

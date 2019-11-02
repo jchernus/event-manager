@@ -21,8 +21,24 @@ export class FightsService {
   addFight(fight : Fight){
     var db = firebase.firestore();
 
-    // Update the fights collection
-    this.firestore.collection('fightHistory').add(fight);
+    // Extract weight class from the robot record
+    db.collection("robots").where("name", "==", fight.loser)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          let weightClass = doc.data()['weightClass'];
+          console.log(weightClass);
+          fight.weightClass = weightClass;
+          console.log(fight);
+
+          // Update the fights collection
+          db.collection('fightHistory').add(fight);
+          console.log("Updated the fights collection");
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
 
     // Update the winning robot's doc
     db.collection("robots").where('name', '==', fight.winner)

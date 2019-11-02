@@ -2,16 +2,10 @@
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==1" (click)="changeViewMode(1)">Antweight</a>
+    <a class="nav-link" [class.active]="viewMode=='Combat'" (click)="changeViewMode('Combat')">Combat</a>
   </li>
 	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==3" (click)="changeViewMode(3)">Beetleweight</a>
-  </li>
-	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">30lb Sumo</a>
-  </li>
-	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==150" (click)="changeViewMode(150)">150lb Sumo</a>
+    <a class="nav-link" [class.active]="viewMode=='Sumo'" (click)="changeViewMode('Sumo')">Sumo</a>
   </li>
 </ul>
 
@@ -46,13 +40,20 @@
             id="recordResultBtn"
             class="btn btn-outline-info">
               Record Result
-          </button >
+          </button>
           <button
             (click)="postponeMatch()"
             type="button" 
             id="recordResultBtn"
             class="btn btn-outline-info">
               Postpone Match
+          </button>
+          <button
+            (click)="scheduleService.clearCurrentMatch(viewMode)"
+            type="button" 
+            id="deleteMatchBtn"
+            class="btn btn-outline-danger">
+              X
           </button>
         </td>
       </tr>

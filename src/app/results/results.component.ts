@@ -58,7 +58,6 @@ export class ResultsComponent implements OnInit {
       loser: this.loserBot,
       ko: wonByKO,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-      weightClass: this.viewMode,
     });
 
     // Send 'er off

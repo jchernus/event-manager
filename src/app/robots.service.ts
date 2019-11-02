@@ -17,6 +17,13 @@ export class RobotsService {
   constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { 
   }
 
+  getAllRobotsObservable() {
+    this.robots = this.firestore.collection('robots', ref => ref.orderBy('name', 'asc')).snapshotChanges()
+    .pipe(map(actions => actions.map(this.documentToDomainObject)));
+
+    return this.robots;
+  }
+
   getRobotsObservable(weightClass:number) {
     this.robots = this.firestore.collection('robots', ref => ref.where('weightClass', "==", weightClass).orderBy('name', 'asc')).snapshotChanges()
     .pipe(map(actions => actions.map(this.documentToDomainObject)));
@@ -57,6 +64,7 @@ export class RobotsService {
         koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
         timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         lastFought: firebase.firestore.FieldValue.delete(),
+        // arena: "Combat",
         matches : {} // History of matches for the robot
       })
       .then(function() {
@@ -135,6 +143,18 @@ export class RobotsService {
     } else {
       this.firestore.doc('robots/' + robotId).update({
         photographed: photographed
+      });
+    }
+  }
+
+  updateArena(robotId: string, arena: string){
+    if (arena == "Combat") {
+      this.firestore.doc('robots/' + robotId).update({
+        arena: "Combat"
+      });
+    } else if (arena == "Sumo") {
+      this.firestore.doc('robots/' + robotId).update({
+        arena: "Sumo"
       });
     }
   }

@@ -25,6 +25,7 @@
         <th>State</th>
         <th>Number of Fights</th>
         <th>Last Fought</th>
+        <th>Controls</th>
       </tr>
     </thead>
     <tbody>
@@ -55,6 +56,22 @@
         <td>{{ robot.fightCount }} </td>
         <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
         <ng-template #noTimestamp><td></td></ng-template>
+        <td>
+          <button
+            (click)="robotService.updateArena(robot.id, 'Combat')"
+            type="button" 
+            id="updateArenaBtn"
+            class="btn btn-outline-info">
+              Mark Combat
+          </button>
+          <button
+            (click)="robotService.updateArena(robot.id, 'Sumo')"
+            type="button" 
+            id="updateArenaBtn"
+            class="btn btn-outline-info">
+              Mark Sumo
+          </button>
+        </td>
       </tr>
     </tbody>
 	</table>
