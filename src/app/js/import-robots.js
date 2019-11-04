@@ -4,7 +4,13 @@ require("firebase/firestore");
 
 // Initialize Cloud Firestore through Firebase
 firebase.initializeApp({
-    
+    apiKey: "AIzaSyD3-xJAJbZq64VGASSAnD-gUWbqCA8s8yE",
+    authDomain: "combat-robotics-event-manager.firebaseapp.com",
+    databaseURL: "https://combat-robotics-event-manager.firebaseio.com",
+    projectId: "combat-robotics-event-manager",
+    storageBucket: "combat-robotics-event-manager.appspot.com",
+    messagingSenderId: "214902089918",
+    appId: "1:214902089918:web:43b199380681bdeb"
   });
 
 const rp = require('request-promise');
