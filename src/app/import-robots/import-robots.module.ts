@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as firebase from 'firebase/app';
-// import * as $ from '@types/cheerio';
-// import * as rp from 'request-promise';
+import * as $ from '@types/cheerio';
+import * as r from 'request';
+import * as rp from 'request-promise';
 
 
 @NgModule({
