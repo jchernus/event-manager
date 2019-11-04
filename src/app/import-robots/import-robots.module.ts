@@ -5,7 +5,6 @@ import * as $ from '@types/cheerio';
 import * as r from 'request';
 import * as rp from 'request-promise';
 
-
 @NgModule({
   imports: [
     CommonModule
@@ -21,11 +20,16 @@ export class ImportRobotsModule {
     console.log(path);
     // console.log(rp);
   
-    // rp(path)
-    //   .then(function(html){
-    //     console.log(html);
-    //   });
-  //     });
+    try {
+      rp(path)
+        .then(function(html){
+          console.log(html);
+        });
+    }
+    catch(e) {
+      console.log(e);
+    }
+
             // //success!
             // var botInfo = [];
             // var botName;
