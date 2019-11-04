@@ -13,8 +13,7 @@ firebase.initializeApp({
     appId: "1:214902089918:web:43b199380681bdeb"
   });
 
-const rp = require('request-promise');
-const $ = require('cheerio');
+
 
 var db = firebase.firestore();
 

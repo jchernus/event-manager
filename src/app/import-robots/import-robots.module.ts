@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as firebase from 'firebase/app';
-import * as $ from '@types/cheerio';
-import * as r from 'request';
-import * as rp from 'request-promise';
+
+declare var require: any;
+const rp = require('request-promise');
+const $ = require('cheerio');
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import * as rp from 'request-promise';
   ],
   declarations: []
 })
+
 export class ImportRobotsModule { 
   db = firebase.firestore();
 
