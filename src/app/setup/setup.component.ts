@@ -3,8 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
+import { ImportRobotsModule } from '../import-robots.module';
 
-import * as importRobotsFormBuildersDB from '../js/import-robots';
+// import * as importRobotsFormBuildersDB from '../js/import-robots';
 
 @Component({
   selector: 'app-setup',
