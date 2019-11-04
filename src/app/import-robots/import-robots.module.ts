@@ -23,10 +23,10 @@ export class ImportRobotsModule {
 
     console.log(path);
   
-    rp(path)
-        .then(function(html){
-          console.log(html);
-        });
+    // rp(path)
+    //     .then(function(html){
+    //       console.log(html);
+    //     });
             // //success!
             // var botInfo = [];
             // var botName;
