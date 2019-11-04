@@ -21,10 +21,10 @@ export class ImportRobotsModule {
     // console.log(rp);
   
     try {
-      rp(path)
-        .then(function(html){
-          console.log(html);
-        });
+      // rp(path)
+      //   .then(function(html){
+      //     console.log(html);
+      //   });
     }
     catch(e) {
       console.log(e);
