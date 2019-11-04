@@ -18,7 +18,7 @@ const $ = require('cheerio');
 
 var db = firebase.firestore();
 
-function importBotsFromBuildersDB(eventId, weightId){
+var importBotsFromBuildersDB = function (eventId, weightId){
   const weight = 250; // 250, 30, 15
   const weightId = 7; // 7, 123, 142
   const eventId = 580;
@@ -71,4 +71,4 @@ function importBotsFromBuildersDB(eventId, weightId){
       });
 };
 
-export default importBotsFromBuildersDB;
+module.exports = importBotsFromBuildersDB;

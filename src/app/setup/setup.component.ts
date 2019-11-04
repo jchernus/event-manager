@@ -4,7 +4,7 @@ import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
 
-import importRobotsFormBuildersDB from '../js/import-robots.js';
+import * as importRobotsFormBuildersDB from '../js/import-robots';
 
 @Component({
   selector: 'app-setup',
@@ -39,8 +39,6 @@ export class SetupComponent implements OnInit {
   }
 
   importBots(){
-/*
-    importRobotsFormBuildersDB(1,2);
-*/
+    // importRobotsFormBuildersDB(1,2);
   }
 }
