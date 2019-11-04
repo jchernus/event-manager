@@ -38,7 +38,7 @@ import { Three60Component } from './three60/three60.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: ScheduleComponent },
+      { path: '', component: SetupComponent },
       { path: 'overview', component: OverviewComponent, canActivate: [ModeratorGuard] },
       { path: 'schedule', component: ScheduleComponent },
       { path: 'results', component: ResultsComponent },

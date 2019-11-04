@@ -42,7 +42,6 @@ export class SetupComponent implements OnInit {
   importBots(){
     console.log("Importing robots...");
     console.log(new ImportRobotsModule().importBotsFromBuildersDB);
-    // importRobotsFormBuildersDB(1,2);
-    new ImportRobotsModule().importBotsFromBuildersDB(13, 2);
+    new ImportRobotsModule().importBotsFromBuildersDB(2, 250, 2);
   }
 }
