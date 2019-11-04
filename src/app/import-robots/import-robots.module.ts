@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as firebase from 'firebase/app';
 // import * as $ from '@types/cheerio';
-// import * as rp from 'request-promise';
+import * as rp from 'request-promise';
 
 
 @NgModule({
@@ -21,12 +21,13 @@ export class ImportRobotsModule {
 
     const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + eventId + '&sort=&classid=' + weightId;
 
-    console.log(path);
+    console.log(rp);
   
     // rp(path)
-    //     .then(function(html){
-    //       console.log(html);
-    //     });
+    //   .then(function(html){
+    //     console.log(html);
+    //   });
+  //     });
             // //success!
             // var botInfo = [];
             // var botName;
