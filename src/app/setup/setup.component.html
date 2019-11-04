@@ -8,11 +8,11 @@
       id="eventID"
       type="text"
       class="form-control">
-      <div *ngIf="eventID.touched && eventID.invalid" class="alert alert-danger">
+      <!-- <div *ngIf="eventID.touched && eventID.invalid" class="alert alert-danger">
         <div *ngIf="eventID.errors.required">Event ID is required.</div>
         <div *ngIf="eventID.errors.pattern">Event ID must be a number.</div>
         <div *ngIf="eventID.errors.shouldExist">Event ID not found.</div>
-      </div>
+      </div> -->
   </div>
   <!-- <div>
     <label for=""></label>
@@ -24,8 +24,4 @@
       class="form-control">
   </div> -->
   <button type="submit" class="btn btn-success">Import</button>
-</form>
-
-<form [formGroup]="importRobotsForm" (ngSubmit)="importBots()">
-
 </form>

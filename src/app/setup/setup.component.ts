@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { eventIdValidators } from './eventIdValidators'; 
+import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
+
+// import importRobotsFormBuildersDB from '../js/import-robots.js';
 
 @Component({
   selector: 'app-setup',
@@ -29,7 +31,7 @@ export class SetupComponent implements OnInit {
   constructor(private robotService: RobotsService) { }
 
   ngOnInit() {
-    
+    // console.log(importRobotsFormBuildersDB);
   }
 
   pullClassIds(eventID: number){
@@ -37,13 +39,6 @@ export class SetupComponent implements OnInit {
   }
 
   importBots(){
-    // this.robotService.importBots();
 
-    /*
-      this.importRobotsForm.setErrors({
-        invalidEventID: true
-        invalidClassID: true
-      })
-    */
   }
 }
