@@ -21,7 +21,7 @@ export class ImportRobotsModule {
 
     const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + eventId + '&sort=&classid=' + weightId;
 
-    console.log(rp);
+    // console.log(rp);
   
     // rp(path)
     //   .then(function(html){
