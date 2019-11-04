@@ -25,7 +25,7 @@
         <th>State</th>
         <th>Number of Fights</th>
         <th>Last Fought</th>
-        <th>Controls</th>
+        <!-- <th>Controls</th> -->
       </tr>
     </thead>
     <tbody>
@@ -56,7 +56,7 @@
         <td>{{ robot.fightCount }} </td>
         <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
         <ng-template #noTimestamp><td></td></ng-template>
-        <td>
+        <!-- <td>
           <button
             (click)="robotService.updateArena(robot.id, 'Combat')"
             type="button" 
@@ -71,10 +71,17 @@
             class="btn btn-outline-info">
               Mark Sumo
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
 	</table>
+  <button 
+    (click)="addRobot(addRobotModal)"
+    type="button" 
+    id="addRobotBtn"
+    class="btn btn-outline-primary">
+      +
+  </button>
 </div>
 <br>
 
@@ -167,5 +174,53 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
+  </div>
+</ng-template>
+
+
+<ng-template #addRobotModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Robot</h4>
+    <button type="button" class="close" (click)="clearAddRobotForm(); modal.dismiss('Cross click')" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="addRobotForm.errors" class="alert alert-danger">
+      <!-- <p *ngIf="addRobotForm.get('winner').invalid || addRobotForm.get('loser').invalid">You must specify the winner & loser robots.</p> -->
+      <!-- <p *ngIf="addRobotForm.get('ko').invalid">You must select a win condition (KO or JD).</p> -->
+    </div>
+    <form [formGroup]="addRobotForm">
+      <div class="form-group">
+        <label>Name:</label>
+        <
+        <label>Weight Class:</label>
+        <select 
+            class="form-control"
+            [(ngModel)]="loserBot" 
+            name="loser"
+            formControlName="loser"
+            (change)="updateSelection('loser')">
+          <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
+          <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
+        </select>
+        <p>Text:</p>
+        <div class="form-check">
+          <input
+              class="form-check-input" 
+              type="radio" 
+              id="ko"  
+              [(ngModel)]="ko" 
+              formControlName="ko"
+              name="ko"
+              value="ko">
+          <label class="form-check-label" for="formCheck-1">KO</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" type="button" (click)="clearRecordResultForm(); modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="recordResult()">Add Result</button>
   </div>
 </ng-template>

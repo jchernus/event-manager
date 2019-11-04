@@ -24,7 +24,7 @@
     <thead>
       <tr>
         <th>Red Square</th>
-        <th>Blue Square</th>
+        <th>White Square</th>
         <!-- <th>Timestamp</th> -->
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
@@ -72,7 +72,7 @@
       <tr>
         <th>No.</th>
         <th>Red Square</th>
-        <th>Blue Square</th>
+        <th>White Square</th>
         <!-- <th>Timestamp</th> -->
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
@@ -181,7 +181,7 @@
     <div class="modal-body">
     <div *ngIf="scheduleForm.errors" class="alert alert-danger">
       <p *ngIf="scheduleForm.get('red').required">You must specify a robot for the red square.</p>
-      <p *ngIf="scheduleForm.get('blue').required">You must specify a robot for the blue square</p>
+      <p *ngIf="scheduleForm.get('blue').required">You must specify a robot for the white square</p>
       <p *ngIf="scheduleForm.get('red').touched && scheduleForm.get('blue').touched && scheduleForm.errors.botValues">Winner and loser robots must be unique.</p>
     </div>
       <form [formGroup]="scheduleForm">
@@ -194,7 +194,7 @@
             formControlName="red">
               <option *ngFor="let robot of (robots | async)" value="{{robot.name}}">{{robot.name}}</option>
           </select>
-          <label>Blue Square:</label>
+          <label>White Square:</label>
           <select
             class="form-control" 
             [(ngModel)]="blueBot" 

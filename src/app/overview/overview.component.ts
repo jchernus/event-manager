@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators  } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,17 @@ export class OverviewComponent implements OnInit {
     "Ready",
     "Scheduled",
     "Repairing",
+    "Disqualified",
+    "Dead"
   ]
+  
+  // addRobot = new FormGroup({
+  //   winner: new FormControl('', Validators.required),
+  //   loser: new FormControl('', Validators.required),
+  //   ko: new FormControl('', Validators.required),
+  //   jd: new FormControl('', Validators.required)
+  //   // TODO: Add weight class
+  // });
 
   constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
 
@@ -57,6 +67,17 @@ export class OverviewComponent implements OnInit {
         modalRef.componentInstance.bot = this.bot;
       });
   }
+
+  addRobot(addRobotModal) {
+    const modalRef = this.modalService.open(addRobotModal, {ariaLabelledBy: 'modal-basic-title'});
+  }
+
+  // clearRecordResultForm(){
+  //   this.winnerBot = "";
+  //   this.loserBot = "";
+  //   this.jd = "";
+  //   this.ko = "";
+  // }
 
   trackById (index, item) {
     return item.id;

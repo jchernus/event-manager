@@ -43,14 +43,10 @@ export class ScheduleComponent implements OnInit {
   });
   
   resultsForm = new FormGroup({
-    winner: new FormControl('', [
-      Validators.required,
-      
-    ]),
+    winner: new FormControl('', Validators.required),
     loser: new FormControl('', Validators.required),
     ko: new FormControl('', Validators.required),
     jd: new FormControl('', Validators.required)
-    // TODO: Add weight class
   });
 
   ngOnInit() {
@@ -83,7 +79,7 @@ export class ScheduleComponent implements OnInit {
       this.scheduleForm.setErrors({
         botValues: true
       });
-      console.log("Red square bot & blue square bot should be different.");
+      console.log("Red square bot & white square bot should be different.");
       return;
     }
 
