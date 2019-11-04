@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { eventIdValidators } from './eventIdValidators';
 
 import { RobotsService } from '../robots.service';
-import { ImportRobotsModule } from '../import-robots.module';
+import { ImportRobotsModule } from '../import-robots/import-robots.module';
 
 // import * as importRobotsFormBuildersDB from '../js/import-robots';
 
@@ -41,6 +41,8 @@ export class SetupComponent implements OnInit {
 
   importBots(){
     console.log("Importing robots...");
+    console.log(new ImportRobotsModule().importBotsFromBuildersDB);
     // importRobotsFormBuildersDB(1,2);
+    new ImportRobotsModule().importBotsFromBuildersDB(1, 2);
   }
 }
