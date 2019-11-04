@@ -25,6 +25,8 @@ var importBotsFromBuildersDB = function (eventId, weightId){
 
   const path = 'http://www.buildersdb.com/view_bots.asp?eventid=' + eventId + '&sort=&classid=' + weightId;
 
+  console.log(path);
+  /*
   rp(path)
       .then(function(html){
           //success!
@@ -69,6 +71,7 @@ var importBotsFromBuildersDB = function (eventId, weightId){
       .catch(function(err){
           console.log("Error occured: " + err);
       });
+      */
 };
 
 module.exports = importBotsFromBuildersDB;

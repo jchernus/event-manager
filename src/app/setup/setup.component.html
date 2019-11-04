@@ -1,27 +1,3 @@
 <h2>Import Robots</h2>
 
-<form [formGroup]="importRobotsForm" (ngSubmit)="importBots()">
-  <div>
-    <label for="">Event ID</label>
-    <input
-      formControlName="eventID"
-      id="eventID"
-      type="text"
-      class="form-control">
-      <!-- <div *ngIf="eventID.touched && eventID.invalid" class="alert alert-danger">
-        <div *ngIf="eventID.errors.required">Event ID is required.</div>
-        <div *ngIf="eventID.errors.pattern">Event ID must be a number.</div>
-        <div *ngIf="eventID.errors.shouldExist">Event ID not found.</div>
-      </div> -->
-  </div>
-  <!-- <div>
-    <label for=""></label>
-    <input 
-      multiple
-      formControlName="classID"
-      id="classID"
-      type="select"
-      class="form-control">
-  </div> -->
-  <button type="submit" class="btn btn-success">Import</button>
-</form>
+<button (click)="importBots()" type="button" class="btn btn-success">Import</button>
