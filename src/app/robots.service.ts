@@ -155,13 +155,13 @@ export class RobotsService {
   }
 
   updateArena(robotId: string, arena: string){
-    if (arena == "Combat") {
+    if (arena == "Big") {
       this.firestore.doc('robots/' + robotId).update({
-        arena: "Combat"
+        arena: "Big"
       });
-    } else if (arena == "Sumo") {
+    } else if (arena == "Small") {
       this.firestore.doc('robots/' + robotId).update({
-        arena: "Sumo"
+        arena: "Small"
       });
     }
   }

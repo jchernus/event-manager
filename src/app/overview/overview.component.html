@@ -2,16 +2,22 @@
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==130" (click)="changeViewMode(130)">Fairyweight</a>
+  </li>
+	<li class="nav-item">
     <a class="nav-link" [class.active]="viewMode==1" (click)="changeViewMode(1)">Antweight</a>
   </li>
 	<li class="nav-item">
     <a class="nav-link" [class.active]="viewMode==3" (click)="changeViewMode(3)">Beetleweight</a>
   </li>
 	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">30lb Sumo</a>
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">15lb Dogeweight</a>
   </li>
 	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==150" (click)="changeViewMode(150)">150lb Sumo</a>
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">30lb Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
   </li>
 </ul>
 
@@ -58,18 +64,18 @@
         <ng-template #noTimestamp><td></td></ng-template>
         <!-- <td>
           <button
-            (click)="robotService.updateArena(robot.id, 'Combat')"
+            (click)="robotService.updateArena(robot.id, 'Big')"
             type="button" 
             id="updateArenaBtn"
             class="btn btn-outline-info">
-              Mark Combat
+              Mark Big
           </button>
           <button
-            (click)="robotService.updateArena(robot.id, 'Sumo')"
+            (click)="robotService.updateArena(robot.id, 'Small')"
             type="button" 
             id="updateArenaBtn"
             class="btn btn-outline-info">
-              Mark Sumo
+              Mark Small
           </button>
         </td> -->
       </tr>

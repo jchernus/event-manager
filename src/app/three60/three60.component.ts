@@ -10,7 +10,7 @@ import { RobotsService } from '../robots.service';
 })
 export class Three60Component implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 1;
+  viewMode = 130;
 
   constructor(private robotService: RobotsService) { }
 

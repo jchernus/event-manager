@@ -17,7 +17,7 @@ import { Fight } from './fight';
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-  viewMode = "Combat";
+  viewMode = "Small";
   robots : Observable<any[]>;
   schedule : Observable<any[]>;
   currentMatch;
@@ -79,7 +79,7 @@ export class ScheduleComponent implements OnInit {
       this.scheduleForm.setErrors({
         botValues: true
       });
-      console.log("Red square bot & white square bot should be different.");
+      console.log("Red square bot & blue square bot should be different.");
       return;
     }
 
