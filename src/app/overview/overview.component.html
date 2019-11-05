@@ -82,7 +82,7 @@
     </tbody>
 	</table>
   <button 
-    (click)="addRobot(addRobotModal)"
+    (click)="openAddRobotModal(addRobotModal)"
     type="button" 
     id="addRobotBtn"
     class="btn btn-outline-primary">
@@ -196,37 +196,59 @@
       <!-- <p *ngIf="addRobotForm.get('winner').invalid || addRobotForm.get('loser').invalid">You must specify the winner & loser robots.</p> -->
       <!-- <p *ngIf="addRobotForm.get('ko').invalid">You must select a win condition (KO or JD).</p> -->
     </div>
-    <form [formGroup]="addRobotForm">
+      <form [formGroup]="addRobotForm">
       <div class="form-group">
         <label>Name:</label>
-        <
+        <input 
+          class="form-control" 
+          [(ngModel)]="name" 
+          type="text" 
+          id="robotName"
+          name="botName"
+          formControlName="botName"
+          style="margin-bottom: 15px;">
         <label>Weight Class:</label>
         <select 
-            class="form-control"
-            [(ngModel)]="loserBot" 
-            name="loser"
-            formControlName="loser"
-            (change)="updateSelection('loser')">
-          <option value="{{currentMatch.redSquare}}">{{currentMatch.redSquare}}</option>
-          <option value="{{currentMatch.blueSquare}}">{{currentMatch.blueSquare}}</option>
+          class="form-control" 
+          [(ngModel)]="weightClass" 
+          id="weightClassSelect" 
+          name="botWeight"
+          formControlName="botWeight"
+          style="margin-bottom: 15px;">
+            <option value="130" selected="">Fairyweight</option>
+            <option value="1">Antweight</option>
+            <option value="3">Beetleweight</option>
+            <option value="15">15lb Dogeweight</option>
+            <option value="30">30lb Sportsman</option>
+            <option value="250">Heavyweight</option>
         </select>
-        <p>Text:</p>
         <div class="form-check">
-          <input
-              class="form-check-input" 
-              type="radio" 
-              id="ko"  
-              [(ngModel)]="ko" 
-              formControlName="ko"
-              name="ko"
-              value="ko">
-          <label class="form-check-label" for="formCheck-1">KO</label>
+          <input 
+            class="form-check-input"
+            [(ngModel)]="arrived"  
+            type="checkbox" 
+            id="arrivedCheckBox"
+            name="botArrived"
+            formControlName="botArrived"
+            style="margin-bottom: 15px;">
+          <label class="form-check-label" for="formCheck-2">Arrived</label>
+        </div>
+        <div class="form-check">
+          <input 
+            class="form-check-input" 
+            [(ngModel)]="safety" 
+            type="checkbox" 
+            id="safetyCheckBox" 
+            name="botSafety"
+            formControlName="botSafety"
+            style="margin-bottom: 15px;">
+          <label class="form-check-label" for="formCheck-1">Passed Safety</label>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-light" type="button" (click)="clearRecordResultForm(); modal.dismiss()">Close</button>
-    <button class="btn btn-primary" type="button" (click)="recordResult()">Add Result</button>
+    <button class="btn btn-light" type="button" (click)="clearAddRobotForm(); modal.dismiss()">Close</button>
+    <button class="btn btn-primary" type="button" (click)="addRobot(); modal.dismiss()">Add Result</button>
   </div>
 </ng-template>

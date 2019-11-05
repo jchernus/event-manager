@@ -96,14 +96,24 @@ export class RobotsService {
     });
   }
 
-  addRobot(botName: String, weight: number){
+  addRobot(botName: String, weight: number, arena: string, inAttendance: boolean, passedSafety: boolean){
     return this.firestore.collection('robots').add({
       name: botName,
-      weightClass: weight
+      weightClass: weight,
+      arena: arena,
+      alive: true,  // Still participating (or intending to) in the competition
+      inAttendance : false, // Arrived & checked in
+      passedSafety : false, // Passed safety
+      state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
+      fightCount : 0, 
+      winCount : 0,
+      lossCount : 0, 
+      koCount : 0, // Number of fights won by KO (winCount - koCount = jdCount)
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      matches : {} // History of matches for the robot
     })
     .then(function(docRef) {
       console.log("Robot added with ID: ", docRef.id);
-      this.initializeBot(docRef.id, weight);
     })
     .catch(function(error) {
       console.error("Error adding robot: ", error);

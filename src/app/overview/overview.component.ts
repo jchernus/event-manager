@@ -21,6 +21,11 @@ export class OverviewComponent implements OnInit {
   viewMode = 130;
   selectedState : string;
 
+  name: string;
+  weightClass: number = 130 ;
+  arrived: boolean;
+  safety: boolean;
+
   @Input() public bot : Robot = {
     name : "N/A",
     weightClass : 250,
@@ -36,13 +41,12 @@ export class OverviewComponent implements OnInit {
     "Dead"
   ]
   
-  // addRobot = new FormGroup({
-  //   winner: new FormControl('', Validators.required),
-  //   loser: new FormControl('', Validators.required),
-  //   ko: new FormControl('', Validators.required),
-  //   jd: new FormControl('', Validators.required)
-  //   // TODO: Add weight class
-  // });
+  addRobotForm = new FormGroup({
+    botName: new FormControl('', Validators.required),
+    botWeight: new FormControl('', Validators.required),
+    botArrived: new FormControl('', Validators.required),
+    botSafety: new FormControl('', Validators.required)
+  });
 
   constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
 
@@ -68,16 +72,32 @@ export class OverviewComponent implements OnInit {
       });
   }
 
-  addRobot(addRobotModal) {
+  openAddRobotModal(addRobotModal) {
     const modalRef = this.modalService.open(addRobotModal, {ariaLabelledBy: 'modal-basic-title'});
   }
 
-  // clearRecordResultForm(){
-  //   this.winnerBot = "";
-  //   this.loserBot = "";
-  //   this.jd = "";
-  //   this.ko = "";
-  // }
+  addRobot(){
+    let arena = "Big";
+    let weightClass = +this.weightClass;
+    if (weightClass <= 3 || weightClass === 130){
+      arena = "Small";
+    }
+
+    // Add the robot
+    console.log("Arrived: ", this.arrived);
+    console.log("Safetied: ", this.safety);
+    // this.robotService.addRobot(this.name, weightClass, arena, this.arrived, this.safety);
+
+    // Clear the form
+    this.clearAddRobotForm();
+  }
+
+  clearAddRobotForm(){
+    this.name = "";
+    this.weightClass = 130;
+    this.arrived = false;
+    this.safety = false;
+  }
 
   trackById (index, item) {
     return item.id;
