@@ -102,8 +102,8 @@ export class RobotsService {
       weightClass: weight,
       arena: arena,
       alive: true,  // Still participating (or intending to) in the competition
-      inAttendance : false, // Arrived & checked in
-      passedSafety : false, // Passed safety
+      inAttendance : inAttendance, // Arrived & checked in
+      passedSafety : passedSafety, // Passed safety
       state : "N/A", // Repairing, Ready to Fight, Scheduled, Dead
       fightCount : 0, 
       winCount : 0,

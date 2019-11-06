@@ -22,7 +22,7 @@ export class OverviewComponent implements OnInit {
   selectedState : string;
 
   name: string;
-  weightClass: number = 130 ;
+  weightClass: number = this.viewMode ;
   arrived: boolean;
   safety: boolean;
 
@@ -73,6 +73,7 @@ export class OverviewComponent implements OnInit {
   }
 
   openAddRobotModal(addRobotModal) {
+    this.weightClass = this.viewMode;
     const modalRef = this.modalService.open(addRobotModal, {ariaLabelledBy: 'modal-basic-title'});
   }
 
@@ -83,10 +84,8 @@ export class OverviewComponent implements OnInit {
       arena = "Small";
     }
 
-    // Add the robot
-    console.log("Arrived: ", this.arrived);
-    console.log("Safetied: ", this.safety);
-    // this.robotService.addRobot(this.name, weightClass, arena, this.arrived, this.safety);
+    // Add the robot   
+    this.robotService.addRobot(this.name, weightClass, arena, !!this.arrived, !!this.safety);
 
     // Clear the form
     this.clearAddRobotForm();
@@ -94,7 +93,7 @@ export class OverviewComponent implements OnInit {
 
   clearAddRobotForm(){
     this.name = "";
-    this.weightClass = 130;
+    //weightClass is set when the modal opens
     this.arrived = false;
     this.safety = false;
   }
