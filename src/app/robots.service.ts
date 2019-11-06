@@ -152,6 +152,12 @@ export class RobotsService {
     }
   }
 
+  updateName(robotId: string, newName: string){
+    this.firestore.doc('robots/' + robotId).update({
+      name: newName,
+    });
+  }
+
   markPhotographed(robotId: string, photographed: boolean){
     if (photographed) {
       this.firestore.doc('robots/' + robotId).update({

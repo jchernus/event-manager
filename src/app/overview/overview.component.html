@@ -95,98 +95,91 @@
 
 <ng-template #robotDetails let-modal>
   <div class="modal-header">
-    <h4 *ngIf="bot !== undefined" class="modal-title" id="modal-basic-title">{{bot.name}}</h4>
+    <h4 *ngIf="bot !== undefined" class="modal-title" id="modal-basic-title">Robot Details</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" *ngIf="bot !== undefined">
-    <p>
-      <b>Weight Class: </b> {{ bot.weightClass }} 
-      <span *ngIf="bot.weightClass === 130; else pound"> g </span>
-      <ng-template #pound>
-        <span *ngIf="bot.weightClass === 1; else pounds"> lb </span>
-        <ng-template #pounds> lbs </ng-template>
-      </ng-template>
-    </p>
-
-    <p *ngIf="bot.inAttendance; else notInAttendance">
-      <b>Attendance:</b> &#x2714;
-    </p>
-    <ng-template #notInAttendance>
-      <p><b>Attendance:</b> &#x274C;</p>
-    </ng-template>
-
-    <p *ngIf="bot.passedSafety; else noSafety">
-      <b>Safety:</b> &#x2714;
-    </p>
-    <ng-template #noSafety>
-      <p><b>Safety:</b> &#x274C;</p>
-    </ng-template>
-
-    <p *ngIf="bot.state">
-      <b>State:</b> <span 
-      [class.ready]="bot.state=='Ready'"
-      [class.repairing]="bot.state=='Repairing'"
-      [class.scheduled]="bot.state=='Scheduled'">
-      {{ bot.state }}
-      </span>
-    </p>
-
-    <!-- <ng-template #noImage>
-      <p>No image to display.</p>
-    </ng-template> -->
-
-    <!-- <p><b>Fight History:</b></p>
-    <div *ngIf="bot.fights; else noFightsYet">
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr> *ngFor=""
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-    <ng-template #noFightsYet>
-      <p>This robot has not had any fights yet.</p>
-      <p><i>This section still under construction.</i></p>
-    </ng-template> -->
-
-    <!-- <div *ngIf="">
-      <p></p>
-      <table>
-        <tr>
-          <th></th>
-        </tr>
-        <tr *ngFor="">
-        </tr>
-      </table>
-    </div> -->
-
-    <p><b> Change State: </b></p>
-    <select
-        [(ngModel)]="bot.state"
-        name="stateSelection"
-        id=""
-        type="select"
-        class="form-control"
-        class="custom-select mr-sm-2"
-        (change)="robotService.changeState(bot.id, bot.state)">
-      <option *ngFor="let state of states " value="{{state}}">{{state}}</option>
-    </select>
-
-    <p><b> Admin Controls: </b></p>
-    <button (click)="robotService.initializeBot(bot.id, viewMode)" class="btn btn-success">Initialize Bot</button>
-    <button (click)="robotService.deleteRobot(bot.id); modal.dismiss()" class="btn btn-danger">Delete Bot</button>
-
+    <form [formGroup]="updateRobotForm">
+      <div class="form-group">
+        <label>Name:</label>
+        <input 
+            class="form-control" 
+            type="text" id="robotName" 
+            style="margin-bottom: 15px;" 
+            formControlName="robotName"
+            [(ngModel)]="bot.name"
+            (focusout)="robotService.updateName(bot.id, bot.name)">
+        <label>Weight Class: 
+            <em> {{ bot.weightClass }}
+                <span *ngIf="bot.weightClass === 130; else pound"> g </span>
+                <ng-template #pound>
+                    <span *ngIf="bot.weightClass === 1; else pounds"> lb </span>
+                    <ng-template #pounds> lbs </ng-template>
+                </ng-template>
+            </em>
+        </label>
+        <div></div>
+        <label>State:</label>
+        <select 
+            id="stateSelect" 
+            [(ngModel)]="bot.state"
+            formControlName="robotState"
+            name="stateSelection"
+            type="select"
+            class="form-control"
+            class="custom-select mr-sm-2"
+            (change)="robotService.changeState(bot.id, bot.state)">
+                <option *ngFor="let state of states" value="{{state}}">{{state}}</option>
+        </select>
+        <div class="form-check">
+            <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="arrivedCheckBox"
+                formControlName="robotArrived"
+                [(ngModel)]="bot.inAttendance" 
+                (change)="robotService.markPresent(bot.id, bot.inAttendance)">
+            <label class="form-check-label" for="formCheck-2">Arrived</label>
+        </div>
+        <div class="form-check">
+            <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="safetyCheckBox" 
+                formControlName="robotSafety"
+                [(ngModel)]="bot.passedSafety" 
+                (change)="robotService.markSafety(bot.id, bot.passedSafety)"
+                style="margin-bottom: 15px;">
+            <label class="form-check-label" for="formCheck-1">Passed Safety</label>
+        </div>
+        <br>
+        <label><b>Administrative Controls:</b></label>
+        <div class="btn-group" role="group"></div>
+        <div>
+            <button 
+                class="btn btn-primary btn-sm" 
+                type="button" 
+                (click)="robotService.initializeBot(bot.id, viewMode)" 
+                style="margin-right: 5px;">
+                    Initialize Bot
+            </button>
+            <button 
+                class="btn btn-danger btn-sm" 
+                type="button" 
+                (click)="robotService.deleteRobot(bot.id); modal.dismiss()"
+                style="margin-left: 5px;">
+                    Delete Bot
+            </button>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" (click)="modal.dismiss()">Exit</button>
+    <button class="btn btn-primary" (click)="modal.dismiss()">Close</button>
+    <!-- <button class="btn btn-light" (click)="modal.dismiss()">Close</button> -->
+    <!-- <button class="btn btn-primary" (click)="updateRobot(bot.id)">Save</button> -->
   </div>
 </ng-template>
 
@@ -203,7 +196,7 @@
       <!-- <p *ngIf="addRobotForm.get('winner').invalid || addRobotForm.get('loser').invalid">You must specify the winner & loser robots.</p> -->
       <!-- <p *ngIf="addRobotForm.get('ko').invalid">You must select a win condition (KO or JD).</p> -->
     </div>
-      <form [formGroup]="addRobotForm">
+    <form [formGroup]="addRobotForm">
       <div class="form-group">
         <label>Name:</label>
         <input 

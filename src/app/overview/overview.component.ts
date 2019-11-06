@@ -22,7 +22,7 @@ export class OverviewComponent implements OnInit {
   selectedState : string;
 
   name: string;
-  weightClass: number = this.viewMode ;
+  weightClass: number = this.viewMode;
   arrived: boolean;
   safety: boolean;
 
@@ -46,6 +46,13 @@ export class OverviewComponent implements OnInit {
     botWeight: new FormControl('', Validators.required),
     botArrived: new FormControl('', Validators.required),
     botSafety: new FormControl('', Validators.required)
+  });
+  
+  updateRobotForm = new FormGroup({
+    robotName: new FormControl('', Validators.required),
+    robotState: new FormControl('', Validators.required),
+    robotArrived: new FormControl('', Validators.required),
+    robotSafety: new FormControl('', Validators.required)
   });
 
   constructor(public auth: AuthService, private robotService: RobotsService, private modalService: NgbModal){}
@@ -87,13 +94,14 @@ export class OverviewComponent implements OnInit {
     // Add the robot   
     this.robotService.addRobot(this.name, weightClass, arena, !!this.arrived, !!this.safety);
 
-    // Clear the form
+    // Clear form
     this.clearAddRobotForm();
   }
 
   clearAddRobotForm(){
     this.name = "";
     //weightClass is set when the modal opens
+    this.state = "N/A";
     this.arrived = false;
     this.safety = false;
   }
