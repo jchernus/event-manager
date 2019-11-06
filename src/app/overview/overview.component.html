@@ -101,7 +101,14 @@
     </button>
   </div>
   <div class="modal-body" *ngIf="bot !== undefined">
-    <p><b>Weight Class: </b> {{ bot.weightClass }} </p>
+    <p>
+      <b>Weight Class: </b> {{ bot.weightClass }} 
+      <span *ngIf="bot.weightClass === 130; else pound"> g </span>
+      <ng-template #pound>
+        <span *ngIf="bot.weightClass === 1; else pounds"> lb </span>
+        <ng-template #pounds> lbs </ng-template>
+      </ng-template>
+    </p>
 
     <p *ngIf="bot.inAttendance; else notInAttendance">
       <b>Attendance:</b> &#x2714;
