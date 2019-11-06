@@ -2,7 +2,7 @@
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode==130" (click)="changeViewMode(130)">Fairyweight</a>
+    <a class="nav-link" [class.active]="viewMode==150" (click)="changeViewMode(150)">Fairyweight</a>
   </li>
 	<li class="nav-item">
     <a class="nav-link" [class.active]="viewMode==1" (click)="changeViewMode(1)">Antweight</a>
@@ -113,7 +113,7 @@
             (focusout)="robotService.updateName(bot.id, bot.name)">
         <label>Weight Class: 
             <em> {{ bot.weightClass }}
-                <span *ngIf="bot.weightClass === 130; else pound"> g </span>
+                <span *ngIf="bot.weightClass === 150; else pound"> g </span>
                 <ng-template #pound>
                     <span *ngIf="bot.weightClass === 1; else pounds"> lb </span>
                     <ng-template #pounds> lbs </ng-template>
@@ -215,7 +215,7 @@
           name="botWeight"
           formControlName="botWeight"
           style="margin-bottom: 15px;">
-            <option value="130" selected="">Fairyweight</option>
+            <option value="150" selected="">Fairyweight</option>
             <option value="1">Antweight</option>
             <option value="3">Beetleweight</option>
             <option value="15">15lb Dogeweight</option>

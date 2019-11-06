@@ -9,7 +9,7 @@ import { RobotsService } from '../robots.service';
   styleUrls: ['./robot-details.component.css']
 })
 export class RobotDetailsComponent {
-  viewMode = 130;
+  viewMode = 150;
   
   constructor(
     private robotService: RobotsService, 

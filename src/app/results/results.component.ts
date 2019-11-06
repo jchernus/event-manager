@@ -15,7 +15,7 @@ import { Fight } from '../fight';
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit {
-  viewMode = 130;
+  viewMode = 150;
   robots : Observable<any[]>;
   fights : Observable<any[]>;
   winnerBot : string;

@@ -18,7 +18,7 @@ import { Robot } from '../robot';
 })
 export class OverviewComponent implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 130;
+  viewMode = 150;
   selectedState : string;
 
   name: string;
@@ -87,7 +87,7 @@ export class OverviewComponent implements OnInit {
   addRobot(){
     let arena = "Big";
     let weightClass = +this.weightClass;
-    if (weightClass <= 3 || weightClass === 130){
+    if (weightClass <= 3 || weightClass === 150){
       arena = "Small";
     }
 

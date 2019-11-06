@@ -10,7 +10,7 @@ import { RobotsService } from '../robots.service';
 })
 export class CheckinComponent implements OnInit {
   robots : Observable<any[]>;
-  viewMode = 130;
+  viewMode = 150;
 
   constructor(private robotService: RobotsService) { }
 
