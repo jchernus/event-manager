@@ -1,0 +1,29 @@
+<h1>Brackets</h1>
+
+<ul class="nav nav-pills">
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==150" (click)="changeViewMode(150)">Fairyweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==1" (click)="changeViewMode(1)">Antweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==3" (click)="changeViewMode(3)">Beetleweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==15" (click)="changeViewMode(15)">15lb Dogeweight</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==30" (click)="changeViewMode(30)">30lb Sportsman</a>
+  </li>
+	<li class="nav-item">
+    <a class="nav-link" [class.active]="viewMode==250" (click)="changeViewMode(250)">Heavyweight</a>
+  </li>
+</ul>
+
+<p *ngIf="viewMode==150">No bracket available for this weight class.</p>
+<iframe *ngIf="viewMode==1" src="https://challonge.com/1pbaw6s/module" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+<iframe *ngIf="viewMode==3" src="https://challonge.com/mj1xr4wl/module" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+<p *ngIf="viewMode==15">No bracket available for this weight class.</p>
+<p *ngIf="viewMode==30">No bracket available for this weight class.</p>
+<p *ngIf="viewMode==250">No bracket available for this weight class.</p>

@@ -30,6 +30,7 @@ import { ModeratorGuard } from './moderator.guard';
 import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
 import { Three60Component } from './three60/three60.component';
+import { BracketsComponent } from './brackets/brackets.component';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { Three60Component } from './three60/three60.component';
       { path: 'setup', component: SetupComponent , canActivate: [AdminGuard] },
       { path: 'check-in', component: CheckinComponent , canActivate: [ModeratorGuard] },
       { path: 'safety', component: SafetyComponent , canActivate: [ModeratorGuard] },
+      { path: 'brackets', component: BracketsComponent},
       { path: '360', component: Three60Component},
       { path: '**', component: NotFoundComponent },
     ]),
@@ -70,6 +72,7 @@ import { Three60Component } from './three60/three60.component';
     CheckinComponent,
     SafetyComponent,
     Three60Component,
+    BracketsComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard]
