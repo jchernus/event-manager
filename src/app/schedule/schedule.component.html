@@ -73,6 +73,7 @@
         <th>No.</th>
         <th>Red Square</th>
         <th>Blue Square</th>
+        <th>Weight Class</th>
         <!-- <th>Timestamp</th> -->
         <th *ngIf="auth.isAdmin(auth.user | async)">Controls</th>
       </tr>
@@ -81,7 +82,7 @@
       <ng-container *ngFor="let match of schedule | async as matches; let i = index; first as isFirst; last as isLast; trackBy: trackById;">
         <tr *ngIf="match.breakDuration !== undefined; else isFight">
           <td class="info">{{i+1}}</td>
-          <td  class="info"colspan="2" align="center">
+          <td class="info" colspan="3" align="center">
             {{match.breakDuration}} Minute Break
           </td>
           <td class="info" *ngIf="auth.isAdmin(auth.user | async)">
@@ -124,6 +125,13 @@
           <td>{{i+1}}</td>
           <td>{{match.redSquare}}</td>
           <td>{{match.blueSquare}}</td>
+          <td>{{match.weightClass}}
+            <span *ngIf="match.weightClass === 150; else pound"> g </span>
+                <ng-template #pound>
+                    <span *ngIf="match.weightClass === 1; else pounds"> lb </span>
+                    <ng-template #pounds> lbs </ng-template>
+                </ng-template>
+          </td>
           <!-- <td>{{match.timestamp.toDate() | date:'medium'}}</td> -->
           <td *ngIf="auth.isAdmin(auth.user | async)">
             <button 

@@ -27,9 +27,7 @@ export class FightsService {
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           let weightClass = doc.data()['weightClass'];
-          console.log(weightClass);
           fight.weightClass = weightClass;
-          console.log(fight);
 
           // Update the fights collection
           db.collection('fightHistory').add(fight);

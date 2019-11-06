@@ -27,13 +27,36 @@ export class ScheduleService {
   // MATCHES
   addMatch(arena: string, redBot: string, blueBot: string){
     var db = firebase.firestore();
-    // Update the fightSchedule collection
-    this.firestore.collection('fightSchedule').add({
-      redSquare: redBot,
-      blueSquare: blueBot,
-      arena: arena,
-      timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+    let weightClass : number;
+
+    // Extract weight class from the robot record
+    db.collection("robots").where("name", "==", redBot)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          weightClass = doc.data()['weightClass'];
+
+          // Update the fightSchedule collection
+          db.collection('fightSchedule').add({
+            redSquare: redBot,
+            blueSquare: blueBot,
+            arena: arena,
+            weightClass: weightClass,
+            timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+          });
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
     });
+
+    // Update the fightSchedule collection
+    // this.firestore.collection('fightSchedule').add({
+    //   redSquare: redBot,
+    //   blueSquare: blueBot,
+    //   arena: arena,
+    //   timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+    // });
 
     // Update the robot's states to "Scheduled"
     db.collection("robots").where('name', '==', redBot)
