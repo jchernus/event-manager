@@ -61,26 +61,24 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      roles: {
-        viewer: true
-      }
+      role: "Viewer"
     }
     return userRef.set(data, { merge: true })
   }
 
 
   isViewer(user: User): boolean {
-    const allowed = ['admin', 'moderator', 'viewer'];
+    const allowed = ['Admin', 'Moderator', 'Viewer'];
     return this.checkAuthorization(user, allowed);
   }
 
   isModerator(user: User): boolean {
-    const allowed = ['admin', 'moderator'];
+    const allowed = ['Admin', 'Moderator'];
     return this.checkAuthorization(user, allowed);
   }
 
   isAdmin(user: User): boolean {
-    const allowed = ['admin'];
+    const allowed = ['Admin'];
     return this.checkAuthorization(user, allowed);
   }
 
@@ -88,7 +86,7 @@ export class AuthService {
   private checkAuthorization(user: User, allowedRoles: string[]): boolean {
     if (!user) return false
     for (const role of allowedRoles) {
-      if ( user.roles[role] ) {
+      if ( user.role == role ) {
         return true
       }
     }

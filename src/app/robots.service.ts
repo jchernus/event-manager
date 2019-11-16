@@ -7,8 +7,6 @@ import { map } from 'rxjs/operators/map';
 
 import { Robot } from './robot';
 
-declare var require: any;
-
 @Injectable()
 export class RobotsService {
   robots;

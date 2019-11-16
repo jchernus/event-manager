@@ -62,22 +62,6 @@
         <td>{{ robot.fightCount }} </td>
         <td *ngIf="robot.lastFought!== undefined; else noTimestamp">{{ robot.lastFought.toDate() | timeAgo}} </td>
         <ng-template #noTimestamp><td></td></ng-template>
-        <!-- <td>
-          <button
-            (click)="robotService.updateArena(robot.id, 'Big')"
-            type="button" 
-            id="updateArenaBtn"
-            class="btn btn-outline-info">
-              Mark Big
-          </button>
-          <button
-            (click)="robotService.updateArena(robot.id, 'Small')"
-            type="button" 
-            id="updateArenaBtn"
-            class="btn btn-outline-info">
-              Mark Small
-          </button>
-        </td> -->
       </tr>
     </tbody>
 	</table>

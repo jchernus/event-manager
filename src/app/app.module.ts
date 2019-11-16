@@ -31,6 +31,8 @@ import { CheckinComponent } from './checkin/checkin.component';
 import { SafetyComponent } from './safety/safety.component';
 import { Three60Component } from './three60/three60.component';
 import { BracketsComponent } from './brackets/brackets.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { UsersService } from './users.service';
 
 @NgModule({
   imports: [
@@ -44,11 +46,12 @@ import { BracketsComponent } from './brackets/brackets.component';
       { path: 'schedule', component: ScheduleComponent },
       { path: 'results', component: ResultsComponent },
       { path: 'standings', component: StandingsComponent },
-      { path: 'setup', component: SetupComponent , canActivate: [AdminGuard] },
-      { path: 'check-in', component: CheckinComponent , canActivate: [ModeratorGuard] },
-      { path: 'safety', component: SafetyComponent , canActivate: [ModeratorGuard] },
+      { path: 'setup', component: SetupComponent, canActivate: [AdminGuard] },
+      { path: 'check-in', component: CheckinComponent, canActivate: [ModeratorGuard] },
+      { path: 'safety', component: SafetyComponent, canActivate: [ModeratorGuard] },
       { path: 'brackets', component: BracketsComponent},
       { path: '360', component: Three60Component},
+      { path: 'user-management', component: UserManagementComponent, canActivate: [AdminGuard] },
       { path: '**', component: NotFoundComponent },
     ]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -73,8 +76,9 @@ import { BracketsComponent } from './brackets/brackets.component';
     SafetyComponent,
     Three60Component,
     BracketsComponent,
+    UserManagementComponent,
   ],
   bootstrap: [ AppComponent ],
-  providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard]
+  providers: [FightsService, RobotsService, ScheduleService, AuthService, AdminGuard, ModeratorGuard, UsersService]
 })
 export class AppModule { }

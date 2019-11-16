@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators  } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as firebase from 'firebase/app';
 import { map } from 'rxjs/operators/map';
 
 import { AuthService} from '../auth.service';
@@ -101,7 +100,6 @@ export class OverviewComponent implements OnInit {
   clearAddRobotForm(){
     this.name = "";
     //weightClass is set when the modal opens
-    this.state = "N/A";
     this.arrived = false;
     this.safety = false;
   }
