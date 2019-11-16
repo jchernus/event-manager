@@ -65,6 +65,7 @@
       </tr>
     </tbody>
 	</table>
+  <p *ngIf="robots | async as robots">Robot Count: {{robots.length}}</p>
   <button 
     (click)="openAddRobotModal(addRobotModal)"
     type="button" 
