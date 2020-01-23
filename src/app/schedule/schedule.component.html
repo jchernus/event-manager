@@ -4,9 +4,6 @@
 	<li class="nav-item">
     <a class="nav-link" [class.active]="viewMode=='Small'" (click)="changeViewMode('Small')">Insect Arena</a>
   </li>
-	<li class="nav-item">
-    <a class="nav-link" [class.active]="viewMode=='Big'" (click)="changeViewMode('Big')">Axe Backwards Arena</a>
-  </li>
 </ul>
 
 <div *ngIf="auth.isAdmin(auth.user | async)">
